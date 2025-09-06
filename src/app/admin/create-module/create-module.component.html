@@ -1,0 +1,120 @@
+<div class="section-container">
+  <div class="card user-card p-0 mb-5">
+    <div class="row mx-0 user-row user-container">
+      <div class="col-10 d-flex align-items-center">
+        <div class="pointer" (click)="goBack()">
+          <img src="assets/img/common/back.png" width="7px" class="mr-3">
+        </div>
+        <div class="fs25 fw600 color-dark-grey px-3">Module
+        </div>
+        <div>
+          <img src="assets/img/common/right-icon.png" width="7px" class="mr-3">
+        </div>
+        <div class="fs18 fw500 color-dark-grey ml-2 mt-1">Create New Module
+        </div>
+      </div>
+
+    </div>
+    <div class="row mx-0 user-row" [formGroup]="createModuleform">
+      <div class="col-lg-4 col-md-4 col-sm-6">
+        <div class="mb-3">
+          <label class="fs12 fw500 label">Module Name <span class="asterisk">*</span></label>
+          <input type="text" class="form-control" formControlName="moduleName" placeholder="Module Name" required (keydown)="spaceRestrict($event)"
+            [ngClass]="{'redBorder': this.createModuleform.get('moduleName').invalid &&
+            (this.createModuleform.get('moduleName').dirty || this.createModuleform.get('moduleName').touched) ||
+            ( this.submitted && this.createModuleform.get('moduleName').invalid )}">
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-6">
+        <div class="mb-3">
+          <label class="fs12 fw500 label">Module Url <span class="asterisk">*</span></label>
+          <input type="text" class="form-control  " formControlName="Url" placeholder="Url" required (keydown)="spaceRestrict($event)" [ngClass]="{'redBorder': this.createModuleform.get('Url').invalid &&
+            (this.createModuleform.get('Url').dirty || this.createModuleform.get('Url').touched) ||
+            ( this.submitted && this.createModuleform.get('Url').invalid )}">
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-6">
+        <div class="mb-3">
+          <label class="fs12 fw500 label">Module Key <span class="asterisk">*</span></label>
+          <input type="text" class="form-control  " formControlName="moduleKey" placeholder="Module Key" required (keydown)="spaceRestrict($event)"
+          [ngClass]="{'redBorder': this.createModuleform.get('moduleKey').invalid &&
+          (this.createModuleform.get('moduleKey').dirty || this.createModuleform.get('moduleKey').touched) ||
+          ( this.submitted && this.createModuleform.get('moduleKey').invalid )}">
+        </div>
+      </div>
+    </div>
+
+    <div class="card table-card mb-4 inform scroller" id="customscrollbar">
+      <table class="table user-table mb-0 text-center">
+        <thead>
+          <tr class="rowAlign fs15 fw500">
+            <th></th>
+            <th>Create</th>
+            <th>Edit</th>
+            <th>Delete</th>
+            <th>List</th>
+            <th>View</th>
+          </tr>
+        </thead>
+        <tbody class="fs15 fw500">
+          <tr class="trBody cursor-hand">
+            <td class="">Access</td>
+            <td><input class="form-check-input" type="checkbox" value="" id="create"
+                (change)="createCheck($event, 'create')"></td>
+            <td><input class="form-check-input" type="checkbox" value="" id="edit"
+                (change)="createCheck($event, 'edit')"></td>
+            <td><input class="form-check-input" type="checkbox" value="" id="delete"
+                (change)="createCheck($event, 'delete')"></td>
+            <td><input class="form-check-input" type="checkbox" value="" id="list"
+                (change)="createCheck($event, 'list')"></td>
+            <td><input class="form-check-input" type="checkbox" value="" id="view"
+                (change)="createCheck($event, 'view')"></td>
+          </tr>
+        </tbody>
+
+      </table>
+    </div>
+
+    <div class="row mx-0 justify-content-center mb-3">
+      <div class="col-lg-2 col-sm-4 col-4">
+        <button class="btn btn-prop bg-green fs15 fw500 cancel-btn" type="button" (click)="goBack()">
+          Cancel
+        </button>
+      </div>
+      <div class="col-lg-2 col-sm-4 col-4">
+        <button class="btn btn-prop bg-green fs15 fw500 search-btn" type="button" (click)="moduleCreation()">
+          Create
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #responseModel let-modal>
+  <div class="modal-body pb-4">
+    <div class="row mx-0 text-left">
+      <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+        <img src="assets/img/common/cross.svg">
+        {{this.errorMessage}}
+      </div>
+    </div>
+  </div>
+  <div class="w-100 text-center">
+    <button class="btn btn-prop color-white bg-red w-50" type="button" data-dismiss="modal"
+      (click)="closeModal()">Close</button>
+  </div>
+</ng-template>
+
+<ng-template #successModel let-modal>
+  <div class="modal-body pb-4">
+    <div class="row mx-0 text-left">
+      <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+        <img src="assets/img/common/tick.svg">
+        {{this.successMessage}}
+      </div>
+    </div>
+  </div>
+  <div class="w-100 text-center">
+    <button class="btn btn-prop close-button color-white bg-green w-50" type="button" data-dismiss="modal"
+      (click)="close()">Close</button>
+  </div>
+</ng-template>

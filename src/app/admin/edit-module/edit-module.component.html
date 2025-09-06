@@ -1,0 +1,170 @@
+<div class="section-container">
+    <div class="card user-card p-0 mb-5">
+        <div class="row mx-0 user-row user-container">
+            <div class="col-10 d-flex align-items-center">
+                <div class="pointer" (click)="goBack()">
+                    <img src="assets/img/common/back.png" width="7px" class="mr-3">
+                </div>
+                <div class="fs25 fw600 color-dark-grey px-3">Edit Module
+                </div>
+                <div>
+                    <img src="assets/img/common/right-icon.png" width="7px" class="mr-3">
+                </div>
+                <div class="fs18 fw500 color-dark-grey ml-2 mt-1">{{this.moduleData?.name}}
+                </div>
+            </div>
+
+        </div>
+        <div class="row mx-0 user-row" [formGroup]="editModuleForm">
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="mb-3">
+                    <label class="fs12 fw500 label">Module Name <span class="asterisk">*</span></label>
+                    <input type="text" (keydown)="spaceRestrict($event)" class="form-control" formControlName="moduleName" placeholder="Module Name"
+                        required [ngClass]="{'redBorder': this.editModuleForm.get('moduleName').invalid &&
+                    (this.editModuleForm.get('moduleName').dirty || this.editModuleForm.get('moduleName').touched) ||
+                    ( this.submitted && this.editModuleForm.get('moduleName').invalid )}">
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="mb-3">
+                    <label class="fs12 fw500 label">Module URL <span class="asterisk">*</span></label>
+                    <input type="text" (keydown)="spaceRestrict($event)" class="form-control" formControlName="moduleUrl" placeholder="Module Url"
+                        required [ngClass]="{'redBorder': this.editModuleForm.get('moduleUrl').invalid &&
+                    (this.editModuleForm.get('moduleUrl').dirty || this.editModuleForm.get('moduleUrl').touched) ||
+                    ( this.submitted && this.editModuleForm.get('moduleUrl').invalid )}">
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="mb-3">
+                  <label class="fs12 fw500 label">Module Key <span class="asterisk">*</span></label>
+                  <input type="text" (keydown)="spaceRestrict($event)" class="form-control  " formControlName="moduleKey" placeholder="Module Key" required
+                    [ngClass]="{'redBorder': this.editModuleForm.get('moduleKey').invalid &&
+                      (this.editModuleForm.get('moduleKey').dirty || this.editModuleForm.get('moduleKey').touched) ||
+                      ( this.submitted && this.editModuleForm.get('modulekey').invalid )}">
+                </div>
+              </div>
+        </div>
+
+        <div class="card table-card mb-4 inform scroller" id="customscrollbar">
+            <table class="table user-table mb-0 text-center">
+                <thead>
+                    <tr class="rowAlign fs15 fw500">
+                        <th></th>
+                        <th>Create</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                        <th>List</th>
+                        <th>View</th>
+                    </tr>
+                </thead>
+                <tbody class="fs15 fw500" [formGroup]="moduleListForm">
+                    <tr class="trBody cursor-hand">
+                        <td class="">Access</td>
+                        <td><input class="form-check-input" type="checkbox" formControlName="create"
+                                [checked]="this.moduleData?.create==true?true:false"
+                                [disabled]="this.moduleData?.create==false?true:false"
+                                value={{this.moduleData?.moduleId}} id="create"></td>
+                        <td><input class="form-check-input" type="checkbox" formControlName="edit"
+                                [checked]="this.moduleData?.edit==true?true:false"
+                                [disabled]="this.moduleData?.edit==false?true:false" value={{this.moduleData?.moduleId}}
+                                id="edit"></td>
+                        <td><input class="form-check-input" type="checkbox" formControlName="delete"
+                                [checked]="this.moduleData?.delete==true?true:false"
+                                [disabled]="this.moduleData?.delete==false?true:false"
+                                value={{this.moduleData?.moduleId}} id="delete"></td>
+                        <td><input class="form-check-input" type="checkbox" formControlName="list"
+                                [checked]="this.moduleData?.list==true?true:false"
+                                [disabled]="this.moduleData?.list==false?true:false" value={{this.moduleData?.moduleId}}
+                                id="list"></td>
+                        <td><input class="form-check-input" type="checkbox" formControlName="view"
+                                [checked]="this.moduleData?.view==true?true:false"
+                                [disabled]="this.moduleData?.view==false?true:false" value={{this.moduleData?.moduleId}}
+                                id="view"></td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+        <div class="row mx-0 mb-3 mx-4">
+            <div class="col-lg-8 col-sm-4 col-3 btn-row">
+                <button class="btn btn-prop bg-green fs15 fw500 delete-btn " type="button" (click)="deleteModule()">
+                    <img src="assets/img/common/Delete.svg" class="ms-2 update-icon"> Delete
+                </button>
+            </div>
+
+                <div class="col-lg-2 col-sm-4 col-3 d-flex ps-0">
+
+                    <button class="col-sm-4 me-3 btn btn-prop bg-green fs15 fw500 cancel-btn" type="button" (click)="goBack()">
+                        Cancel
+                    </button>
+                    <button class="col-sm-4 btn btn-prop bg-green fs15 fw500 search-btn" type="button" (click)="updateModule()">
+                        Save
+                    </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #responseModel let-modal>
+    <div class="modal-body pb-4">
+        <div class="row mx-0 text-left">
+            <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+                <img src="assets/img/common/cross.svg">
+                {{this.errorMessage}}
+            </div>
+        </div>
+    </div>
+    <div class="w-100 text-center">
+        <button class="btn btn-prop color-white bg-red w-50" type="button" data-dismiss="modal"
+            (click)="closeModal()">Close</button>
+    </div>
+</ng-template>
+
+<ng-template #successModel let-modal>
+    <div class="modal-body pb-4">
+        <div class="row mx-0 text-left">
+            <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+                <img src="assets/img/common/tick.svg">
+                {{this.successMessage}}
+            </div>
+        </div>
+    </div>
+    <div class="w-100 text-center">
+        <button class="btn btn-prop color-white close-button bg-green w-50" type="button" data-dismiss="modal"
+            (click)="close()">Close</button>
+    </div>
+</ng-template>
+
+
+<ng-template #deleteModel let-modal>
+    <div class="modal-body pb-4">
+        <div class="row mx-0 text-left">
+            <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+                {{this.deleteMessage}}
+            </div>
+        </div>
+    </div>
+    <div class="w-100 text-center row">
+        <button class="btn btn-prop bg-green fs15 fw500 cancel-button button-cancel" type="button" data-dismiss="modal"
+            (click)="closeModal()">Cancel </button>
+        <button class="btn btn-prop color-white bg-red delete-button" type="button" data-dismiss="modal"
+            (click)="confirmDelete()">Delete </button>
+    </div>
+</ng-template>
+
+<ng-template #updateModel let-modal>
+    <div class="modal-body pb-4">
+        <div class="row mx-0 text-left">
+            <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+                Are you sure you want to update the details?
+            </div>
+        </div>
+    </div>
+    <div class="w-100 text-center row">
+        <button class="btn btn-prop fs15 fw500 cancel-button button-cancel" type="button" data-dismiss="modal"
+            (click)="closeModal()">Cancel </button>
+        <button class="btn btn-prop color-white bg-green delete-button close-button" type="button" data-dismiss="modal"
+            (click)="moduleUpdation()">Save </button>
+    </div>
+</ng-template>

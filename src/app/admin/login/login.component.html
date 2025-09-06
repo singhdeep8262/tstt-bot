@@ -1,0 +1,62 @@
+<div class="section-container bg-img">
+
+  <div class="container">
+    <div class="col-12">
+      <div>
+        <img src="assets/img/common/bmobile-logo.png">
+      </div>
+    </div>
+  </div>
+  <div class="container login-container">
+    <div class="row">
+      <div class="col-sm-12 col-md-6 col-lg-4">
+        <div class="my-5" [formGroup]="loginForm">
+          <div class="color-white fs35 fw600 mb-3">Sign In to your account</div>
+          <div class="form-floating mb-4">
+            <img src="assets/img/login/username.png" class="user-img">
+            <input type="text" class="form-control username" required formControlName="username" autocomplete="off"
+              id="floatingInput" placeholder="User Name" (keydown)="spaceRestrict($event)">
+            <label class="color-white" for="floatingInput">Username</label>
+          </div>
+          <div class="form-floating mb-4">
+            <img src="assets/img/login/password.png" class="password-img">
+            <input tabindex="1" required  class="form-control password" formControlName="password" (keydown)="spaceRestrict($event)"
+              autocomplete="off" id="floatingPassword" placeholder="Password"
+              [ngClass]="{'passworField': this.hidePin}">
+            <img src="assets/img/users/showPassword.svg" class="open-eye-img" *ngIf="!this.hidePin" (click)="showPin()">
+            <img src="assets/img/login/hidePassword.png" class="closed-eye-img" *ngIf="this.hidePin"
+              (click)="showPin()">
+            <label class="color-white" for="floatingPassword">Password</label>
+          </div>
+
+          <!-- <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" formControlName="remember" value=""
+              id="rememberPasswordCheck">
+            <label class="form-check-label color-white" for="rememberPasswordCheck">
+              Remember password
+            </label>
+          </div> -->
+          <div class="d-grid">
+            <button class="btn btn-prop btn-login text-uppercase fw-bold" (click)="login()">Log
+              in</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #responseModel let-modal>
+  <div class="modal-body pb-4">
+    <div class="row mx-0 text-left">
+      <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+        <img src="assets/img/common/cross.svg">
+        {{this.errorMessage}}
+      </div>
+    </div>
+  </div>
+  <div class="w-100 text-center">
+    <button class="btn btn-prop color-white bg-red w-50" type="button" data-dismiss="modal"
+      (click)="closeModal()">Close</button>
+  </div>
+</ng-template>

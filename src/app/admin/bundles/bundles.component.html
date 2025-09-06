@@ -1,0 +1,179 @@
+<div class="section-container">
+  <div class="card user-card p-0" [formGroup]="userSearchForm">
+    <div class="row mx-0 user-row user-container">
+      <div class="col-10 d-flex align-items-center">
+        <div class="fs25 fw600 color-dark-grey ml-2">Bundles
+        </div>
+      </div>
+      <div class="col-lg-2 col-sm-4 col-7">
+        <button class="btn btn-prop add-user-btn fs15 fw500" type="button" (click)="addBundleScreen()">
+          <img src="assets/img/common/add.png" class="mr-2 add-img">
+          Add Bundle
+        </button>
+      </div>
+    </div>
+    <div class="row mx-0 user-row">
+      <div class="col-lg-2 col-sm-6 filter-padding">
+        <div class="mb-3">
+          <label class="fw500 mb-0 fs14 labels">Paid Type</label>
+          <select class="img input5 select-status" formControlName="paidType" placeholder="Paid Type">
+            <option value="" selected>Select</option>
+            <option *ngFor="let type of this.paidType" [attr.value]="type.key">
+              {{ type.value }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-lg-2 col-sm-6 filter-padding">
+        <div class="mb-3">
+          <label class="fw500 mb-0 fs14 labels">Bundle Type</label>
+          <select class="img input5 select-status" formControlName="bundleType" placeholder="Bundle Type">
+            <option value="" selected>Select</option>
+            <option *ngFor="let type of this.bundleType" [attr.value]="bundleType.key">
+              {{ type.value }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-lg-2 col-sm-12 button-search">
+        <div class="mb-3 ipad-view">
+          <button class="btn btn-prop bg-green fs15 fw500 search-btn" type="button" (click)="search(1)">
+            Search
+          </button>
+        </div>
+      </div>
+    </div>
+    <table class="table mb-4 user-table">
+      <thead>
+        <tr class="rowAlign fs15 fw500">
+          <th>S. No.</th>
+          <th>Name</th>
+          <th>Account Type(TTD $)</th>
+          <th>Bundle Type</th>
+          <th>Bundle Identifier</th>
+          <th>Amount</th>
+          <th>Total Amount(TTD $)</th>
+          <th>VAT(TTD $)</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody class="fs15 fw500">
+        <tr class="trBody cursor-hand pointer" *ngFor="let data of this.userList; let i = index;">
+          <td>{{(this.currentPage-1)*10+i+1}}</td>
+          <td>{{data?.name}}</td>
+          <td>{{getLookup(data?.accountType,'accountType')}}</td>
+          <td>{{getLookup(data?.bundleType,'bundleType')}}</td>
+          <td>{{data?.bundleIdentifier}}</td>
+          <td>{{data?.amount?data?.amount:0}}</td>
+          <td>{{data?.totalAmount ? data?.totalAmount : 0 }}</td>
+          <!-- <td><span class="bundles" *ngFor="let item of data?.bundleCategoryNamesArray;let i = index">
+                {{item}}{{i != data.bundleCategoryNamesArray.length-1 ? ', ' : ''}}</span></td> -->
+          <td>{{data?.vat ? data?.vat :0}}</td>
+          <td *ngIf="data.isActive"><button type="button" class="btn viewButton deactivate fs15 fw500"
+              (click)="bundleAccess(data?.id, !data.isActive)">Deactivate</button></td>
+          <td *ngIf="!data.isActive"><button type="button" class="btn viewButton  activate fs15 fw500"
+              (click)="bundleAccess(data?.id, !data.isActive)">Activate</button></td>
+
+          <td *ngIf="this.editRoleAccess" class="color-blue pointer" (click)="editRole(data.id)"><img
+              src="assets/img/common/Edit.svg" class="ms-2 update-icon">Edit</td>
+          <td *ngIf="this.deleteRoleAccess" class="color-red pointer" (click)="deleteBundle(data?.id)"><img
+              src="assets/img/common/Delete.svg" class="ms-2 update-icon">Delete</td>
+
+
+        </tr>
+        <tr *ngIf="this.userList.length == 0">
+          <td class="text-center" colspan="12">No Data Found</td>
+        </tr>
+      </tbody>
+
+    </table>
+    <div class="text-center d-flex justify-content-center mb-2" *ngIf="this.userList.length > 0">
+      <div class="pagination">
+        <a href="javascript: void(0)" style="color: #333333;" (click)="goToPage(currentPage - 1)"><u>Prev</u></a>
+        <a href="javascript: void(0)" *ngFor="let page of pageArray" (click)="goToPage(page)"
+          [ngClass]="{'active': currentPage == page, 'no-page': page == 0}">
+          {{page == 0 ? "..." : page}}
+        </a>
+        <a href="javascript: void(0)" style="color: #333333;" (click)="goToPage(currentPage + 1)"><u>Next</u></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #responseModel let-modal>
+  <div class="modal-body pb-4">
+    <div class="row mx-0 text-left">
+      <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+        <img src="assets/img/common/cross.svg">
+        {{this.errorMessage}}
+      </div>
+    </div>
+  </div>
+  <div class="w-100 text-center">
+    <button class="btn btn-prop color-white bg-red w-50" type="button" data-dismiss="modal"
+      (click)="closeModal()">Close</button>
+  </div>
+</ng-template>
+
+
+<ng-template #confirmationModal let-modal>
+  <div class="modal-body pb-2 pt-2">
+    <div class="row mx-0 text-left">
+      <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+        <div class="mb-2 ">
+          <!-- <img src="assets/img/users/log-out2.svg" class="logout-img"><span class="logoutIcon fs20 fw700"></span> -->
+        </div>
+        <div class="modal-text fs15 fw500">
+          <div>Are you sure you want to {{this.modalContent}} ?</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mx-0 mt-4">
+      <div class="col-6 px-1">
+        <button class="btn btn-prop cancel-button ms-0" type="button" data-dismiss="modal"
+          (click)="close()">Cancel</button>
+      </div>
+      <div class="col-6 px-1">
+        <button class="btn btn-prop bg-green" type="button" data-dismiss="modal"
+          (click)="confirmBundleAccess()">Confirm</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #successModel let-modal>
+  <div class="modal-body pb-4">
+    <div class="row mx-0 text-left">
+      <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+        <img src="assets/img/common/tick.svg">
+        {{this.successMessage}}
+      </div>
+    </div>
+  </div>
+  <div class="w-100 text-center">
+    <button class="btn btn-prop color-white bg-green close-button w-50" type="button" data-dismiss="modal"
+      (click)="close()">Close</button>
+  </div>
+</ng-template>
+
+<ng-template #deleteconfirmationModal let-modal>
+  <div class="modal-body pb-4 pt-2">
+    <div class="row mx-0 text-left">
+      <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+        <div class="modal-text fs15">
+          <div>Are you sure you want to delete this bundle?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mx-0">
+    <div class="col-6 px-1 mb-2">
+      <button class="btn btn-prop cancel-btn" type="button" data-dismiss="modal" (click)="closeModal()">Cancel</button>
+    </div>
+    <div class="col-6 px-1 mb-2">
+      <button class="btn btn-prop color-white bg-red" type="button" data-dismiss="modal"
+        (click)="confirmDelete()">Delete</button>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,178 @@
+<div class="section-container">
+  <div class="card user-card p-0" [formGroup]="editUser">
+    <div class="row mx-0 user-row user-container mb-4">
+      <div class="col-10 d-flex align-items-center">
+        <div class="pointer" (click)="goBack()">
+          <img src="assets/img/common/back.png" width="7px" class="me-2">
+        </div>
+        <div class="fs25 fw600 color-dark-grey px-2">Edit User
+        </div>
+        <div>
+          <img src="assets/img/common/right-icon.png" width="7px" class="mx-2">
+        </div>
+        <div class="fs18 fw500 color-dark-grey ml-2 mt-1">{{this.userData?.username}}
+        </div>
+      </div>
+
+    </div>
+    <div class="row mx-0 mt-4 px-4">
+      <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="form-group ">
+          <label class="fontsCsshead">Username <span class="asterisk">*</span></label>
+          <input type="text" tabindex="1" class="form-control fontsCss" readonly formControlName="username" />
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="form-group">
+          <label class="fontsCsshead">First Name <span class="asterisk">*</span></label>
+          <input type="text" tabindex="1" class="form-control fontsCss" formControlName="firstName" oninput="this.value=this.value.replace(/[^[a-zA-Z ]*$]/g,'');" (keypress)="letterOnly($event)" required (keydown)="spaceRestrict($event)" [ngClass]="{'redBorder': this.editUser.get('firstName').invalid &&
+                  (this.editUser.get('firstName').dirty || this.editUser.get('firstName').touched) ||
+                  ( this.submitted && this.editUser.get('firstName').invalid )}" />
+                  <div *ngIf="this.editUser.get('firstName').invalid &&
+                  (this.editUser.get('firstName').dirty || this.editUser.get('firstName').touched) ||
+                  ( this.submitted && this.editUser.get('firstName').invalid )">
+                  <small class="text-danger">First Name is required</small>
+              </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="form-group">
+          <label class="fontsCsshead">Last Name <span class="asterisk">*</span></label>
+          <input type="text" tabindex="1" class="form-control fontsCss" formControlName="lastName" oninput="this.value=this.value.replace(/[^[a-zA-Z ]*$]/g,'');" (keypress)="letterOnly($event)" required (keydown)="spaceRestrict($event)" [ngClass]="{'redBorder': this.editUser.get('lastName').invalid && 
+                  (this.editUser.get('lastName').dirty || this.editUser.get('lastName').touched) ||
+                  ( this.submitted && this.editUser.get('lastName').invalid )}" />
+                  <div *ngIf="this.editUser.get('lastName').invalid &&
+                  (this.editUser.get('lastName').dirty || this.editUser.get('lastName').touched) ||
+                  ( this.submitted && this.editUser.get('lastName').invalid )">
+                  <small class="text-danger">Last Name is required</small>
+              </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="form-group ">
+          <label class="fontsCsshead">Email <span class="asterisk">*</span></label>
+          <input type="email" tabindex="1" class="form-control fontsCss" readonly formControlName="Email" />
+        </div>
+
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="form-group ">
+          <label class="fontsCsshead">Mobile <span class="asterisk">*</span></label>
+          <input readonly formControlName="mobile" type="text"
+            oninput="this.value=this.value.replace(/[^0-9]/g,'');" tabindex="1" class="form-control fontsCss" />
+        </div>
+      </div>
+
+
+      <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="form-group mb-1">
+            <label class="fontsCsshead">Password</label>
+            <input type="text" tabindex="1" class="form-control fontsCss" formControlName="password"  (keydown)="spaceRestrict($event)"
+                [ngClass]="{'passworField': this.hidePin }" />
+            <img src="assets\img\users\hide-password.svg" class="closed-eye-img pointer" *ngIf="this.hidePin"
+                (click)="showPin()">
+            <img src="assets\img\users\eyeopen.svg" class="open-eye-img pointer" *ngIf="!this.hidePin"
+                (click)="showPin()">
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6">
+      <div class="form-group mb-1 ">
+        <label class="fontsCsshead">Confirm Password </label>
+        <input type="text" tabindex="1" class="form-control fontsCss " formControlName="confirmPassword"
+            (keydown)="spaceRestrict($event)" 
+            [ngClass]="{'redBorder': this.editUser.get('confirmPassword').invalid &&
+            (this.editUser.get('confirmPassword').dirty || this.editUser.get('confirmPassword').touched) ||
+            ( this.submitted && this.editUser.get('confirmPassword').invalid ) || ((this.editUser.get('confirmPassword').value != this.editUser.get('password').value) && this.editUser.get('confirmPassword').value !=''), 'passworField': this.hideConfirmpin }" />
+        <div class="messageDiv uxErrorMessage"
+            *ngIf="(this.editUser.get('confirmPassword').value != this.editUser.get('password').value) && this.editUser.get('confirmPassword').value !='' ">
+            <small>Passwords do not match.</small>
+        </div>
+        <img src="assets\img\users\hide-password.svg" class="closed-eye-img  pointer"
+            *ngIf="this.hideConfirmpin" (click)="showConfirmpin()">
+        <img src="assets\img\users\eyeopen.svg" class="open-eye-img pointer" *ngIf="!this.hideConfirmpin"
+            (click)="showConfirmpin()">
+    </div>
+    </div>
+   
+
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="fontsCsshead fs14">Roles <span class="asterisk">*</span></div>
+      <div class="rolesParent"   [ngClass]="{'redBorder':  this.rolesSubmitted && this.rolesArray.length == 0}">
+        <div class="rolesChild mx-1" *ngFor="let role of rolesArray; index as i">
+          <div class="fs14">{{role.value}}
+              <img src="assets\img\users\greenCross.svg" class='cursor-pointer crosspng' alt=""
+                  (click)="this.deleteRoles(i,role)">
+          </div>
+      </div>
+      <div class="dropdown dropdownRoles">
+          <div class=" dropdown-toggle pointer" data-bs-toggle="dropdown">
+              <img src="assets\img\common\add.png" class='cursor-pointer crosspng' alt="">
+              Add Role
+          </div>
+          <ul class="dropdown-menu inform scroller" id="customscrollbar">
+              <li>
+                  <a class="dropdown-item cursor-pointer" [class.disabled]="isDisabled(roleValue.value)"
+                      *ngFor="let roleValue of rolesValuearray; index as i"
+                      (click)="this.rolesArraypush(roleValue)">{{roleValue.value}}</a>
+              </li>
+          </ul>
+      </div>
+      </div>
+      <div class="px-0" *ngIf="this.rolesSubmitted && this.rolesArray.length == 0">
+        <small class="text-danger px-0">Please add a role</small>
+    </div>
+    </div>
+  </div>
+    <div class="row mx-0 my-4">
+      <div class="col-md-12 text-center">
+        <button type="button" class="btn fs15 fw500 me-2 cancelBtn" (click)="goBack()">Cancel</button>
+        <button type="button" class="btn  btn-prop bg-green fs15 fw500 ms-2 submitBtn" (click)="updateUser()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #responseModel let-modal>
+  <div class="modal-body pb-4">
+    <div class="row mx-0 text-left">
+      <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+        <img src="assets/img/common/cross.svg">
+        {{this.errorMessage}}
+      </div>
+    </div>
+  </div>
+  <div class="w-100 text-center">
+    <button class="btn btn-prop color-white bg-red w-50" type="button" data-dismiss="modal"
+      (click)="closeModal()">Close</button>
+  </div>
+</ng-template>
+
+<ng-template #successModel let-modal>
+  <div class="modal-body pb-4">
+    <div class="row mx-0 text-left">
+      <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+        <img src="assets/img/common/tick.svg">
+        {{this.successMessage}}
+      </div>
+    </div>
+  </div>
+  <div class="w-100 text-center">
+    <button class="btn btn-prop close-button color-white bg-green w-50" type="button" data-dismiss="modal"
+      (click)="close()">Close</button>
+  </div>
+</ng-template>
+<ng-template #updateModel let-modal>
+  <div class="modal-body pb-4">
+    <div class="row mx-0 text-left">
+      <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+        Are you sure you want to update the details?
+      </div>
+    </div>
+  </div>
+  <div class="w-100 text-center row">
+    <button class="btn btn-prop fs15 fw500 cancel-button button-cancel" type="button" data-dismiss="modal"
+      (click)="closeModal()">Cancel </button>
+    <button class="btn btn-prop color-white bg-green delete-button close-button" type="button" data-dismiss="modal"
+      (click)="userUpdation()">Save </button>
+  </div>
+</ng-template>

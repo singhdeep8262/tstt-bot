@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="75" height="75" viewBox="0 0 75 75">
+  <g id="Group_10288" data-name="Group 10288" transform="translate(-59 -381)">
+    <rect id="Rectangle_661" data-name="Rectangle 661" width="75" height="75" rx="16" transform="translate(59 381)" fill="#f4f4f4"/>
+    <g id="Layer_2" data-name="Layer 2" transform="translate(79.812 401.812)">
+      <g id="hash">
+        <rect id="Rectangle_662" data-name="Rectangle 662" width="34" height="34" transform="translate(34.188 34.188) rotate(180)" fill="#04d151" opacity="0"/>
+        <path id="Path_27153" data-name="Path 27153" d="M27.35,18.768H21.191l1.046-5.729H27.35a1.432,1.432,0,0,0,0-2.865h-4.6l.988-5.457a1.5,1.5,0,1,0-2.951-.53l-1.074,5.987H14.158l.988-5.457a1.5,1.5,0,1,0-2.951-.53l-1.074,5.987H4.432a1.432,1.432,0,1,0,0,2.865h6.159L9.546,18.768H4.432a1.432,1.432,0,1,0,0,2.865h4.6L8.042,27.09a1.432,1.432,0,0,0,1.2,1.7,1.432,1.432,0,0,0,1.747-1.175l1.074-5.987h5.558l-.988,5.457a1.5,1.5,0,1,0,2.951.53l1.074-5.987H27.35a1.432,1.432,0,0,0,0-2.865Zm-14.753,0,1.046-5.729h5.543L18.14,18.768Z" transform="translate(1.297 1.285)" fill="#04d151"/>
+      </g>
+    </g>
+  </g>
+</svg>

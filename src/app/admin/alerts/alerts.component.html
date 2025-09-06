@@ -1,0 +1,136 @@
+<div class="section-container">
+    <div class="card user-card p-0">
+        <div class="row mx-0 user-row user-container">
+            <div class="col-10 d-flex align-items-center">
+                <div class="fs25 fw600 color-dark-grey ml-2">Alerts
+                </div>
+            </div>
+            <div class="col-lg-2 col-sm-4 col-7" *ngIf="this.createUserAccess == true">
+                <button class="btn btn-prop add-user-btn fs15 fw500" type="button" (click)="addNewAlert()">
+                    <img src="assets/img/common/add.png" class="mr-2 add-img">
+                    Add New Alert
+                </button>
+            </div>
+        </div>
+        <div class="row mx-0 user-row">
+            <div class="row mx-0 filter-row">
+                <div class="promo-card px-0" *ngFor="let data of this.bannerList">
+                    <div class="promo-details">
+                        <div class="d-flex">
+                            <div class="col-7 fs16 fw600 subject-container">{{data?.subject}}</div>
+
+                            <div class="col-5 text-end"
+                                *ngIf="this.editUserAccess == true || this.deleteUserAccess == true">
+                                <img class="ms-2 pointer" *ngIf="this.editUserAccess == true"
+                                    (click)="editAlert(data?.id,data?.subject,data?.body,data?.data)"
+                                    src="assets/img/promotion/edit.svg" width="22px">
+                                <img class="ms-2 pointer" *ngIf="this.deleteUserAccess == true"
+                                    (click)="deleteAlert(data?.id)" src="assets/img/promotion/delete.svg" width="22px">
+                                    <label *ngIf="this.showNewToggle==false" class="switch ms-2">
+                                        <input type="checkbox" (change)="getToggleValue($event, data, data.id)" id="{{data.id}}"
+                                          [checked]="data.isActive">
+                                        <span class="slider round"></span>
+                                    </label>
+                                    <label *ngIf="this.showNewToggle==true" class="switch ms-2">
+                                        <input type="checkbox" (change)="getToggleValue($event, data, data.id)" id="{{data.id}}"
+                                          [checked]="data.Id==this.newIdValue?(this.reverseToggleValue):data.isActive">
+                                        <span class="slider round"></span>
+                                      </label>
+                            </div>
+                        </div>
+                        <div class="container-body pt-3 pb-3 fs15 fw500">
+                            <div>{{data.body}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center d-flex justify-content-center mb-2" *ngIf="this.bannerList?.length > 0">
+                <div class="pagination">
+                    <a href="javascript: void(0)" style="color: #333333;"
+                        (click)="goToPage(currentPage - 1)"><u>Prev</u></a>
+                    <a href="javascript: void(0)" *ngFor="let page of pageArray" (click)="goToPage(page)"
+                        [ngClass]="{'active': currentPage == page, 'no-page': page == 0}">
+                        {{page == 0 ? "..." : page}}
+                    </a>
+                    <a href="javascript: void(0)" style="color: #333333;"
+                        (click)="goToPage(currentPage + 1)"><u>Next</u></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #responseModel let-modal>
+    <div class="modal-body pb-4">
+        <div class="row mx-0 text-left">
+            <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+                <img src="assets/img/common/cross.svg">
+                {{this.errorMessage}}
+            </div>
+        </div>
+    </div>
+    <div class="w-100 text-center">
+        <button class="btn btn-prop color-white bg-red w-50" type="button" data-dismiss="modal"
+            (click)="closeModal()">Close</button>
+    </div>
+</ng-template>
+
+<ng-template #successModel let-modal>
+    <div class="modal-body pb-4">
+        <div class="row mx-0 text-left">
+            <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+                <img src="assets/img/common/tick.svg">
+                {{this.successMessage}}
+            </div>
+        </div>
+    </div>
+    <div class="w-100 text-center">
+        <button class="btn btn-prop color-white bg-green close-button w-50" type="button" data-dismiss="modal"
+            (click)="close()">Close</button>
+    </div>
+</ng-template>
+
+<ng-template #deleteconfirmationModal let-modal>
+    <div class="modal-body pb-4 pt-2">
+        <div class="row mx-0 text-left">
+            <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+                <div class="modal-text fs15">
+                    <div>Are you sure you want to delete?</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mx-0">
+        <div class="col-6 px-1 mb-2">
+            <button class="btn btn-prop cancel-btn" type="button" data-dismiss="modal"
+                (click)="closeModal()">Cancel</button>
+        </div>
+
+        <div class="col-6 px-1 mb-2">
+            <button class="btn btn-prop color-white bg-red" type="button" data-dismiss="modal"
+                (click)="confirmDelete()">Delete</button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #toggleConfirmationModal let-modal>
+    <div class="modal-body pb-2 pt-2">
+        <div class="row mx-0 text-left">
+            <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+                <div class="modal-text fs15 color-green details">
+                    <div>{{ this.toggleMessage}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mx-0 mt-3">
+        <div class="col-6 px-1 mb-2">
+            <button class="btn btn-prop cancel-btn" type="button" data-dismiss="modal"
+                (click)="setToggleVal()">Cancel</button>
+        </div>
+        <div class="col-6 px-1 mb-2">
+            <button class="btn btn-prop bg-green" type="button" data-dismiss="modal"
+                (click)="toggle()">Confirm</button>
+        </div>
+    </div>
+</ng-template>

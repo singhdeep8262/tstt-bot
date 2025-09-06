@@ -1,0 +1,139 @@
+.background_master {
+    background-image: url("/assets/img/Cards/masterCard.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 160px;
+    border-radius: 15px;
+}
+
+.background_visa {
+    background-image: url("/assets/img/Cards/visaCard.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 160px;
+    border-radius: 15px;
+}
+
+.img-position {
+    align-self: center;
+}
+
+.float-right {
+    float: right;
+}
+
+.fw700 {
+    font-weight: 700;
+}
+
+.text-color {
+    color: #ffff;
+}
+
+.text-color-visa {
+    color: black;
+}
+
+.fs11 {
+    font-size: 11px;
+}
+
+.section-container {
+    background-color: #f8f8f8;
+}
+
+.user-card {
+    background-color: #fff;
+    border-radius: 8px 8px 0px 0px;
+    border: none;
+}
+
+.user-bottom-card {
+    background-color: #fff;
+    border-radius: 0px 0px 8px 8px;
+}
+
+.user-row {
+    padding: 20px;
+}
+
+.filter-row {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(323px, 0.3fr));
+    gap: 10px 10px;
+}
+
+.logo_visa {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.logo_master {
+    position: relative;
+    left: -8px;
+}
+
+.user-container {
+    border-bottom: 2px solid #d6d6d6;
+}
+
+.img-position {
+    align-self: center;
+}
+
+.color-dark-grey {
+    color: #2b2b2b;
+}
+
+.color-blue {
+    color: #4d8fe8;
+}
+
+.color-pink {
+    color: #ba42bf;
+}
+
+.border-bottom {
+    border-bottom: 2px solid #d6d6d6;
+}
+
+.txt-label {
+    color: grey;
+}
+
+.padding {
+    padding: 10px 15px;
+}
+
+.fs13 {
+    font-size: 13px;
+}
+
+.color-red {
+    color: red;
+}
+
+/* .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  } */
+
+/* .card {
+    flex-basis: calc(33.33% - 10px);
+    margin-bottom: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .card {
+      flex-basis: calc(50% - 10px);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .card {
+      flex-basis: 100%;
+    }
+  }
+   */

@@ -1,0 +1,236 @@
+<div class="section-container">
+  <div class="card user-card p-0">
+    <div class="row mx-0 user-row user-container">
+      <div class="col-lg-10 col-sm-8 col-5 d-flex align-items-center">
+        <div class="fs25 fw600 color-dark-grey ml-2">Survey Management
+        </div>
+      </div>
+      <div class="col-lg-2 col-sm-4 col-7">
+        <button class="btn btn-prop add-user-btn fs15 fw500" (click)="addFeedback()" type="button">
+          <img src="assets/img/common/add.png" class="mr-2 add-img">
+          Add Survey
+        </button>
+      </div>
+    </div>
+    <div class="row mx-0 user-row" [formGroup]="feedbackForm">
+      <div class="col-lg-2 col-sm-6">
+        <div class="mb-3">
+          <label class="fw500 mb-0 fs14 labels">Label</label>
+          <input type="text" class="form-control input5" formControlName="formLabel" placeholder="Label"
+            (keydown)="spaceRestrict($event)">
+        </div>
+      </div>
+      <div class="col-lg-2 col-sm-6 button-search">
+        <div class="mb-3">
+          <button class="btn btn-prop bg-green fs15 fw500 search-btn" type="button" (click)="search(1)">
+            Search
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="row mx-0 mb-4 mt-4 justify-content-center" *ngIf="this.feedbackData.length===0">
+      <div class="col-7 text-center">
+        <div class="card no-data-card py-4 mb-0">
+          <div class="fw600 fs20">No Data Found</div>
+        </div>
+      </div>
+    </div> -->
+
+
+    <div class="category-container" *ngFor="let category of feedbackData">
+      <div class="category-body">
+        <div class="row category-tag mx-0 g-0 align-content-center">
+          <div class="col">
+            <div class="tag-heading">{{ category.formLabel }}</div>
+          </div>
+          <!-- <div class="col-auto mt-2 pe-2">
+            <button class="btn btn-prop add-user-btn fs15 fw500 btn-small btn-compact" (click)="addQuestion(category.formId)"
+              type="button">
+              <img src="assets/img/common/add.png" class="mr-2 add-img">
+              Add Question
+            </button>
+          </div> -->
+          <div class="col-auto mt-2">
+            <button class="btn btn-prop add-user-btn fs15 fw500 btn-small btn-compact me-3" type="button"
+              (click)="addNewQuestion(category)">
+              Add Question
+            </button>
+          </div>
+          <div class="col-auto mt-2">
+            <button class="btn btn-prop add-user-btn fs15 fw500 btn-small btn-compact me-3" type="button"
+              (click)="changeStatus(category.formId)" [ngClass]="category.isActive ? 'delete-btn' : 'add-user-btn'">
+              {{ category.isActive == true ? "Deactivate" : "Activate" }}
+            </button>
+          </div>
+          <div class="col-auto mt-2">
+            <button class="btn btn-prop delete-btn fs15 fw500 btn-small btn-compact me-3" style="" type="button"
+              (click)="deleteQuestion(category)">
+              Delete
+            </button>
+          </div>
+        </div>
+        <div *ngIf="this.feedbackData.length!=0">
+          <div class="question-container"
+            *ngFor="let item of category.questions.slice(0,showAll[category.label] ? category.questions.length : 3);let i = index">
+            <div class="question-box">
+              <p class="question-index me-3">Ques {{ (this.currentPage-1)*50+i+1 }}</p>
+              <div class="question-answer-container">
+                <div class="question-header" [ngClass]="{ 'isActive': item.isActive, 'isInactive': !item.isActive }">
+                  <p class="question-text" >{{item?.question}}</p>
+                  <div class="mb-2 d-flex align-items-center">
+                    <span class="me-0 mb-1 me-2" *ngIf="item.type === 'starRating'">
+                      <ng-container *ngFor="let star of [].constructor(item.starRatingScale)">
+                        <img class="star-icon" src="assets/img/common/filled-star.svg" alt="star">
+                      </ng-container>
+                    </span>
+
+                    <span class="me-4">
+                      <img class="delete-icon" src="assets/img/common/editFaq.svg"
+                        (click)="openEditConfirmational(item,category.formId)" alt="edit">
+                    </span>
+                    <!-- <span class="me-0">
+                      <img class="delete-icon" src="assets/img/common/Delete.svg" (click)="deleteQuestion(item)"
+                        alt="delete">
+                    </span> -->
+                  </div>
+                </div>
+                <!-- <p class="fs14 grey-color">{{item?.comments}}</p> -->
+              </div>
+            </div>
+          </div>
+          <div *ngIf="category.questions.length > 3" class="text-center view-more p-3" style="cursor: pointer;"
+            (click)="showAllQuestions(category.label)">
+            {{ showAll[category.label] ? 'View Less' : 'View More' }}
+            <img src="assets/img/common/down_arrow.svg" id="downArrow">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center d-flex justify-content-center mb-2">
+      <div class="pagination">
+        <a href="javascript: void(0)" style="color: #333333;" (click)="goToPage(currentPage - 1)"><u>Prev</u></a>
+        <a href="javascript: void(0)" *ngFor="let page of pageArray" (click)="goToPage(page)"
+          [ngClass]="{'active': currentPage == page, 'no-page': page == 0}">
+          {{page == 0 ? "..." : page}}
+        </a>
+        <a href="javascript: void(0)" style="color: #333333;" (click)="goToPage(currentPage + 1)"><u>Next</u></a>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #addEditSurveyModal let-modal>
+    <div class="modal-content p-0">
+      <div class="modal-body">
+        <div class="modal-heading p-2 text-center faq-heading">
+          {{this.isEditMode ? "Edit Survey Question" : "Add Survey Question"}}
+          <span class="text-end">
+            <img src="assets/img/common/filled-cross.svg" class="mr-2 mx-0 cross-icon" (click)="closeModal()">
+          </span>
+        </div>
+        <div>
+          <div>
+            <form [formGroup]="addFeedbackForm" class="text-left p-3">
+              <div class="row">
+                <div class="col-12 mb-3">
+                  <label class="fw500 mb-0 fs14 labels">Select Question Type</label>
+                  <input  *ngIf="this.isEditMode" class="form-control input6" (keydown)="spaceRestrict($event)" readOnly [formControl]="type" />
+                  <select  *ngIf="!this.isEditMode" class="img input select-status"  [formControl]="type">
+                    <option *ngFor="let type of this.npsSurveyType" [attr.value]="type.key">
+                      {{ type.value }}</option>
+                  </select>
+                </div>
+                <div class="col-12 mb-3"  *ngIf="type.value === 'starRating'">
+                  <label class="fw500 mb-0 fs14  labels">Scale<span class="required-field">*</span></label>
+                  <div class="row">
+                    <div class="col-6">
+                      <input *ngIf="this.isEditMode" class="form-control input6"  (keydown)="spaceRestrict($event)" readOnly [formControl]="scale" />
+                      <select *ngIf="!this.isEditMode" placeholder="Select" class="img form-control input select-status"  [formControl]="scale">
+                        <option value="" selected>Select</option>
+                        <option *ngFor="let rating of starRatingValue" [value]="rating.value">
+                          {{ rating.value }}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="col-3">
+                      <span class="me-0">
+                        <img style="height:2rem" src="assets/img/common/filled-star.svg" alt="star">
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 mb-3">
+                  <label class="fw500 mb-0 fs14 labels">Question <span class="required-field">*</span></label>
+                  <textarea style="height: 120px; width: 100%;" rows="8" class="form-control text-area"
+                    placeholder="Write your question here..." formControlName="question"
+                    (keydown)="spaceRestrict($event)">
+                </textarea>
+                </div>
+              </div>
+              <div class="form-group d-flex align-items-center justify-content-between mb-3" *ngIf="this.isEditMode">
+                <div class="fw500 fs14 mb-0">Is Active</div>
+                <label class="switch mb-0">
+                  <input type="checkbox" formControlName="isActive">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </form>
+            <div class="w-100 text-center row mb-3">
+              <div class="col text-end">
+                <button class="btn   fs15 fw500 delete-button cancel-btn" type="button" data-dismiss="modal"
+                  (click)="closeModal()">Cancel </button>
+              </div>
+              <div class="col text-start">
+                <button class="btn color-white close-button bg-green delete-button" type="button" data-dismiss="modal"
+                  (click)="editFeedback()">Confirm</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #responseModel let-modal>
+    <div class="modal-body pb-4">
+      <div class="row mx-0 text-left">
+        <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+          <img src="assets/img/common/cross.svg">
+          {{this.errorMessage}}
+        </div>
+      </div>
+    </div>
+    <div class="w-100 text-center">
+      <button class="btn btn-prop color-white bg-red w-50" type="button" data-dismiss="modal"
+        (click)="closeModal()">Close</button>
+    </div>
+  </ng-template>
+
+  <ng-template #successModel let-modal>
+    <div class="modal-body pb-4">
+      <div class="row mx-0 text-left">
+        <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+          <img src="assets/img/common/tick.svg">
+          {{this.successMessage}}
+        </div>
+      </div>
+    </div>
+    <div class="w-100 text-center">
+      <button class="btn btn-prop close-button color-white bg-green w-50" type="button" data-dismiss="modal"
+        (click)="closeModal()">Close</button>
+    </div>
+  </ng-template>
+
+  <ng-template #deleteModal let-modal>
+    <div class="modal-body pb-4">
+      <div class="row mx-0 text-left">
+        <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+          {{this.deleteMessage}}
+        </div>
+      </div>
+    </div>
+    <div class="w-100 text-center row">
+      <button class="btn btn-prop bg-green button-cancel fs15 fw500 cancel-btn" type="button" data-dismiss="modal"
+        (click)="closeModal()">Cancel </button>
+      <button class="btn btn-prop color-white bg-red delete-button" type="button" data-dismiss="modal"
+        (click)="confirmDelete()">Delete </button>
+    </div>
+  </ng-template>

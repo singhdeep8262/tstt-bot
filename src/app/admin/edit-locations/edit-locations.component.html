@@ -1,0 +1,461 @@
+<div class="section-container">
+  <div class="card user-card p-0" [formGroup]="uploadForm">
+    <div class="row mx-0 user-row user-container mb-4">
+      <div class="col-10 d-flex align-items-center">
+        <div class="pointer" (click)="goBack()">
+          <img src="assets/img/common/back.png" width="7px" class="me-2">
+        </div>
+        <div class="fs25 fw600 color-dark-grey px-2">Locations
+        </div>
+        <div>
+          <img src="assets/img/common/right-icon.png" width="7px" class="mx-2">
+        </div>
+        <div class="fs18 fw500 color-dark-grey ml-2 mt-1">Edit Locations
+        </div>
+      </div>
+
+    </div>
+    <div class="row mx-0 mt-4 px-4">
+      <div class="row">
+      <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="upload-form-group form-group">
+          <label>Title <span class="asterisk ">*</span></label>
+          <input class="form-control" type="text" maxlength="100" formControlName="title"
+            (keydown)="spaceRestrict($event)" [ngClass]="{'redBorder': this.uploadForm.get('title').invalid &&
+                  (this.uploadForm.get('title').dirty || this.uploadForm.get('title').touched) ||
+                  ( this.submitted && this.uploadForm.get('title').invalid )}" />
+          <div class="messageDiv uxErrorMessage"
+            *ngIf="this.uploadForm.get('title').invalid &&
+                      (this.uploadForm.get('title').dirty || this.uploadForm.get('title').touched) || ( this.submitted && this.uploadForm.get('title').invalid )">
+            <small>Title is required</small>
+          </div>
+        </div>
+      </div>
+     
+      <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="upload-form-group form-group">
+          <label>Latitude <span class="asterisk ">*</span></label>
+          <input class="form-control" type="number" maxlength="100" formControlName="lat"
+            (keydown)="spaceRestrict($event)" [ngClass]="{'redBorder': this.uploadForm.get('lat').invalid &&
+                  (this.uploadForm.get('lat').dirty || this.uploadForm.get('lat').touched) ||
+                  ( this.submitted && this.uploadForm.get('lat').invalid )}" />
+          <div class="messageDiv uxErrorMessage"
+            *ngIf="this.uploadForm.get('lat').invalid &&
+                      (this.uploadForm.get('lat').dirty || this.uploadForm.get('lat').touched) || ( this.submitted && this.uploadForm.get('lat').invalid )">
+            <small>Latitude is required</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="upload-form-group form-group">
+          <label>Longitude <span class="asterisk ">*</span></label>
+          <input class="form-control" type="number" maxlength="100" formControlName="lng"
+            (keydown)="spaceRestrict($event)" [ngClass]="{'redBorder': this.uploadForm.get('lng').invalid &&
+                  (this.uploadForm.get('lng').dirty || this.uploadForm.get('lng').touched) ||
+                  ( this.submitted && this.uploadForm.get('lng').invalid )}" />
+          <div class="messageDiv uxErrorMessage"
+            *ngIf="this.uploadForm.get('lng').invalid &&
+                      (this.uploadForm.get('lng').dirty || this.uploadForm.get('lng').touched) || ( this.submitted && this.uploadForm.get('lng').invalid )">
+            <small>Longitude is required</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="upload-form-group form-group">
+          <label>Street <span class="asterisk ">*</span></label>
+          <input class="form-control" type="text" maxlength="100" formControlName="street"
+           (keydown)="spaceRestrict($event)" (keydown)="spaceRestrict($event)" [ngClass]="{'redBorder': this.uploadForm.get('street').invalid &&
+                  (this.uploadForm.get('street').dirty || this.uploadForm.get('street').touched) ||
+                  ( this.submitted && this.uploadForm.get('street').invalid )}" />
+          <div class="messageDiv uxErrorMessage"
+            *ngIf="this.uploadForm.get('street').invalid &&
+                      (this.uploadForm.get('street').dirty || this.uploadForm.get('street').touched) || ( this.submitted && this.uploadForm.get('street').invalid )">
+            <small>Street is required</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="upload-form-group form-group">
+          <label>City <span class="asterisk ">*</span></label>
+          <input class="form-control" type="text" maxlength="100" formControlName="city"
+          oninput="this.value=this.value.replace(/[^[a-zA-Z ]*$]/g,'');" (keypress)="letterOnly($event)" (keydown)="spaceRestrict($event)" (keydown)="spaceRestrict($event)" [ngClass]="{'redBorder': this.uploadForm.get('city').invalid &&
+                  (this.uploadForm.get('city').dirty || this.uploadForm.get('city').touched) ||
+                  ( this.submitted && this.uploadForm.get('city').invalid )}" />
+          <div class="messageDiv uxErrorMessage"
+            *ngIf="this.uploadForm.get('city').invalid &&
+                      (this.uploadForm.get('city').dirty || this.uploadForm.get('city').touched) || ( this.submitted && this.uploadForm.get('city').invalid )">
+            <small>City is required</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="upload-form-group form-group">
+          <label>Region <span class="asterisk ">*</span></label>
+          <input class="form-control" type="text" maxlength="100" formControlName="region"
+          oninput="this.value=this.value.replace(/[^[a-zA-Z ]*$]/g,'');" (keypress)="letterOnly($event)" (keydown)="spaceRestrict($event)" [ngClass]="{'redBorder': this.uploadForm.get('region').invalid &&
+                  (this.uploadForm.get('region').dirty || this.uploadForm.get('region').touched) ||
+                  ( this.submitted && this.uploadForm.get('region').invalid )}" />
+          <div class="messageDiv uxErrorMessage"
+            *ngIf="this.uploadForm.get('region').invalid &&
+                      (this.uploadForm.get('region').dirty || this.uploadForm.get('region').touched) || ( this.submitted && this.uploadForm.get('region').invalid )">
+            <small>Region is required</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="upload-form-group form-group">
+          <label>CPL <span class="asterisk ">*</span></label>
+          <input class="form-control" type="text" maxlength="100" formControlName="cpl"
+            (keydown)="spaceRestrict($event)" [ngClass]="{'redBorder': this.uploadForm.get('cpl').invalid &&
+                  (this.uploadForm.get('cpl').dirty || this.uploadForm.get('cpl').touched) ||
+                  ( this.submitted && this.uploadForm.get('cpl').invalid )}" />
+          <div class="messageDiv uxErrorMessage"
+            *ngIf="this.uploadForm.get('cpl').invalid &&
+                      (this.uploadForm.get('cpl').dirty || this.uploadForm.get('cpl').touched) || ( this.submitted && this.uploadForm.get('cpl').invalid )">
+            <small>CPL is required</small>
+          </div>
+        </div>
+      </div>
+   </div>
+   <div class="row">
+       
+    <div class="col-lg-3 col-md-3 col-sm-6 d-flex " *ngFor="let terminalData of newContactArray.controls; index as i" >    
+        <div class="upload-form-group form-group" [formGroup]="terminalData">
+          <label>Phone {{i !=0?i:''}}<span class="asterisk ">*</span></label>
+          <input class="form-control fontsCss" type="text" maxlength="10"
+            oninput="this.value=this.value.replace(/[^0-9]/g,'');" formControlName="phone"
+            (keydown)="spaceRestrict($event)" taopenbindex="1" [ngClass]="{'redBorder': this.terminalData.get('phone').invalid &&
+    (this.terminalData.get('phone').dirty || this.terminalData.get('phone').touched) ||
+    ( this.submitted && this.terminalData.get('phone').invalid )}" />
+          <div class="messageDiv uxErrorMessage"
+            *ngIf="this.terminalData.get('phone').invalid &&
+        (this.terminalData.get('phone').dirty || this.terminalData.get('phone').touched) || ( this.submitted && this.terminalData.get('phone').invalid )">
+            <small>Phone is required</small>
+          </div>
+        </div>
+      <div class="crossPhone">
+        
+        <img *ngIf="i > 0" style="height: 40.5px;" class="add-icon cursor-pointer" src="assets/img/common/cross.png"
+          alt="Cross icon" (click)="removeNewContact(i)" />
+      </div>
+    </div>
+    <div class="pb-3" >
+      <img class="cursor-pointer me-1 plus-icon" 
+      src="assets/img/common/plus.svg" alt="Plus icon" (click)="addNewContact()" /><span class="cursor-pointer" (click)="addNewContact()" style="color:#00E556">&nbsp;Add New Phone Number</span>
+    </div>
+  
+</div>
+<div class="row">
+
+      <div class="col-lg-3 col-md-3 col-sm-6 d-flex"  *ngFor="let emailData of emailArray.controls; index as i">
+        <div class="upload-form-group form-group" [formGroup]="emailData">
+          <label>Email {{i !=0?i:''}}<span class="asterisk ">*</span></label>
+          <input class="form-control fontsCss" type="text" formControlName="email"
+            (keydown)="spaceRestrict($event)" taopenbindex="1" [ngClass]="{'redBorder': this.emailData.get('email').invalid &&
+    (this.emailData.get('email').dirty || this.emailData.get('email').touched) ||
+    ( this.submitted && this.emailData.get('email').invalid )}" />
+          <div class="messageDiv uxErrorMessage"
+            *ngIf="this.emailData.get('email').invalid &&
+        (this.emailData.get('email').dirty || this.emailData.get('email').touched) || ( this.submitted && this.emailData.get('email').invalid )">
+            <small>Email is required</small>
+          </div>
+        </div>
+
+      <div class="crossEmail" >   
+        <img *ngIf="i > 0" style="height: 40.5px;" class="add-icon cursor-pointer" src="assets/img/common/cross.png"
+          alt="Cross icon" (click)="removeEmail(i)" />
+      </div> 
+    </div>
+    <div class="pb-3" >
+      <img  class="cursor-pointer me-1 plus-icon" 
+        src="assets/img/common/plus.svg" alt="Plus icon" (click)="addEmail()" /><span class="cursor-pointer" (click)="addEmail()"  style="color:#00E556" >&nbsp;Add New Email ID</span>
+        </div>
+</div>
+<div class="row">
+  <div class="pt-3 pb-1 fs-4" style="font-weight: 500;"> Timings</div>
+  <div class="fs-5 fw-normal">Timing of availablity at the selected Location.</div>
+</div>
+      <div class="row">
+        <div class="col padding-toggle ">
+          <div class="upload-form-group form-group">
+            <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 mt-3">
+            <label class="col-8">Days<span class="asterisk ">*</span></label>
+            <label class="col-2 px-3">Actions<span class="asterisk ">*</span></label>
+            <label class="col-2 px-3">Edit<span class="asterisk ">*</span></label>
+          </div>
+            <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 mt-3">
+              <div class="mb-3 d-flex" >
+                <label 
+                  class="color-grey fw500 mb-0 fs15 pl-0 label-checkbox col-8">{{this.bannerList?.openHours?.MON != false ? 'Monday '+ this.bannerList?.openHours?.MON?.openingHours+'-'+ this.bannerList?.openHours?.MON?.closingHours :'Monday'}}</label>
+                <label class="switch  col-2">
+                  <input type="checkbox" formControlName="MON" />
+                  <span class="slider round"></span>
+                </label>
+                <label class=" switchLabel col-1 fw-light">{{this.uploadForm.controls.MON.value == true? 'Open':'Closed'}}</label>
+                <img class="pointer1  cursor-pointer" src="assets/img/promotion/edit.svg" width="22px" (click)="editDays('MON')">
+              </div>
+             
+
+            </div>
+            <div class="row" *ngIf="this.editTimeMON==false && this.uploadForm.controls.MON.value==true">
+              <div class="col-lg-2 col-md-4 col-sm-12 width20">
+                <div class="w-100" style="margin-bottom: 9px;">
+                  <label class="fw500 mb-0 fs14 labels">Opening Hours</label>
+                  <timepicker formControlName="monOpen" [showMeridian]="isMeridian" [showSpinners]="showSpinners"
+                    [format]="24"></timepicker>
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-4 col-sm-12 width20">
+                <div class="w-100" style="margin-bottom: 9px;">
+                  <label class="fw500 mb-0 fs14 labels">Closing Hours</label>
+                  <timepicker formControlName="monClose" [showMeridian]="isMeridian" [showSpinners]="showSpinners"
+                    [format]="24"></timepicker>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 ">
+              <div class="mb-3 d-flex">
+                <label 
+                  class="color-grey fw500 mb-0 fs15  pl-0 label-checkbox col-8">{{(this.bannerList?.openHours?.TUE != false)?'Tuesday '+(this.bannerList?.openHours?.TUE?.openingHours+'-'+this.bannerList?.openHours?.TUE?.closingHours) :'Tuesday'}}</label>
+
+                  <label class="switch  col-2">
+                    <input type="checkbox" formControlName="TUE" />
+                    <span class="slider round"></span>
+                  </label>
+                  <label class=" switchLabel col-1 fw-light">{{this.uploadForm.controls.TUE.value == true? 'Open':'Closed'}}</label>
+                <img class="pointer1 cursor-pointer" src="assets/img/promotion/edit.svg" width="22px" (click)="editDays('TUE')">
+              </div>
+
+            </div>
+            <div class="row" *ngIf="this.editTimeTUE==false && this.uploadForm.controls.TUE.value==true">
+              <div class="col-lg-2 col-md-4 col-sm-12 width20">
+                <div class="w-100" style="margin-bottom: 9px;">
+                  <label class="fw500 mb-0 fs14 labels">Opening Hours</label>
+                  <timepicker formControlName="tueOpen" [showMeridian]="isMeridian" [showSpinners]="showSpinners"
+                    [format]="24"></timepicker>
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-4 col-sm-12 width20">
+                <div class="w-100" style="margin-bottom: 9px;">
+                  <label class="fw500 mb-0 fs14 labels">Closing Hours</label>
+                  <timepicker formControlName="tueClose" [showMeridian]="isMeridian" [showSpinners]="showSpinners"
+                    [format]="24"></timepicker>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12  ">
+              <div class="mb-3 d-flex">
+                <label 
+                  class="color-grey fw500 mb-0 fs15  pl-0 label-checkbox col-8">{{(this.bannerList?.openHours?.WED != false)?'Wednesday '+(this.bannerList?.openHours?.WED?.openingHours+'-'+this.bannerList?.openHours?.WED?.closingHours) :'Wednesday'}}</label>
+                <label class="switch  col-2">
+                  <input type="checkbox" formControlName="WED" />
+                  <span class="slider round"></span>
+                </label>
+                <label class=" switchLabel col-1 fw-light">{{this.uploadForm.controls.WED.value == true? 'Open':'Closed'}}</label>
+                <img class="pointer1 cursor-pointer" src="assets/img/promotion/edit.svg" width="22px" (click)="editDays('WED')">
+              </div>
+
+            </div>
+            <div class="row" *ngIf="this.editTimeWED==false && this.uploadForm.controls.WED.value==true">
+              <div class="col-lg-2 col-md-4 col-sm-12 width20">
+                <div class="w-100" style="margin-bottom: 9px;">
+                  <label class="fw500 mb-0 fs14 labels">Opening Hours</label>
+                  <timepicker formControlName="wedOpen" [showMeridian]="isMeridian" [showSpinners]="showSpinners"
+                    [format]="24"></timepicker>
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-4 col-sm-12 width20">
+                <div class="w-100" style="margin-bottom: 9px;">
+                  <label class="fw500 mb-0 fs14 labels">Closing Hours</label>
+                  <timepicker formControlName="wedClose" [showMeridian]="isMeridian" [showSpinners]="showSpinners"
+                    [format]="24"></timepicker>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 ">
+              <div class="mb-3 d-flex">
+                <label 
+                  class="color-grey fw500 mb-0 fs15 pl-0 label-checkbox col-8"> {{(this.bannerList?.openHours?.THU != false)?'Thursday '+(this.bannerList?.openHours?.THU?.openingHours+'-'+this.bannerList?.openHours?.THU?.closingHours) :'Thursday'}}</label>
+                <label class="switch  col-2">
+                  <input type="checkbox" formControlName="THU" />
+                  <span class="slider round"></span>
+                </label>
+                <label class=" switchLabel col-1 fw-light">{{this.uploadForm.controls.THU.value == true? 'Open':'Closed'}}</label>
+                <img class="pointer1 cursor-pointer" src="assets/img/promotion/edit.svg" width="22px" (click)="editDays('THU')">
+              </div>
+            </div>
+            <div class="row" *ngIf="this.editTimeTHU==false && this.uploadForm.controls.THU.value==true">
+              <div class="col-lg-2 col-md-4 col-sm-12 width20">
+                <div class="w-100" style="margin-bottom: 9px;">
+                  <label class="fw500 mb-0 fs14 labels">Opening Hours</label>
+                  <timepicker formControlName="thuOpen" [showMeridian]="isMeridian" [showSpinners]="showSpinners"
+                    [format]="24"></timepicker>
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-4 col-sm-12 width20">
+                <div class="w-100" style="margin-bottom: 9px;">
+                  <label class="fw500 mb-0 fs14 labels">Closing Hours</label>
+                  <timepicker formControlName="thuClose" [showMeridian]="isMeridian" [showSpinners]="showSpinners"
+                    [format]="24"></timepicker>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 ">
+              <div class="mb-3 d-flex">
+                <label 
+                  class="color-grey fw500 mb-0 fs15  pl-0 label-checkbox col-8">{{(this.bannerList?.openHours?.FRI != false)?'Friday '+(this.bannerList?.openHours?.FRI?.openingHours+'-'+this.bannerList?.openHours?.FRI?.closingHours) :'Friday'}}</label>
+                <label class="switch  col-2">
+                  <input type="checkbox" formControlName="FRI" />
+                  <span class="slider round"></span>
+                </label>
+                <label class=" switchLabel col-1 fw-light">{{this.uploadForm.controls.FRI.value == true? 'Open':'Closed'}}</label>
+                <img class="pointer1 cursor-pointer " src="assets/img/promotion/edit.svg" width="22px" (click)="editDays('FRI')">
+
+
+              </div>
+            </div>
+            <div class="row" *ngIf="this.editTimeFRI==false && this.uploadForm.controls.FRI.value==true">
+              <div class="col-lg-2 col-md-4 col-sm-12 width20">
+                <div class="w-100" style="margin-bottom: 9px;">
+                  <label class="fw500 mb-0 fs14 labels">Opening Hours</label>
+                  <timepicker formControlName="friOpen" [showMeridian]="isMeridian" [showSpinners]="showSpinners"
+                    [format]="24"></timepicker>
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-4 col-sm-12 width20">
+                <div class="w-100" style="margin-bottom: 9px;">
+                  <label class="fw500 mb-0 fs14 labels">Closing Hours</label>
+                  <timepicker formControlName="friClose" [showMeridian]="isMeridian" [showSpinners]="showSpinners"
+                    [format]="24"></timepicker>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 ">
+              <div class="mb-3 d-flex">
+                <label 
+                  class="color-grey fw500 mb-0 fs15  pl-0 label-checkbox col-8">{{(this.bannerList?.openHours?.SAT != false)?'Saturday '+(this.bannerList?.openHours?.SAT?.openingHours+'-'+this.bannerList?.openHours?.SAT?.closingHours) :'Saturday'}}</label>
+                <label class="switch  col-2">
+                  <input type="checkbox" formControlName="SAT" />
+                  <span class="slider round"></span>
+                </label>
+                <label class=" switchLabel col-1 fw-light">{{this.uploadForm.controls.SAT.value == true? 'Open':'Closed'}}</label>
+                <img class="pointer1 cursor-pointer" src="assets/img/promotion/edit.svg" width="22px" (click)="editDays('SAT')">
+
+              </div>
+            </div>
+            <div class="row" *ngIf="this.editTimeSAT==false && this.uploadForm.controls.SAT.value==true">
+              <div class="col-lg-2 col-md-4 col-sm-12 width20">
+                <div class="w-100" style="margin-bottom: 9px;">
+                  <label class="fw500 mb-0 fs14 labels">Opening Hours</label>
+                  <timepicker formControlName="satOpen" [showMeridian]="isMeridian" [showSpinners]="showSpinners"
+                    [format]="24"></timepicker>
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-4 col-sm-12 width20">
+                <div class="w-100" style="margin-bottom: 9px;">
+                  <label class="fw500 mb-0 fs14 labels">Closing Hours</label>
+                  <timepicker formControlName="satClose" [showMeridian]="isMeridian" [showSpinners]="showSpinners"
+                    [format]="24"></timepicker>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 ">
+              <div class="mb-3 d-flex">
+                <label 
+                  class="color-grey fw500 mb-0 fs15  pl-0 label-checkbox col-8">{{(this.bannerList?.openHours?.SUN != false)?'Sunday '+(this.bannerList?.openHours?.SUN?.openingHours+'-'+this.bannerList?.openHours?.SUN?.closingHours) :'Sunday'}}</label>
+                <label class="switch col-2">
+                  <input type="checkbox" formControlName="SUN" />
+                  <span class="slider round"></span>
+                </label>
+                <label class=" switchLabel col-1 fw-light">{{this.uploadForm.controls.SUN.value == true? 'Open':'Closed'}}</label>
+                <img class="pointer1 cursor-pointer" src="assets/img/promotion/edit.svg" width="22px" (click)="editDays('SUN')">
+              </div>
+            </div>
+            <div class="row" *ngIf="this.editTimeSUN==false && this.uploadForm.controls.SUN.value==true">
+              <div class="col-lg-2 col-md-4 col-sm-12 width20">
+                <div class="w-100" style="margin-bottom: 9px;">
+                  <label class="fw500 mb-0 fs14 labels">Opening Hours</label>
+                  <timepicker formControlName="sunOpen" [showMeridian]="isMeridian" [showSpinners]="showSpinners"
+                    [format]="24"></timepicker>
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-4 col-sm-12 width20">
+                <div class="w-100" style="margin-bottom: 9px;">
+                  <label class="fw500 mb-0 fs14 labels">Closing Hours</label>
+                  <timepicker formControlName="sunClose" [showMeridian]="isMeridian" [showSpinners]="showSpinners"
+                    [format]="24"></timepicker>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mx-0 my-4">
+        <div class="col-md-12 text-center">
+          <button type="button" class="btn fs15 fw500 me-2 cancelBtn" (click)="goBack()">Cancel</button>
+          <button type="button" class="btn fs15 fw500 ms-2 submitBtn bg-green close-button"
+            (click)="editLocations()">Edit Locations</button>
+        </div>
+      </div>
+
+      <ng-template #confirmationModal let-modal>
+        <div class="modal-body pb-2 pt-2">
+          <div class="row mx-0 text-left">
+            <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+              <div class="modal-text fs15 color-green details pb-3">
+                <div>Are you sure you want to upload the details?</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mx-0">
+          <div class="col-6 px-1 mb-2">
+            <button class="btn btn-prop cancel-btn" type="button" data-dismiss="modal" (click)="back()">Cancel</button>
+          </div>
+          <div class="col-6 px-1 mb-2">
+            <button class="btn btn-prop bg-green" type="button" data-dismiss="modal"
+              (click)="confirmEditLocations()">Confirm</button>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #responseModel let-modal>
+        <div class="modal-body pb-4">
+          <div class="row mx-0 text-left">
+            <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+              <img src="assets/img/common/cross.svg">
+              {{this.errorMessage}}
+            </div>
+          </div>
+        </div>
+        <div class="w-100 text-center">
+          <button class="btn btn-prop color-white bg-red w-50" type="button" data-dismiss="modal"
+            (click)="closeModal()">Close</button>
+        </div>
+      </ng-template>
+
+      <ng-template #successModel let-modal>
+        <div class="modal-body pb-4">
+          <div class="row mx-0 text-left">
+            <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+              <img src="assets/img/common/tick.svg">
+              {{this.successMessage}}
+            </div>
+          </div>
+        </div>
+        <div class="w-100 text-center">
+          <button class="btn btn-prop color-white bg-green close-button w-50" type="button" data-dismiss="modal"
+            (click)="close()">Close</button>
+        </div>
+      </ng-template>

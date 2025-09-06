@@ -1,0 +1,231 @@
+.section-container {
+  background-color: #F8F8F8;
+  padding: 40px;
+}
+
+.user-card {
+  border-radius: 8px;
+  top: 40px;
+  background-color: #fff;
+  border: none;
+}
+
+.scroller {
+  overflow-y: auto;
+  border-radius: 3px;
+}
+
+#customscrollbar::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px transparent;
+  background-color: #F8F8F8;
+  border-radius: 10px;
+}
+
+#customscrollbar::-webkit-scrollbar {
+  width: 7px;
+  background-color: #F8F8F8;
+}
+
+#customscrollbar::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #afaeaedc;
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.25, #afaeaedc), color-stop(0.50, #afaeaedc), color-stop(0.60, #afaeaedc), color-stop(0.80, #afaeaedc));
+}
+
+#customscrollbar>.row:not(:last-child) {
+  border-bottom: 2px solid #fff;
+}
+
+.user-row {
+  padding: 20px;
+}
+
+.text-danger{
+  font-size: 12px;
+}
+
+.user-container {
+  border-bottom: 2px solid #D6D6D6;
+}
+
+.rolesParent {
+  /* min-height: 3rem; */
+  display: flex;
+  flex-direction: row;
+  padding: 8px;
+  flex-wrap: wrap;
+  height: 45px;
+  border-radius: 6px;
+  background-color: #FAFAFA;
+  border: 1px solid #707070;
+}
+
+.rolesChild {
+  border: 1px solid #CCD6FF;
+  padding: 2px 10px;
+  text-align: center;
+  background: #E7FDF8 0% 0% no-repeat padding-box;
+  border-radius: 15px;
+  color: #14892F;
+  letter-spacing: 0px;
+  opacity: 1;
+}
+
+.crosspng {
+  width: 16px;
+  margin-bottom: 3px;
+}
+
+.bg-green {
+  background-color: #00E556;
+  color: #F8F8F8;
+  border: 1px solid #00E556;
+  border-radius: 8px;
+}
+
+.cancelBtn {
+  width: 160px;
+  height: 38px;
+  border: 1px solid #333333;
+  border-radius: 8px;
+  opacity: 1;
+  background: none;
+  text-align: center;
+  letter-spacing: 0px;
+  color: #333333;
+  opacity: 1;
+}
+
+.fontsCss {
+  text-align: left;
+  letter-spacing: 0px;
+  color: #333333;
+  opacity: 1;
+}
+
+.fontsCsshead {
+  text-align: left;
+  letter-spacing: 0px;
+  opacity: 1;
+}
+
+.submitBtn {
+  width: 160px;
+  height: 38px;
+  opacity: 1;
+  border: none;
+  text-align: center;
+  letter-spacing: 0px;
+  opacity: 1;
+}
+
+.dropdownRoles {
+  border: 1px solid #32B765;
+  border-radius: 26px;
+  padding: 2px 10px;
+  text-align: center;
+  font-size: 14px;
+  letter-spacing: 0px;
+  color: #32B765;
+  background-color: #fff;
+  opacity: 1;
+}
+
+.dropdown-menu{
+  overflow-y: auto;
+  max-height:220px;
+  overflow-x:hidden;
+}
+
+.mobileDropdown {
+  height: 38px;
+  width: 48px;
+  position: absolute;
+  border-right: none;
+  border-bottom: none;
+  border-left: none;
+  left: 4px;
+  background: fixed;
+}
+
+input::-webkit-inner-spin-button {
+  opacity: 0;
+}
+
+.open-eye-img {
+  position: absolute;
+  right: 10px;
+  top: 35px;
+}
+
+.uxErrorMessage{
+  font-size: 12px;
+  color:red;
+}
+
+.passworField {
+  -webkit-text-security: disc;
+  font-family: text-security-disc;
+  font-size: 20px !important;
+  letter-spacing: 3px !important;
+}
+
+.closed-eye-img {
+  position: absolute;
+  right: 10px;
+  top: 35px;
+}
+
+.form-control {
+  height: 40px;
+}
+
+.form-control:focus,
+.form-control:active,
+.form-control:active:focus {
+  border-color: #81D087;
+  box-shadow: none;
+}
+
+.rolesLabel {
+  position: relative;
+  height: fit-content;
+  width: auto;
+  left: 11px;
+  padding: 0px 4px;
+  top: -11px;
+  background-color: #fff;
+}
+
+.bg-green:focus,
+.bg-green:active,
+.bg-green:active:focus {
+  box-shadow: 0 0 0 0.2rem #87d6a5;
+}
+
+.cancel-button {
+  border: 1px solid #333333;
+  color: #333333;
+  background-color: #fff;
+  width: 150px;
+  margin-left: 20px
+}
+
+.delete-button {
+  width: 150px;
+  margin-left: 14px;
+  border-radius: 7px
+}
+
+.button-cancel:focus,
+.button-cancel:active,
+.button-cancel:active:focus {
+  box-shadow: 0 0 0 0.25rem #a7a5a5;
+  ;
+}
+
+.close-button:focus,
+.close-button:active,
+.close-button:active:focus {
+  box-shadow: 0 0 0 0.25rem #87d6a5;
+}

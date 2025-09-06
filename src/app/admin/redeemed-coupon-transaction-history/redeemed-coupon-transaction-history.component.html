@@ -1,0 +1,301 @@
+<div class="section-container">
+    <div class="card user-card p-0">
+        <div class="row mx-0 user-row user-container">
+            <div class="col-lg-10 col-sm-8 col-8 d-flex align-items-center">
+                <div class="fs25 fw600 color-dark-grey ml-2">Redeemed Coupon Transaction History
+                </div>
+            </div>
+        </div>
+        <div class="card p-2 m-4 amount-cards">
+            <div class="row align-card-container col-lg-12">
+                <div class="col-lg-2 col-md-4 col-sm-6 align-cards justify-content-center border_right border_bottom">
+                    <div class="amountValue fw600 lightGreenColor">
+                        {{ this.summary.totalCouponTransactions }}
+                    </div>
+                    <div class="labelValue fw500">
+                        Total Coupon Transactions
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6 align-cards justify-content-center border_right border_bottom">
+                    <div class="amountValue fw600 yellowColor">
+                        {{ this.summary.totalAmountPaid }}
+                    </div>
+                    <div class="labelValue fw500">
+                        Total Amount Paid (TTD)
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6 align-cards justify-content-center border_right border_bottom">
+                    <div class="amountValue fw600 yellowColor">
+                        {{ summary.discountAmountApplied }}
+                    </div>
+                    <div class="labelValue fw500">
+                        Discount Amount Applied (TTD)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mx-0 filter-row d-flex " [formGroup]="coupontransactionHistory">
+            <div class="col-lg-2 col-md-4 col-sm-4 filter-padding"
+                [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2': this.isScreenMobile() == true}">
+                <div class="w-100" style="margin-bottom: 9px;">
+                    <label class="fw500 mb-0 fs14 labels">Date From</label>
+                    <input type="text" class="form-control-date img cursor-pointer" (keydown)="restrictAlphas($event)"
+                        maxlength="10" formControlName="dateFrom" bsDatepicker placeholder="DD-MM-YYYY"
+                        style="background-image:url('/assets/img/common/calendar.png')" [maxDate]="today"
+                        [bsConfig]="{dateInputFormat: 'DD-MM-YYYY', showClearButton: true, clearPosition: 'right', showTodayButton: true, todayPosition: 'left',allowInput: false }"
+                        #dp="bsDatepicker" [bsValue]="bsValue">
+                    <!-- <input type="text"
+                  class="form-control"
+                  #dp="bsDatepicker"
+                  bsDatepicker
+                  formControlName="dateFrom"
+                  [bsValue]="maxDate"
+                  [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',containerClass: 'theme-orange', showClearButton: true, clearPosition: 'right' }"> -->
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 filter-padding"
+                [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2': this.isScreenMobile() == true}">
+                <div class="w-100" style="margin-bottom: 9px;">
+                    <label class="fw500 mb-0 fs14 labels">Date To</label>
+                    <input type="text" class="form-control-date img cursor-pointer" (keydown)="restrictAlphas($event)"
+                        maxlength="10" formControlName="dateTo" placeholder="DD-MM-YYYY" bsDatepicker
+                        style="background-image:url('/assets/img/common/calendar.png')" [maxDate]="today"
+                        [bsConfig]="{dateInputFormat: 'DD-MM-YYYY', showClearButton: true, clearPosition: 'right' , showTodayButton: true, todayPosition: 'left' }">
+                    <!-- <input type="text"
+              class="form-control"
+              #dp="bsDatepicker"
+              bsDatepicker
+              [bsValue]="bsValue"
+              [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',containerClass: 'theme-orange', showClearButton: true, clearPosition: 'right' }">
+               <input type="text" class="form-control mb-3" placeholder="Datepicker" bsDatepicker formControlName="date" /> -->
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 filter-padding "
+                [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2 mb-3': this.isScreenMobile() == true}">
+                <div class="mb-3">
+                    <label class="fw500 mb-0 fs14 labels">Customer Id</label>
+                    <input type="text" class="form-control img input4" formControlName="customerId"
+                        placeholder="Customer Id">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 filter-padding "
+                [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2 mb-3': this.isScreenMobile() == true}">
+                <div class="mb-3">
+                    <label class="fw500 mb-0 fs14 labels">Coupon Code</label>
+                    <input type="text" class="form-control img input4" formControlName="couponCode"
+                        placeholder="Coupon Code">
+                </div>
+            </div>
+<!-- Influencer Name -->
+            <!-- <div class="col-lg-2 col-md-4 col-sm-4 filter-padding "
+                [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2 mb-3': this.isScreenMobile() == true}">
+                <div class="mb-3">
+                    <label class="fw500 mb-0 fs14 labels">Influencer Name</label>
+                    <input type="text" class="form-control img input4" formControlName="influencerName"
+                        placeholder="Influencer Name">
+                </div>
+            </div> -->
+        <div class="col-lg-2 col-md-4 col-sm-4 filter-padding"
+        [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2 mb-3': this.isScreenMobile() == true}">
+        <div class="mb-3">
+            <label class="fw500 mb-0 fs14 labels">Coupon Source</label>
+            <select class="selectOption" formControlName="couponSource">
+                <option value="" selected>All</option>
+                <option value="" *ngFor="let item of this.couponSource" [attr.value]="item.key">{{
+                    item.value }}
+                </option>
+            </select>
+        </div>
+    </div>
+
+            <div class="col-lg-2 col-md-4 col-sm-4 filter-padding "
+                [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2 mb-3': this.isScreenMobile() == true}">
+                <div class="mb-3">
+                    <label class="fw500 mb-0 fs14 labels">Coupon Name</label>
+                    <input type="text" class="form-control img input4" formControlName="couponName"
+                        placeholder="Coupon Name">
+                </div>
+            </div>
+            <!-- <div class="col-lg-2 col-md-4 col-sm-4 filter-padding"
+        [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2 mb-3': this.isScreenMobile() == true}">
+             <div class="mb-3">
+                <label class="fw500 mb-0 fs14 labels">Customer ID</label>
+                 <input type="text" class="form-control img input4" formControlName="customerId" placeholder="Customer ID">
+             </div>
+            </div> -->
+            <div class="col-lg-2 col-md-4 col-sm-4 filter-padding "
+                [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2 mb-3': this.isScreenMobile() == true}">
+                <div class="mb-3">
+                    <label class="fw500 mb-0 fs14 labels">First Name</label>
+                    <input type="text" class="form-control img input4" formControlName="firstName"
+                        placeholder="First Name">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 filter-padding "
+                [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2 mb-3': this.isScreenMobile() == true}">
+                <div class="mb-3">
+                    <label class="fw500 mb-0 fs14 labels">Last Name</label>
+                    <input type="text" class="form-control img input4" formControlName="lastName"
+                        placeholder="Last Name">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 filter-padding"
+                [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2 mb-3': this.isScreenMobile() == true}">
+                <div class="mb-3">
+                    <label class="fw500 mb-0 fs14 labels">Phone</label>
+                    <input type="text" class="form-control img input4"
+                        oninput="this.value=this.value.replace(/[^0-9]/g,'');" taopenbindex="1" placeholder="Phone"
+                        formControlName="phone" (keydown)="spaceRestrict($event)">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 filter-padding "
+                [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2 mb-3': this.isScreenMobile() == true}">
+                <div class="mb-3">
+                    <label class="fw500 mb-0 fs14 labels">Email</label>
+                    <input type="text" class="form-control img input4" formControlName="email" placeholder="Email">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 filter-padding"
+                [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2 mb-3': this.isScreenMobile() == true}">
+                <div class="mb-3">
+                    <label class="fw500 mb-0 fs14 labels">Account Number</label>
+                    <input type="text" class="form-control img input4"
+                        oninput="this.value=this.value.replace(/[^0-9]/g,'');" taopenbindex="1"
+                        placeholder="Account Number" formControlName="accountNumber" (keydown)="spaceRestrict($event)">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 filter-padding"
+                [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2 mb-3': this.isScreenMobile() == true}">
+                <div class="mb-3">
+                    <label class="fw500 mb-0 fs14 labels">Transaction Status</label>
+                    <select class="selectOption" formControlName="status">
+                        <option value="" selected>All</option>
+                        <option value="" *ngFor="let item of this.transactionStatus" [attr.value]="item.key">{{
+                            item.value }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-12 fs15 searchButton mt-2 d-flex p-0"
+                [ngClass]="{'mb-3 ml-0': this.isScreenMobile() == true}">
+
+                <div class="mb-3 col-lg-12 d-flex outer-button-container">
+
+                    <div class="col-lg-6 inner-button-container ms-1">
+                        <button class="btn btn-prop fs15 fw500  btn-search me-2 resetBtn"   type="button"
+                            (click)="resetData()">
+                            Reset
+                        </button>
+                    </div>
+
+                    <div class="col-lg-6 inner-button-container">
+                        <button class="btn btn-prop bg-green fs15 fw500 search-btn btn-search me-2" type="button"
+                            (click)="search(1)">
+                            Search
+                        </button>
+                    </div>
+                    <div class="col-lg-6 inner-button-container">
+                        <button class="btn btn-prop fs15 fw500 cancel-button button-cancel btn-search mx-0"
+                            type="button" data-dismiss="modal" (click)="exportRedeemedCouponTransactionHistory()">
+                            <img src="assets/img/common/download.svg" width="15px" class="me-2 download-img">Export
+                        </button>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <table class="table mb-4 user-table pl-2">
+            <thead>
+                <tr class="rowAlign fs15 fw500">
+                    <th>S. No.</th>
+                    <th>Customer ID</th>
+                    <th>Transaction ID</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Account Number</th>
+                    <th>Coupon Code</th>
+                    <th>Influencer Name</th>
+                    <th>Coupon Source</th>
+                    <th>Coupon Name</th>
+                    <th>Bundle Name</th>
+                    <th>Card Number</th>
+                    <th>Discount (TTD)</th>
+                    <th>Discounted Amount (TTD)</th>
+                    <th>Discounted Tax (TTD)</th>
+                    <th>Discounted Total Amount (TTD)</th>
+                    <th>Loan Amount (TTD)</th>
+                    <th>Original Amount (TTD)</th>
+                    <th>Original Tax (TTD)</th>
+                    <th>Original Total Amount (TTD)</th>
+                    <th>Transaction Date and Time</th>
+                    <th>Transaction Status</th>
+                    <!-- <th>Transaction Type</th> -->
+                </tr>
+            </thead>
+            <tbody class="fs15 fw500">
+                <tr class="trBody cursor-hand" *ngFor="let data of this.couponTransactionDetails; let i = index;">
+                    <td>{{(this.currentPage-1)*10+i+1}}</td>
+                    <td>{{data?.customerId}}</td>
+                    <td>{{data?.transactionId}}</td>
+                    <td>{{data?.name}}</td>
+                    <td>{{data?.phone}}</td>
+                    <td>{{data?.email}}</td>
+                    <td>{{data?.accountNumber}}</td>
+                    <td>{{data?.couponCode}}</td>
+                    <td>{{data?.influencerName}}</td>
+                    <td>{{getLookups(data?.couponSource,'couponSource')}}</td>
+                    <td>{{data?.couponName}}</td>
+                    <td>{{data?.bundleName}}</td>
+                    <td>{{data?.cardNumber}}</td>
+                    <td>{{data?.discount | number : '.2'}}</td>
+                    <td>{{data?.discountedAmount | number : '.2'}}</td>
+                    <td>{{data?.discountedTax | number : '.2'}}</td>
+                    <td>{{data?.discountedTotalAmount | number : '.2'}}</td>
+                    <td>{{data?.loanAmount | number : '.2'}}</td>
+                    <td>{{data?.originalAmount | number : '.2'}}</td>
+                    <td>{{data?.originalTax | number : '.2'}}</td>
+                    <td>{{data?.originalTotalAmount | number : '.2'}}</td>
+                    <td>{{data?.transactionDatetime}}</td>
+                    <td [ngClass]="{'color-blue': data.transactionStatus == 'INITIALIZED', 'color-light-orange': data?.transactionStatus == 'PENDING',
+        'text-red': data?.transactionStatus == 'FAILED', 'text-green':  data?.transactionStatus == 'COMPLETED'}">
+                        {{getLookups(data?.transactionStatus,'transactionStatus')}}</td>
+                    <!-- <td>{{data?.transactionType}}</td> -->
+                </tr>
+                <tr *ngIf="this.couponTransactionDetails?.length == 0" style="border-bottom:1px solid #ccc">
+                    <td class="text-center" colspan="12">No Data Found</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="text-center d-flex justify-content-center mb-2" *ngIf="this.couponTransactionDetails.length > 0">
+            <div class="pagination">
+                <a href="javascript: void(0)" style="color: #333333;"
+                    (click)="goToPage(currentPage - 1)"><u>Prev</u></a>
+                <a href="javascript: void(0)" *ngFor="let page of pageArray" (click)="goToPage(page)"
+                    [ngClass]="{'active': currentPage == page, 'no-page': page == 0}">
+                    {{page == 0 ? "..." : page}}
+                </a>
+                <a href="javascript: void(0)" style="color: #333333;"(click)="goToPage(currentPage + 1)"><u>Next</u></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #responseModel let-modal>
+    <div class="modal-body pb-4">
+      <div class="row mx-0 text-left">
+        <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+          <img src="assets/img/common/cross.svg">
+          {{this.errorMessage}}
+        </div>
+      </div>
+    </div>
+    <div class="w-100 text-center">
+      <button class="btn btn-prop color-white bg-red w-50" type="button" data-dismiss="modal"
+        (click)="closeModal()">Close</button>
+    </div>
+  </ng-template>

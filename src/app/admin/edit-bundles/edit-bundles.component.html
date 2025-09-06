@@ -1,0 +1,393 @@
+<div class="section-container">
+  <div class="card user-card p-0" [formGroup]="uploadForm">
+    <div class="row mx-0 user-row user-container mb-4">
+      <div class="col-10 d-flex align-items-center">
+        <div class="pointer" (click)="goBack()">
+          <img src="assets/img/common/back.png" width="7px" class="me-2">
+        </div>
+        <div class="fs25 fw600 color-dark-grey px-2">Bundles
+        </div>
+        <div>
+          <img src="assets/img/common/right-icon.png" width="7px" class="mx-2">
+        </div>
+        <div class="fs18 fw500 color-dark-grey ml-2 mt-1">Edit Bundles
+        </div>
+      </div>
+
+    </div>
+    <div class="row mx-0 mt-4 px-4">
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="upload-form-group form-group">
+            <label>Account Type<span class="asterisk ">*</span></label>
+            <select class="img input5 select-status" formControlName="accountType">
+              <option *ngFor="let role of this.customerAccountType" [attr.value]="role.key">
+                {{ role.value }}</option>
+            </select>
+            <div class="messageDiv uxErrorMessage"
+              *ngIf="this.uploadForm.get('accountType').invalid &&
+                        (this.uploadForm.get('accountType').dirty || this.uploadForm.get('accountType').touched) || ( this.submitted && this.uploadForm.get('accountType').invalid )">
+              <small>Account Type is required</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="upload-form-group form-group">
+            <label>Amount(TTD $)<span class="asterisk ">*</span></label>
+            <input class="form-control" type="number" maxlength="100" formControlName="amount"
+              (keydown)="spaceRestrict($event)" [ngClass]="{'redBorder': this.uploadForm.get('amount').invalid &&
+                    (this.uploadForm.get('amount').dirty || this.uploadForm.get('amount').touched) ||
+                    ( this.submitted && this.uploadForm.get('amount').invalid )}" />
+            <div class="messageDiv uxErrorMessage"
+              *ngIf="this.uploadForm.get('amount').invalid &&
+                        (this.uploadForm.get('amount').dirty || this.uploadForm.get('amount').touched) || ( this.submitted && this.uploadForm.get('amount').invalid )">
+              <small>Amount is required</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="upload-form-group form-group">
+            <label>Anywhere Minutes<span class="asterisk ">*</span></label>
+            <input class="form-control" maxlength="100" formControlName="anywhereMinutes"
+              (keydown)="spaceRestrict($event)" type="text" [ngClass]="{'redBorder': this.uploadForm.get('anywhereMinutes').invalid &&
+                      (this.uploadForm.get('anywhereMinutes').dirty || this.uploadForm.get('anywhereMinutes').touched) ||
+                      ( this.submitted && this.uploadForm.get('anywhereMinutes').invalid )}" />
+            <div class="messageDiv uxErrorMessage"
+              *ngIf="this.uploadForm.get('anywhereMinutes').invalid &&
+                          (this.uploadForm.get('anywhereMinutes').dirty || this.uploadForm.get('anywhereMinutes').touched) || ( this.submitted && this.uploadForm.get('anywhereMinutes').invalid )">
+              <small>Anywhere Minutes is required</small>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="upload-form-group form-group">
+            <label>Bundle Identifier<span class="asterisk ">*</span></label>
+            <input class="form-control" type="number" maxlength="100" formControlName="bundleIdentifier"
+              (keydown)="spaceRestrict($event)" [ngClass]="{'redBorder': this.uploadForm.get('bundleIdentifier').invalid &&
+                      (this.uploadForm.get('bundleIdentifier').dirty || this.uploadForm.get('bundleIdentifier').touched) ||
+                      ( this.submitted && this.uploadForm.get('bundleIdentifier').invalid )}" />
+            <div class="messageDiv uxErrorMessage"
+              *ngIf="this.uploadForm.get('bundleIdentifier').invalid &&
+                          (this.uploadForm.get('bundleIdentifier').dirty || this.uploadForm.get('bundleIdentifier').touched) || ( this.submitted && this.uploadForm.get('bundleIdentifier').invalid )">
+              <small>Bundle Identifier is required</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="upload-form-group form-group">
+            <label>Bundle Type<span class="asterisk ">*</span></label>
+            <select class="img input5 select-status" formControlName="bundleType">
+              <option *ngFor="let role of this.bundleTypeArray" [attr.value]="role.key">
+                {{ role.value }}</option>
+            </select>
+            <div class="messageDiv uxErrorMessage"
+              *ngIf="this.uploadForm.get('bundleType').invalid &&
+                    (this.uploadForm.get('bundleType').dirty || this.uploadForm.get('bundleType').touched) || ( this.submitted && this.uploadForm.get('bundleType').invalid )">
+              <small>Bundle Type is required</small>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="upload-form-group form-group">
+            <label>Data Balance<span class="asterisk ">*</span></label>
+            <input class="form-control" type="text" maxlength="100" formControlName="dataBalance"
+              (keydown)="spaceRestrict($event)" [ngClass]="{'redBorder': this.uploadForm.get('dataBalance').invalid &&
+                      (this.uploadForm.get('dataBalance').dirty || this.uploadForm.get('dataBalance').touched) ||
+                      ( this.submitted && this.uploadForm.get('dataBalance').invalid )}" />
+            <div class="messageDiv uxErrorMessage"
+              *ngIf="this.uploadForm.get('dataBalance').invalid &&
+                          (this.uploadForm.get('dataBalance').dirty || this.uploadForm.get('dataBalance').touched) || ( this.submitted && this.uploadForm.get('dataBalance').invalid )">
+              <small>Data Balance is required</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="upload-form-group form-group">
+            <label>Bundle Name<span class="asterisk ">*</span></label>
+            <input class="form-control" type="text" maxlength="100" formControlName="name"
+              (keydown)="spaceRestrict($event)" [ngClass]="{'redBorder': this.uploadForm.get('name').invalid &&
+                      (this.uploadForm.get('name').dirty || this.uploadForm.get('name').touched) ||
+                      ( this.submitted && this.uploadForm.get('name').invalid )}" />
+            <div class="messageDiv uxErrorMessage"
+              *ngIf="this.uploadForm.get('name').invalid &&
+                          (this.uploadForm.get('name').dirty || this.uploadForm.get('name').touched) || ( this.submitted && this.uploadForm.get('name').invalid )">
+              <small>Bundle Name is required</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="upload-form-group form-group">
+            <label>Roaming Data Balance</label>
+            <input class="form-control" type="text" maxlength="100" formControlName="roamingDataBalance"
+              (keydown)="spaceRestrict($event)"  />
+          
+          </div>
+        </div>
+
+
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="upload-form-group form-group">
+            <label>Sms Balance<span class="asterisk ">*</span></label>
+            <input class="form-control" type="text" maxlength="100" formControlName="smsBalance"
+              (keydown)="spaceRestrict($event)" [ngClass]="{'redBorder': this.uploadForm.get('smsBalance').invalid &&
+                      (this.uploadForm.get('smsBalance').dirty || this.uploadForm.get('smsBalance').touched) ||
+                      ( this.submitted && this.uploadForm.get('smsBalance').invalid )}" />
+            <div class="messageDiv uxErrorMessage"
+              *ngIf="this.uploadForm.get('smsBalance').invalid &&
+                          (this.uploadForm.get('smsBalance').dirty || this.uploadForm.get('smsBalance').touched) || ( this.submitted && this.uploadForm.get('smsBalance').invalid )">
+              <small>Sms Balance is required</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="upload-form-group form-group">
+            <label>Total Amount(TTD $)<span class="asterisk ">*</span></label>
+            <input class="form-control" type="number" maxlength="100" formControlName="totalAmount"
+              (keydown)="spaceRestrict($event)" [ngClass]="{'redBorder': this.uploadForm.get('totalAmount').invalid &&
+                      (this.uploadForm.get('totalAmount').dirty || this.uploadForm.get('totalAmount').touched) ||
+                      ( this.submitted && this.uploadForm.get('totalAmount').invalid )}" />
+            <div class="messageDiv uxErrorMessage"
+              *ngIf="this.uploadForm.get('totalAmount').invalid &&
+                          (this.uploadForm.get('totalAmount').dirty || this.uploadForm.get('totalAmount').touched) || ( this.submitted && this.uploadForm.get('totalAmount').invalid )">
+              <small> Total Amount is required</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="upload-form-group form-group">
+            <label>VAT(TTD $)<span class="asterisk ">*</span></label>
+            <input class="form-control" type="number" maxlength="100" formControlName="vat"
+              (keydown)="spaceRestrict($event)" [ngClass]="{'redBorder': this.uploadForm.get('vat').invalid &&
+                      (this.uploadForm.get('vat').dirty || this.uploadForm.get('vat').touched) ||
+                      ( this.submitted && this.uploadForm.get('vat').invalid )}" />
+            <div class="messageDiv uxErrorMessage"
+              *ngIf="this.uploadForm.get('vat').invalid &&
+                          (this.uploadForm.get('vat').dirty || this.uploadForm.get('vat').touched) || ( this.submitted && this.uploadForm.get('vat').invalid )">
+              <small>VAT is required</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="upload-form-group form-group">
+            <label>Voice Balance<span class="asterisk ">*</span></label>
+            <input class="form-control" type="text" maxlength="100" formControlName="voiceBalance"
+              (keydown)="spaceRestrict($event)" [ngClass]="{'redBorder': this.uploadForm.get('voiceBalance').invalid &&
+                      (this.uploadForm.get('voiceBalance').dirty || this.uploadForm.get('voiceBalance').touched) ||
+                      ( this.submitted && this.uploadForm.get('voiceBalance').invalid )}" />
+            <div class="messageDiv uxErrorMessage"
+              *ngIf="this.uploadForm.get('voiceBalance').invalid &&
+                          (this.uploadForm.get('voiceBalance').dirty || this.uploadForm.get('voiceBalance').touched) || ( this.submitted && this.uploadForm.get('voiceBalance').invalid )">
+              <small>Voice Balance is required</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="upload-form-group form-group">
+            <label>Confirmation Description<span class="asterisk ">*</span></label>
+            <input class="form-control" type="text" maxlength="100" formControlName="confirmationDescription"
+              (keydown)="spaceRestrict($event)" [ngClass]="{'redBorder': this.uploadForm.get('confirmationDescription').invalid &&
+                      (this.uploadForm.get('confirmationDescription').dirty || this.uploadForm.get('confirmationDescription').touched) ||
+                      ( this.submitted && this.uploadForm.get('confirmationDescription').invalid )}" />
+            <div class="messageDiv uxErrorMessage"
+              *ngIf="this.uploadForm.get('confirmationDescription').invalid &&
+                          (this.uploadForm.get('confirmationDescription').dirty || this.uploadForm.get('confirmationDescription').touched) || ( this.submitted && this.uploadForm.get('confirmationDescription').invalid )">
+              <small>Confirmation Description is required</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="upload-form-group form-group">
+            <label>Rollover Anywhere Mins</label>
+            <input class="form-control" maxlength="100" formControlName="rolloveranywhereMinutes"
+              (keydown)="spaceRestrict($event)" type="text"  />
+        
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="upload-form-group form-group">
+            <label>Roll Over Data</label>
+            <input class="form-control" maxlength="100" formControlName="roleoverdata"
+              (keydown)="spaceRestrict($event)" type="text"  />
+          
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="upload-form-group form-group">
+            <label>FREE-b Data</label>
+            <input class="form-control" maxlength="100" formControlName="freebdata"
+              (keydown)="spaceRestrict($event)" type="text"  />
+          
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="upload-form-group form-group">
+            <label>Free Data on Weekends</label>
+            <input class="form-control" maxlength="100" formControlName="freeDataOnWeekend"
+              (keydown)="spaceRestrict($event)" type="text"  />
+          
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="upload-form-group form-group">
+            <label>Roaming Destinations</label>
+            <input class="form-control" maxlength="100" formControlName="roamingDestinations"
+              (keydown)="spaceRestrict($event)" type="text"  />
+          
+          </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="upload-form-group form-group">
+            <label>Description</label>
+            <input class="form-control" type="text" formControlName="description"
+              (keydown)="spaceRestrict($event)" />
+          </div>
+        </div>
+
+        <div class="col-lg-12 row justify-content-center mt-4">
+          <div class="col-lg-3 col-md-3 col-sm-6 toggle-vals p-0">
+            <div class="upload-form-group form-group">
+              <div class="col-12 d-flex main-toggle-row border-right pl-2">
+                <div class="col-6 text-row">Is Active</div>
+                <div class="col-6 toggle-row">
+                  <label class="switch ms-2">
+                    <input type="checkbox" (change)="getToggleValue($event)" id="isActive" value="isActive"
+                      [checked]="this.uploadForm.get('isActive').value">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-3 col-sm-6 toggle-vals p-0">
+            <div class="upload-form-group form-group">
+              <div class="col-12 d-flex main-toggle-row right-row border-right pl-2">
+                <div class="col-6 text-row">Is Unlimited</div>
+                <div class="col-6 toggle-row">
+                  <label class="switch ms-2">
+                    <input type="checkbox" (change)="getToggleValue($event)" id="isUnlimited" value="isUnlimited"
+                      [checked]="this.uploadForm.get('isUnlimited').value">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+
+          <div class="col-lg-3 col-md-3 col-sm-6 toggle-vals p-0" *ngIf="this.enableBundleAddOnFlow == true">
+            <div class="upload-form-group form-group">
+              <div class="col-12 d-flex main-toggle-row right-row border-right pl-2">
+                <div class="col-6 text-row">Is Add On</div>
+                <div class="col-6 toggle-row">
+                  <label class="switch ms-2">
+                    <input type="checkbox" (change)="getToggleValue($event)" id="isAddOn" value="isAddOn"
+                      [checked]="this.uploadForm.get('isAddOn').value">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+
+
+
+      <div class="row mx-0 my-4">
+        <div class="col-md-12 text-center">
+          <button type="button" class="btn fs15 fw500 me-2 cancelBtn" (click)="goBack()">Cancel</button>
+          <button type="button" class="btn fs15 fw500 ms-2 submitBtn bg-green close-button"
+            (click)="confirmEditBundles()">Edit Bundles</button>
+        </div>
+      </div>
+
+      <ng-template #confirmationModal let-modal>
+        <div class="modal-body pb-2 pt-2">
+          <div class="row mx-0 text-left">
+            <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+              <div class="modal-text fs15 color-green details pb-3">
+                <div>Are you sure you want to update the details?</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mx-0">
+          <div class="col-6 px-1 mb-2">
+            <button class="btn btn-prop cancel-btn" type="button" data-dismiss="modal" (click)="back()">Cancel</button>
+          </div>
+          <div class="col-6 px-1 mb-2">
+            <button class="btn btn-prop bg-green" type="button" data-dismiss="modal"
+              (click)="editBundles()">Confirm</button>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #responseModel let-modal>
+        <div class="modal-body pb-4">
+          <div class="row mx-0 text-left">
+            <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+              <img src="assets/img/common/cross.svg">
+              {{this.errorMessage}}
+            </div>
+          </div>
+        </div>
+        <div class="w-100 text-center">
+          <button class="btn btn-prop color-white bg-red w-50" type="button" data-dismiss="modal"
+            (click)="closeModal()">Close</button>
+        </div>
+      </ng-template>
+
+      <ng-template #successModel let-modal>
+        <div class="modal-body pb-4">
+          <div class="row mx-0 text-left">
+            <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+              <img src="assets/img/common/tick.svg">
+              {{this.successMessage}}
+            </div>
+          </div>
+        </div>
+        <div class="w-100 text-center">
+          <button class="btn btn-prop color-white bg-green close-button w-50" type="button" data-dismiss="modal"
+            (click)="close()">Close</button>
+        </div>
+      </ng-template>
+
+      <ng-template #updateModel let-modal>
+        <div class="modal-body pb-4">
+          <div class="row mx-0 text-left">
+            <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+              Are you sure you want to update the details?
+            </div>
+          </div>
+        </div>
+        <div class="w-100 text-center row">
+          <button class="btn btn-prop button-cancel fs15 fw500 cancel-button" type="button" data-dismiss="modal"
+            (click)="closeModal()">Cancel </button>
+          <button class="btn btn-prop color-white close-button bg-green delete-button" type="button"
+            data-dismiss="modal">Confirm </button>
+        </div>
+      </ng-template>

@@ -1,0 +1,417 @@
+<div class="section-container" [formGroup]="uploadForm">
+    <div class="row mx-0">
+        <div class="card user-card col-lg-3 col-md-12 col-sm-12 px-0">
+            <div class="row mx-0 user-row user-container">
+                <div class="col-12 d-flex align-items-center pointer" (click)="goBack()">
+                    <div>
+                        <img src="assets/img/common/back.png" width="7px" class="mr-3">
+                    </div>
+                    <div class="fs25 fw600 color-dark-grey ml-2">Customer Details
+                    </div>
+                </div>
+            </div>
+            <div class="row mx-0 my-4 px-3">
+                <div class="col-12 d-flex">
+                    <div class="col-4"><img class="profile-img" src="assets/img/cms/profile.png" width="85px"></div>
+
+                    <div class="fw600 col-8 ps-2">
+                        <div class="fs18">{{this.customerData?.firstName}}&nbsp;{{this.customerData?.lastName}}</div>
+                        <div class="fs14 fw500 color-dark-grey mb-1">{{this.customerData?.customerId}}</div>
+                        <div class=" fs14 fw500"
+                            [ngClass]="{'color-green': this.customerData?.status == 'ACTIVE', 'text-red': this.customerData?.status == 'DEACTIVATED', 'text-orange': this.customerData?.status == 'INACTIVE'}">
+                            <img class="me-1 active-img"
+                                [src]="customerData?.status === 'ACTIVE' ? 'assets/img/cms/Active.svg' :'assets/img/cms/inActive.svg'">{{this.customerData?.status}}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- <div class="row mx-0 mb-4 px-3">
+                <div class="col-12 d-flex">
+                    <div class="col-4"><img src="assets/img/cms/Account Number.svg" width="55px"></div>
+
+                    <div class="fs16 fw600 col-6 mt-1">
+                        <div class="fs14 fw500 color-dark-grey mb-1">Account Number:</div>
+                        <div class="color-dark-grey fs15 fw500">{{this.customerData?.accountNumber}}</div>
+                    </div>
+
+                </div>
+            </div> -->
+
+            <div class="row mx-0 ps-3 py-3 pointer"
+                [ngClass]="{'active-bg-green': this.cmsScreenList['demographics'] == true}"
+                (click)="goToPath('demographics')">
+                <div class="col-12 d-flex align-items-baseline">
+                    <div class="col-4"><img
+                            [src]=" this.cmsScreenList['demographics'] == true ? 'assets/img/cms/Demographics.svg' : 'assets/img/cms/Demographics not Selected.svg'"
+                            width="50px"></div>
+
+                    <div class="fs16 fw600 col-7 color-dark-grey">Demographics
+                    </div>
+                    <div class="col-1 text-center">
+                        <img src="assets/img/common/right-icon.png" width="7px" class="mr-3">
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="row mx-0 ps-3 py-3 pointer" *ngIf="this.viewHistoryAccess"
+                [ngClass]="{'active-bg-blue': this.cmsScreenList['transaction-history'] == true}"
+                (click)="goToPath('transaction-history')">
+                <div class="col-12 d-flex align-items-baseline">
+                    <div class="col-4"><img
+                            [src]=" this.cmsScreenList['transaction-history'] == true ? 'assets/img/cms/Active_History.svg' : 'assets/img/cms/Inactive_History.svg'"
+                            width="50px"></div>
+
+                    <div class="fs16 fw600 col-7 color-dark-grey">Transaction History
+                    </div>
+                    <div class="col-1 text-center">
+                        <img src="assets/img/common/right-icon.png" width="7px" class="mr-3">
+                    </div>
+
+                </div>
+            </div>
+
+
+
+            <div class="row mx-0 ps-3 py-3 pointer"
+                [ngClass]="{'active-bg-light-blue': this.cmsScreenList['added-accounts'] == true}"
+                (click)="goToPath('added-accounts')">
+                <div class="col-12 d-flex align-items-baseline">
+                    <div class="col-4"><img
+                            [src]=" this.cmsScreenList['added-accounts'] == true ? 'assets/img/cms/Added_Accounts_Active.svg' : 'assets/img/cms/Added_Accounts_Inactive.svg'"
+                            width="50px"></div>
+
+                    <div class="fs16 fw600 col-7 color-dark-grey">Added Accounts
+                    </div>
+                    <div class="col-1 text-center">
+                        <img src="assets/img/common/right-icon.png" width="7px" class="mr-3">
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="row mx-0 ps-3 py-3 pointer"
+                [ngClass]="{'active-bg-light-purple': this.cmsScreenList['added-cards'] == true}"
+                (click)="goToPath('added-cards')">
+                <div class="col-12 d-flex align-items-baseline">
+                    <div class="col-4"><img
+                            [src]=" this.cmsScreenList['added-cards'] == true ? '/assets/img/iconSelected/Group 11644.png' : '/assets/img/iconSelected/Group 11645.png'"
+                            width="50px"></div>
+
+                    <div class="fs16 fw600 col-7 color-dark-grey">Added Cards
+                    </div>
+                    <div class="col-1 text-center">
+                        <img src="assets/img/common/right-icon.png" width="7px" class="mr-3">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card user-card col-lg-8 col-md-12 col-sm-12 px-0"
+            [ngClass]="{'ms-4 w-73': this.isScreenMobile() == false, 'ms-0 mt-3 w-100': this.isScreenMobile() == true}"
+            *ngIf="this.cmsScreenList['demographics'] == true">
+            <div class="row mx-0 user-row user-container">
+                <div class="col-lg-10 col-md-9 d-flex align-items-center mt-1">
+                    <div class="fs22 fw600 color-dark-grey ml-2">Customer Demographics
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 d-flex align-items-center mt-1" *ngIf="this.deleteCustomerAccess">
+                    <button class="btn btn-prop color-red border-red delete-btn fs15 fw500 search-btn" type="button"
+                        (click)="delConfirmModal()">
+                        Delete Customer
+                    </button>
+                </div>
+            </div>
+
+            <div class="row mx-0 my-3 px-4 border-bottom-lightgrey">
+                <div class="col-3 mb-3">
+                    <div class="fs14 fw500 color-gray">First Name</div>
+                    <div class="fs16 fw500 color-dark-grey">{{this.customerData?.firstName}}</div>
+                </div>
+                <div class="col-3 mb-3">
+                    <div class="fs14 fw500 color-gray">Last Name</div>
+                    <div class="fs16 fw500 color-dark-grey">{{this.customerData?.lastName}}</div>
+                </div>
+                <div class="col-3 mb-3">
+                    <div class="col-12 row">
+
+                        <div class="col-8 fs14 fw500 color-gray">Mobile</div>
+                        <!-- <div class="col-2 color-blue pointer p-0"><img src="assets/img/common/Edit.svg"
+                                class="ms-2 update-icon" (click)="updateMobileNum()"></div> -->
+                        <!-- <div class="col-2 color-red pointer p-0" *ngIf="isMobileInputVisible==true"><img
+                                src="assets/img/common/Tick_Green.svg" class="ms-2 update-icon" style="width:20px"
+                                (click)="openUpdateMobileModel()"></div> -->
+
+
+                    </div>
+
+
+                    <div class="fs16 fw500 color-dark-grey" *ngIf="isMobileInputVisible==false">
+                        {{this.customerData?.phone}}</div>
+
+                    <div class="col-12 row d-flex mt-2" *ngIf="isMobileInputVisible==true">
+                        <input formControlName="mobileNum" maxlength="10" type="text" (keydown)="spaceRestrict($event)"
+                            oninput="this.value=this.value.replace(/[^0-9]/g,'');" taopenbindex="1" maxlength="10"
+                            class="col-10 form-control fontsCss mbl-option"
+                            [style.paddingLeft.px]="(mobile?.offsetWidth + 7)" [ngClass]="{'redBorder': this.uploadForm.get('mobileNum').invalid &&
+                    (this.uploadForm.get('mobileNum').dirty || this.uploadForm.get('mobileNum').touched) ||
+                    ( this.submitted && this.uploadForm.get('mobileNum').invalid )}">
+
+                        <div class="col-2 align-self-center pl-1">
+                            <img style="height: 35px;" class="add-icon cursor-pointer" src="assets/img/common/cross.png"
+                                (click)="updateNumField()" alt="Cross icon" />
+                        </div>
+
+                        <div class="messageDiv uxErrorMessage"
+                            *ngIf="this.uploadForm.get('mobileNum').invalid &&
+                        (this.uploadForm.get('mobileNum').dirty || this.uploadForm.get('mobileNum').touched) || ( this.submitted && this.uploadForm.get('mobileNum').invalid )">
+                            <small>Mobile Number is required</small>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-3 mb-3">
+                    <div class="fs14 fw500 color-gray">Email</div>
+                    <div class="fs16 fw500 color-dark-grey">{{this.customerData?.email}}</div>
+                </div>
+                <div class="col-3 mb-3">
+                    <div class="fs14 fw500 color-gray">Date of Birth</div>
+                    <div class="fs16 fw500 color-dark-grey">{{this.customerData?.dob}}</div>
+                </div>
+                <div class="col-3 mb-3">
+                    <div class="fs14 fw500 color-gray">City</div>
+                    <div class="fs16 fw500 color-dark-grey">{{getLookups(this.customerData?.city)}}</div>
+                </div>
+                <div class="col-3 mb-3">
+                    <div class="fs14 fw500 color-gray">Last Login On</div>
+                    <div class="fs16 fw500 color-dark-grey">{{this.customerData?.lastloginDateTime}}</div>
+                </div>
+                <div class="col-3 mb-3">
+                    <div class="fs14 fw500 color-gray">Registration Date</div>
+                    <div class="fs16 fw500 color-dark-grey">{{this.customerData?.creationDate}}</div>
+                </div>
+                <div class="col-3 mb-3" *ngIf="this.customerData?.lastPasswordChangeTimestamp!=''">
+                    <div class="fs14 fw500 color-gray">Last Password Change Date</div>
+                    <div class="fs16 fw500 color-dark-grey">{{this.customerData?.lastPasswordChangeTimestamp }}</div>
+                </div>
+                <div class="col-3 mb-3">
+                    <div class="fs14 fw500 color-gray">Opt for Communication</div>
+                    <div class="fs16 fw500 color-dark-grey">{{this.customerData?.optInForEmailUpdates == true ? 'Yes' :
+                        'No' }}</div>
+                </div>
+            </div>
+            <div class="row mx-0 my-3 px-4" *ngIf="this.logoutAccess">
+                <div class="col-lg-3 col-md-3 d-flex align-items-center mt-1">
+                    <button class="btn btn-prop bg-logout fs15 fw500 search-btn" type="button"
+                        (click)="openConfirmModal()">
+                        Clear Active Sessions
+                    </button>
+                </div>
+                <div class="col-lg-3 col-md-3 d-flex align-items-center mt-1"
+                    *ngIf="this.customerData.status =='ACTIVE' && this.enableConsumerDeactivateFlow == true">
+                    <button class="btn btn-prop bg-logout fs15 fw500 search-btn deactivate " type="button"
+                        (click)="openDeactivateModal()">
+                        Account Deactivate
+                    </button>
+                </div>
+                <div class="col-lg-3 col-md-3 d-flex align-items-center mt-1"
+                    *ngIf="this.customerData.status =='DEACTIVATED' && this.enableConsumerDeactivateFlow == true">
+                    <button class="btn btn-prop  fs15 fw500 search-btn activate " type="button"
+                        (click)="activateAccount()">
+                        Account Activate
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card user-card col-lg-8 col-md-12 col-sm-12 px-0"
+            [ngClass]="{'ms-4 w-73': this.isScreenMobile() == false, 'ms-0 mt-3 w-100': this.isScreenMobile() == true}"
+            *ngIf="this.cmsScreenList['transaction-history'] == true">
+            <div class="row mx-0 user-row user-container">
+                <div class="col-lg-10 col-md-9 d-flex align-items-center">
+                    <div class="fs25 fw600 color-dark-grey ml-2">Transaction History
+                    </div>
+                </div>
+            </div>
+            <app-transaction-history></app-transaction-history>
+        </div>
+
+        <div class="card user-card col-lg-8 col-md-12 col-sm-12 px-0"
+            [ngClass]="{'ms-4 w-73': this.isScreenMobile() == false, 'ms-0 mt-3 w-100': this.isScreenMobile() == true}"
+            *ngIf="this.cmsScreenList['added-accounts'] == true ">
+            <div class="row mx-0 user-row user-container">
+                <div class="col-lg-10 col-md-9 d-flex align-items-center">
+                    <div class="fs25 fw600 color-dark-grey ml-2">Added Accounts
+                    </div>
+                </div>
+            </div>
+            <app-added-accounts></app-added-accounts>
+        </div>
+        <div class="card user-card col-lg-8 col-md-12 col-sm-12 px-0"
+            [ngClass]="{'ms-4 w-73': this.isScreenMobile() == false, 'ms-0 mt-3 w-100': this.isScreenMobile() == true}"
+            *ngIf="this.cmsScreenList['added-cards'] == true ">
+            <div class="row mx-0 user-row user-container">
+                <div class="col-lg-10 col-md-9 d-flex align-items-center">
+                    <div class="fs25 fw600 color-dark-grey ml-2">Added Cards
+                    </div>
+                </div>
+            </div>
+            <app-added-cards></app-added-cards>
+        </div>
+    </div>
+
+</div>
+
+
+<ng-template #responseModel let-modal>
+    <div class="modal-body pb-4">
+        <div class="row mx-0 text-left">
+            <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+                <img src="assets/img/common/cross.svg">
+                {{this.errorMessage}}
+            </div>
+        </div>
+    </div>
+    <div class="w-100 text-center">
+        <button class="btn btn-prop color-white bg-red w-50" type="button" data-dismiss="modal"
+            (click)="closeModal()">Close</button>
+    </div>
+</ng-template>
+<ng-template #deactivateModal let-modal>
+    <div>
+        <div class="text-center justify-content-center">
+            <img src="assets/img/users/AccountDeactivator.svg" alt="Deactivate Account" class="mb-3"
+                style="width: 40px;">
+        </div>
+        <div>
+            <h4 class="text-center justify-content-center fw-600 text-red">DEACTIVATE ACCOUNT</h4>
+        </div>
+        <div class="pb-2 pt-2">
+            <div class="row mx-0">
+                <div class="col-12 mb-3">
+                    <label class="form-label deactivate-label">Reason for deactivation <span
+                            class="text-danger">*</span></label>
+                    <select class="form-select" [(ngModel)]="selectedDeactivationReason" required>
+                        <option value="" disabled selected>Select</option>
+                        <option *ngFor="let reason of deactivationReasons" [value]="reason.key">{{reason.value}}
+                        </option>
+                    </select>
+                    <div *ngIf="isDeactivationSubmitted && !selectedDeactivationReason" class="text-danger mt-1 fs-12">
+                        Please select reason for deactivation.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mx-0 w-100">
+            <div class="col-6 px-1">
+                <button type="button" class="btn btn-secondary w-100" (click)="closeModal()">Cancel</button>
+            </div>
+            <div class="col-6 px-1">
+                <button type="button" class="btn btn-danger w-100" (click)="confirmDeactivate()">Confirm</button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #successModel let-modal>
+    <div class="modal-body pb-4">
+        <div class="row mx-0 text-left">
+            <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+                <img src="assets/img/common/tick.svg">
+                {{this.successMessage}}
+            </div>
+        </div>
+    </div>
+    <div class="w-100 text-center">
+        <button class="btn btn-prop close-button color-white bg-green w-50" type="button" data-dismiss="modal"
+            (click)="closeModal()">Close</button>
+    </div>
+</ng-template>
+<ng-template #DeletesuccessModel let-modal>
+    <div class="modal-body pb-4">
+        <div class="row mx-0 text-left">
+            <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+                <img src="assets/img/common/tick.svg">
+                {{this.successMessage}}
+            </div>
+        </div>
+    </div>
+    <div class="w-100 text-center">
+        <button class="btn btn-prop close-button color-white bg-green w-50" type="button" data-dismiss="modal"
+            (click)="close()">Close</button>
+    </div>
+</ng-template>
+
+<ng-template #ConfirmationModal let-modal>
+    <div class="modal-body pb-4 pt-2">
+        <div class="row mx-0 text-left">
+            <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+                <div class="mb-2 ">
+                    <!-- <img src="assets/img/users/log-out2.svg" class="logout-img"><span class="logoutIcon fs20 fw700"></span> -->
+                </div>
+                <div class="modal-text fs15 fw500">
+                    <div>Are you sure you want to Continue?</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mx-0">
+        <div class="col-md-12 d-flex justify-content-center">
+            <button type="button" class="btn fs15 fw500 me-2 cancelBtn col-6" (click)="closeModal()">Cancel</button>
+            <button type="button" class="btn bg-green fs15 fw500 ms-2 submitBtn col-6"
+                (click)="logoutCustomer()">Logout</button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #changeMobileConfirmationModal let-modal>
+    <div class="modal-body pb-4 pt-2">
+        <div class="row mx-0 text-left">
+            <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+                <div class="mb-2 ">
+                    <!-- <img src="assets/img/users/log-out2.svg" class="logout-img"><span class="logoutIcon fs20 fw700"></span> -->
+                </div>
+                <div class="modal-text fs15 fw500">
+                    <div>Are you sure you want to Update the phone number?</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mx-0">
+        <div class="col-md-12 d-flex justify-content-center">
+            <button type="button" class="btn fs15 fw500 me-2 cancelBtn col-6" (click)="closeModal()">Cancel</button>
+            <button type="button" class="btn bg-green fs15 fw500 ms-2 submitBtn col-6"
+                (click)="updateNum()">Confirm</button>
+        </div>
+    </div>
+</ng-template>
+<ng-template #delConfirmationModal let-modal>
+    <div class="modal-body pb-2 pt-2">
+        <div class="row mx-0 text-left">
+            <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+                <div class="mb-2 ">
+                    <!-- <img src="assets/img/users/log-out2.svg" class="logout-img"><span class="logoutIcon fs20 fw700"></span> -->
+                </div>
+                <div class="modal-text fs15 fw500">
+                    <div>Are you sure you want to delete customer ?</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mx-0 mt-4">
+            <div class="col-6 px-1">
+                <button class="btn btn-prop cancelBtn ms-0" type="button" data-dismiss="modal"
+                    (click)="closeModal()">Cancel</button>
+            </div>
+            <div class="col-6 px-1">
+                <button class="btn btn-prop bg-green" type="button" data-dismiss="modal"
+                    (click)="confirmDelete()">Confirm</button>
+            </div>
+        </div>
+    </div>
+</ng-template>

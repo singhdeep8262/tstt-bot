@@ -1,0 +1,172 @@
+<div class="section-container">
+  <div class="card user-card p-0">
+    <div class="row mx-0 filter-row d-flex justify-content-center " [formGroup]="transactionHistory">
+
+      <div class="col-lg-2 col-md-2 col-sm-12 width20"
+        [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2': this.isScreenMobile() == true}">
+        <div class="w-100" style="margin-bottom: 9px;">
+          <label class="fw500 mb-0 fs14 labels">Date From</label>
+          <input type="text" class="form-control-date img cursor-pointer" (keydown)="restrictAlphas($event)"
+            maxlength="10" formControlName="dateFrom" bsDatepicker placeholder="DD-MM-YYYY"
+            style="background-image:url('/assets/img/common/calendar.png')" [maxDate]="today"
+            [bsConfig]="{dateInputFormat: 'DD-MM-YYYY', showClearButton: true, clearPosition: 'right', showTodayButton: true, todayPosition: 'left',allowInput: false }"
+            #dp="bsDatepicker" [bsValue]="bsValue">
+          <!-- <input type="text"
+            class="form-control"
+            #dp="bsDatepicker"
+            bsDatepicker
+            formControlName="dateFrom"
+            [bsValue]="maxDate"
+            [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',containerClass: 'theme-orange', showClearButton: true, clearPosition: 'right' }"> -->
+        </div>
+      </div>
+
+      <div class="col-lg-2 col-md-2 col-sm-12 width20"
+        [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2': this.isScreenMobile() == true}">
+        <div class="w-100" style="margin-bottom: 9px;">
+          <label class="fw500 mb-0 fs14 labels">Date To</label>
+          <input type="text" class="form-control-date img cursor-pointer" (keydown)="restrictAlphas($event)"
+            maxlength="10" formControlName="dateTo" placeholder="DD-MM-YYYY" bsDatepicker
+            style="background-image:url('/assets/img/common/calendar.png')" [maxDate]="today"
+            [bsConfig]="{dateInputFormat: 'DD-MM-YYYY', showClearButton: true, clearPosition: 'right' , showTodayButton: true, todayPosition: 'left' }">
+          <!-- <input type="text"
+            class="form-control"
+            #dp="bsDatepicker"
+            bsDatepicker
+            [bsValue]="bsValue"
+            [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',containerClass: 'theme-orange', showClearButton: true, clearPosition: 'right' }">
+            <input type="text" class="form-control mb-3" placeholder="Datepicker" bsDatepicker formControlName="date" /> -->
+        </div>
+      </div>
+
+      <div class="col-lg-2 col-md-2 col-sm-4 width20"
+        [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2 mb-3': this.isScreenMobile() == true}">
+        <div class="mb-3">
+          <label class="fw500 mb-0 fs14 labels">Mobile</label>
+          <input type="text" class="form-control img input4" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+            taopenbindex="1" placeholder="Mobile" formControlName="mobile" (keydown)="spaceRestrict($event)">
+        </div>
+      </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-4 width20"
+      [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2 mb-3': this.isScreenMobile() == true}">
+          <div class="mb-3">
+            <label class="fw500 mb-0 fs14 labels">Account Number</label>
+            <input type="text" class="form-control img input4" oninput="this.value=this.value.replace(/[^0-9]/g,'');" taopenbindex="1" placeholder="Account Number" formControlName="accountNumber" (keydown)="spaceRestrict($event)">
+          </div>
+        </div>
+
+      <div class="col-lg-2 col-md-2 col-sm-12 width20"
+        [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2 mb-3': this.isScreenMobile() == true}">
+        <div class="mb-3">
+          <label class=" fw500 mb-0 fs14 labels">Transaction Type</label>
+          <select class="selectOption" formControlName="transactionType">
+            <option value="" selected>All</option>
+            <option value="" *ngFor="let item of this.transactionTypeVal" [attr.value]="item.key">{{ item.value }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-lg-2 col-md-2 col-sm-12 width20"
+        [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2 mb-3': this.isScreenMobile() == true}">
+        <div class="mb-3">
+          <label class="fw500 mb-0 fs14 labels">Status</label>
+          <select class="selectOption" formControlName="status">
+            <option value="" selected>All</option>
+            <option value="" *ngFor="let item of this.transactionStatus" [attr.value]="item.key">{{ item.value }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-lg-2 col-md-4 col-sm-12 fs15 px-2 searchButton mt-2"
+        [ngClass]="{'mb-3 ml-0': this.isScreenMobile() == true}">
+        <div class="mb-3">
+          <button class="btn btn-prop bg-green fs15 fw500 search-btn" type="button" (click)="search(1)">
+            Search
+          </button>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-4 col-sm-12 fs15 px-2 searchButton"
+        [ngClass]="{'mb-3 ml-0': this.isScreenMobile() == true, 'ml-1': this.isScreenMobile() == false}">
+        <div class="mb-3">
+          <button class="btn btn-prop fs15 fw500 cancel-button button-cancel mx-0" type="button" data-dismiss="modal"
+            (click)="exportTransactionHistory()">
+            <img src="assets/img/common/download.svg" width="15px" class="me-2 download-img">Export
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+    <table class="table mb-4 user-table pl-2">
+      <thead>
+        <tr class="rowAlign fs15 fw500">
+
+          <th>S. No.</th>
+          <th>Transaction ID</th>
+          <th>Transaction Date</th>
+          <th>Account Number</th>
+          <th>Mobile</th>
+          <th>Card No.</th>
+          <th>Amount (TTD)</th>
+          <th>VAT (TTD)</th>
+          <th> Bligh Repayment (TTD)</th>
+          <th>Total Amount (TTD)</th>
+          <th>Transaction Type</th>
+          <th>Bundle Name</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody class="fs15 fw500">
+        <tr class="trBody cursor-hand" *ngFor="let data of this.userTransactionList; let i = index;">
+          <td>{{(this.currentPage-1)*10+i+1}}</td>
+          <td>{{data?.transactionId}}</td>
+          <td>{{data?.transactionDatetime}}</td>
+          <td>{{data?.accountNumber}}</td>
+          <td>{{data?.phone}}</td>
+          <td>{{data?.cardNumber}}</td>
+          <td>{{data?.amount | number : '.2'}}</td>
+          <td>{{data?.tax | number : '.2'}}</td>
+          <td>{{data?.loanAmount | number : '.2'}}</td>
+          <td>{{data?.totalAmount | number : '.2'}}</td>
+          <td>{{getLookups(data?.transactionType,'transactionType')}}</td>
+          <td>{{data?.bundleName?data?.bundleName:"N/A"}}</td>
+          <td [ngClass]="{'color-blue': data.status == 'INITIALIZED', 'color-light-orange': data?.status == 'PENDING',
+        'text-red': data?.status == 'FAILED', 'text-green':  data?.status == 'COMPLETED'}">
+            {{getLookups(data?.status,'transactionStatus')}}</td>
+        </tr>
+        <tr *ngIf="this.userTransactionList?.length == 0">
+          <td class="text-center" colspan="12">No Data Found</td>
+        </tr>
+      </tbody>
+
+    </table>
+    <div class="text-center d-flex justify-content-center mb-2" *ngIf="this.userTransactionList?.length > 0">
+      <div class="pagination">
+        <a href="javascript: void(0)" style="color: #333333;" (click)="goToPage(currentPage - 1)"><u>Prev</u></a>
+        <a href="javascript: void(0)" *ngFor="let page of pageArray" (click)="goToPage(page)"
+          [ngClass]="{'active': currentPage == page, 'no-page': page == 0}">
+          {{page == 0 ? "..." : page}}
+        </a>
+        <a href="javascript: void(0)" style="color: #333333;" (click)="goToPage(currentPage + 1)"><u>Next</u></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #responseModel let-modal>
+  <div class="modal-body pb-4">
+    <div class="row mx-0 text-left">
+      <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+        <img src="assets/img/common/cross.svg">
+        {{this.errorMessage}}
+      </div>
+    </div>
+  </div>
+  <div class="w-100 text-center">
+    <button class="btn btn-prop color-white bg-red w-50" type="button" data-dismiss="modal"
+      (click)="close()">Close</button>
+  </div>
+</ng-template>

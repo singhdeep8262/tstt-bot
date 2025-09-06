@@ -1,0 +1,534 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+@import"./small.css";
+@import"./tab-style.css";
+@import "./large.css";
+@import url('../node_modules/bootstrap/dist/css/bootstrap.min.css');
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+@font-face {
+  font-family: 'MetropolisRegular';
+  src: url('./assets/data/Metropolis-Regular.otf') format("opentype");
+}
+
+.modal-title {
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
+  color: #00E556;
+  font-weight: 600;
+  margin-top: 0.3em;
+  margin-left: 1.3em;
+}
+
+.modal-content {
+  border-radius: 7px !important;
+  padding: 20px;
+  border: solid 3px #00E556 !important;
+  animation-name: example;
+  animation-duration: 0.3s;
+}
+
+.ng-select .ng-select-container {
+  cursor: default;
+  display: flex;
+  outline: none;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  border: none;
+  position: relative;
+  top: -5px;
+}
+
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value {
+  font-size: .9em;
+  margin-bottom: 5px;
+  color: #14892F;
+  background-color: #E7FDF8;
+  border-radius: 1px solid #14892F;
+  margin-right: 5px;
+}
+
+/* .ng-select .ng-select-container .ng-value-container {
+  top: 0px;
+  position: relative;
+} */
+
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value .ng-value-icon.right {
+  border-left: 1px solid #14892F;
+}
+
+.ng-select.ng-select-focused:not(.ng-select-opened)>.ng-select-container {
+  border: none;
+  box-shadow: none;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected,
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected.ng-option-marked,
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
+  color: #14892F;
+  background-color: #E7FDF8;
+
+}
+
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-input {
+  display: none !important;
+}
+
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder {
+  top: 7px !important;
+}
+
+.modal-body {
+  text-align: center;
+  padding-bottom: 3em;
+  color: #757575;
+  font-size: 1.1em;
+}
+
+.modal-content {
+  max-width: 380px;
+  margin: 0 auto;
+  border-radius: 5px !important;
+}
+
+.modal-dialog {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+  min-height: calc(100vh - 60px);
+}
+
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  width: 138vw;
+  height: 153vh;
+  background-color: #000;
+}
+
+.modal-error-icon {
+  font-size: 2.2em;
+  color: #bd0000;
+}
+
+.modal-success-icon {
+  font-size: 2.2em;
+  color: #00E556;
+}
+
+.fs-12 {
+  font-size: 12px;
+}
+
+.fw-600 {
+  font-weight: 600;
+}
+
+.modal-header .close {
+  outline: none;
+}
+
+.error-modal .modal-content {
+  border: 2px solid #F64346 !important;
+  border-radius: 5px !important;
+}
+
+.error-modal {
+  color: #F64346;
+}
+
+.faq-modal .modal-content {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  border: none !important;
+  border-radius: 1rem !important;
+  max-width: 600px;
+  overflow: hidden;
+}
+
+.faq-modal .modal-body {
+  padding: 0;
+  text-align: start !important;
+
+}
+
+.faq-modal .modal-heading {
+  color: #fff !important;
+  font-weight: 600;
+  background-color: #00E556;
+  border-radius: 0.5rem !important;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+
+.logout-modal .modal-content {
+  height: 185px;
+  border: 2px solid #F64346 !important;
+  border-radius: 5px !important;
+}
+
+.confirm-modal .modal-content {
+  max-width: 500px !important;
+}
+
+
+.logout-modal {
+  color: #F64346;
+}
+
+.asterisk {
+  color: red !important;
+  font-size: 15px;
+}
+
+select {
+  outline: none;
+}
+
+
+.bs-datepicker-container {
+  padding: 0px !important;
+}
+
+.bg-red:active,
+.bg-red:focus,
+.bg-red:active:focus {
+  box-shadow: 0 0 0 0.2rem #FF9698;
+}
+
+.bg-red {
+  background-color: #D64545;
+}
+
+.bg-red:hover {
+  color: #fff;
+}
+
+#loader.loader {
+  z-index: 99999;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+#loader {
+  display: none;
+  position: absolute;
+  top: 0%;
+  z-index: 99999;
+  left: 50%;
+}
+
+#loader img {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.color-green {
+  color: #00E556 !important;
+}
+
+.color-black {
+  color: #000000E3;
+}
+
+.color-light-grey {
+  color: #F4F4F4;
+}
+
+.color-grey {
+  color: #EAEAEA;
+}
+
+.color-dark-grey {
+  color: #2B2B2B;
+}
+
+.color-purple {
+  color: #5F4791;
+}
+
+.color-pink {
+  color: #B92041;
+}
+
+.color-dark-green {
+  color: #14892F;
+}
+
+.pagination {
+  color: #00E556;
+}
+
+.nav.active {
+  color: #04D151;
+}
+
+.bg-light-green {
+  background-color: #E7FDF8;
+}
+
+.bg-light-purple {
+  background-color: #EEE5FF;
+}
+
+.bg-light-red {
+  background-color: #FFD5DE;
+}
+
+.nav {
+  color: #414040;
+}
+
+.color-white {
+  color: #FFFFFF;
+}
+
+.modal-header {
+  /* border-top: 5px #f6931e solid; */
+  color: grey !important;
+  border-bottom: none !important;
+  padding: 0px 15px 15px 0px !important;
+  border-radius: 0px;
+}
+
+.modal-content {
+  border-radius: 0px !important;
+}
+
+.modal-body {
+  text-align: center;
+  padding-bottom: 3em;
+  color: #757575;
+  font-size: 1.1em;
+}
+
+.modal-content {
+  min-width: 300;
+  min-height: 300;
+}
+
+.modal-dialog {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+  min-height: calc(100vh - 60px);
+}
+
+.fs14 {
+  font-size: 14px;
+}
+
+.fs15 {
+  font-size: 15px;
+}
+
+.fs16 {
+  font-size: 16px;
+}
+
+.fs17 {
+  font-size: 17px;
+}
+
+.fs18 {
+  font-size: 18px;
+}
+
+.fs20 {
+  font-size: 20px;
+}
+
+.fs22 {
+  font-size: 22px;
+}
+
+.fs24 {
+  font-size: 24px;
+}
+
+.fs25 {
+  font-size: 25px;
+}
+
+.fs30 {
+  font-size: 30px;
+}
+
+.fw500 {
+  font-weight: 500;
+}
+
+.fw600 {
+  font-weight: 600;
+}
+
+
+.form-group {
+  display: inline-block;
+  width: 100%;
+  position: relative;
+  margin-bottom: 0px;
+  text-align: left;
+  margin-bottom: 24px !important;
+}
+
+.upload-form-group {
+  display: inline-block;
+  width: 100%;
+  position: relative;
+  margin-bottom: 0px;
+  text-align: left;
+  margin-bottom: 11px !important;
+}
+
+.form-control {
+  border: solid 1px #707070;
+  font-size: 14px;
+  color: #333333;
+  width: 100%;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.form-group label {
+  z-index: 1 !important;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 1px;
+  left: 10px;
+  top: -10px;
+  padding: 0 2px;
+}
+
+.ng-dropdown-panel.ng-select-bottom {
+  padding: 0 !important;
+}
+
+.error-info-icon {
+  color: red;
+  font-size: 10px;
+}
+
+.form-control.ng-touched.ng-invalid,
+.redBorder {
+  border-color: red !important;
+}
+
+/*
+.modal-error-icon {
+  font-size: 2.2em;
+  color: #bd0000;
+}
+
+.modal-success-icon {
+  font-size: 2.2em;
+  color: #16c316;
+} */
+
+
+.modal-header .close {
+  outline: none;
+}
+
+/**********************/
+
+/* Plan Compare */
+
+.pointer {
+  cursor: pointer;
+}
+
+
+.notificationModal .modal-content {
+  max-width: 420px !important;
+  border-radius: 6px !important;
+  border: 1px solid #00E556 !important;
+  margin: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.notificationModal .modal-body {
+  text-align: center;
+  padding-bottom: 3em;
+  color: #757575;
+  font-size: 1.1em;
+  width: 90%;
+
+}
+
+.notificationModal .popup-border {
+  display: flex;
+  gap: 1rem;
+}
+
+.notificationModal .modalbutton {
+  width: 150px;
+}
+
+.notificationModal .modal-content {
+  border-radius: 10px !important;
+  border: 1px solid #00E556 !important;
+}
+
+.voucherReqModal .modal-content {
+  max-width: 420px !important;
+  border-radius: 6px !important;
+  border: 1px solid #00E556 !important;
+  margin-bottom: 20px !important;
+  /* background-color: yellow; */
+  padding: 30px;
+}
+
+.voucherReqModal .modal-body {
+  text-align: center;
+  padding-bottom: 3em;
+  color: #757575;
+  font-size: 1.1em;
+  /* background-color:#d192a0; */
+}
+
+.voucherReqModal .popup-border {
+  display: flex;
+  gap: 1rem;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+
+.voucherReqModal .modalbutton {
+  width: 150px;
+
+}
+
+@media (max-width: 767px) {
+  .modal-dialog {
+    min-height: calc(100vh - 20px);
+  }
+}

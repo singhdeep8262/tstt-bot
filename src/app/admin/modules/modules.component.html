@@ -1,0 +1,144 @@
+<div class="section-container">
+  <div class="card user-card p-0">
+    <div class="row mx-0 user-row user-container">
+      <div class="col-lg-10 col-sm-8 col-5 d-flex align-items-center">
+        <div class="fs25 fw600 color-dark-grey ml-2">Module
+        </div>
+      </div>
+      <div class="col-lg-2 col-sm-4 col-7" *ngIf="this.createModuleAccess">
+        <button class="btn btn-prop add-user-btn fs15 fw500" type="button" (click)="gotoAddModule()">
+          <img src="assets/img/common/add.png" class="mr-2 add-img">
+          Add Module
+        </button>
+      </div>
+    </div>
+    <div class="row mx-0 user-row" [formGroup]="modulesForm">
+      <div class="col-lg-2 col-sm-6">
+        <div class="mb-3">
+          <label class="fw500 mb-0 fs14 labels">Module Name</label>
+          <input type="text" class="form-control input5" formControlName="moduleName" placeholder="Module Name" (keydown)="spaceRestrict($event)">
+        </div>
+      </div>
+      <div class="col-lg-2 col-sm-6">
+        <div class="mb-3">
+          <label class="fw500 mb-0 fs14 labels">Module URL</label>
+          <input type="text" class="form-control input5" formControlName="url" placeholder="Module URL" (keydown)="spaceRestrict($event)">
+        </div>
+      </div>
+      <div class="col-lg-2 col-sm-6">
+        <div class="mb-3">
+          <label class="fw500 mb-0 fs14 labels">Module Key</label>
+          <input type="text" class="form-control input5" formControlName="moduleKey" placeholder="Module Key" (keydown)="spaceRestrict($event)">
+        </div>
+      </div>
+      <div class="col-lg-2 col-sm-12 button-search">
+        <div class="mb-3">
+          <button class="btn btn-prop bg-green fs15 fw500 search-btn" type="button" (click)="getModules(1)">
+            Search
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <table class="table mb-5 user-table">
+      <thead>
+        <tr class="rowAlign text-center  fs15 fw500">
+          <th style="width: 5%;">S. No.</th>
+          <th>Module</th>
+          <th>URL</th>
+          <th>Key</th>
+          <th>Create</th>
+          <th>Edit</th>
+          <th>Delete</th>
+          <th>List</th>
+          <th>View</th>
+          <th width="6%" *ngIf="this.editModuleAccess"></th>
+          <th width="7%" *ngIf="this.deleteModuleAccess"></th>
+        </tr>
+      </thead>
+      <tbody class="fs15 fw500">
+        <tr class="trBody text-center cursor-hand" *ngFor="let td of this.moduleList;let i=index">
+          <td>{{(this.currentPage-1)*10+i+1}}</td>
+          <td>{{td?.name}}</td>
+          <td>{{td?.url}}</td>
+          <td>{{td?.key}}</td>
+          <td><img width="15px"
+              [src]="td.create == true ? 'assets/img/common/Tick_Green.svg' : 'assets/img/common/Tick_White.svg'"></td>
+          <td><img width="15px"
+              [src]="td.edit == true ? 'assets/img/common/Tick_Green.svg' : 'assets/img/common/Tick_White.svg'"></td>
+          <td><img width="15px"
+              [src]="td.delete == true ? 'assets/img/common/Tick_Green.svg' : 'assets/img/common/Tick_White.svg'"></td>
+          <td><img width="15px"
+              [src]="td.list == true ? 'assets/img/common/Tick_Green.svg' : 'assets/img/common/Tick_White.svg'"></td>
+          <td><img width="15px"
+              [src]="td.view == true ? 'assets/img/common/Tick_Green.svg' : 'assets/img/common/Tick_White.svg'"></td>
+          <td *ngIf="this.editModuleAccess" class="color-blue pointer" (click)="editModule(td?.id)"><img
+              src="assets/img/common/Edit.svg" class="ms-2 update-icon">Edit</td>
+          <td *ngIf="this.deleteModuleAccess" class="color-red pointer" (click)="deleteModule(td?.id)"><img
+              src="assets/img/common/Delete.svg" class="ms-2 update-icon">Delete</td>
+        </tr>
+        <tr *ngIf="this.moduleList.length == 0">
+          <td class="text-center" colspan="12">No Data Found</td>
+        </tr>
+      </tbody>
+
+    </table>
+    <div class="text-center d-flex justify-content-center mb-2" *ngIf="this.moduleList.length > 0">
+      <div class="pagination">
+        <a href="javascript: void(0)" style="color: #333333;" (click)="goToPage(currentPage - 1)"><u>Prev</u></a>
+        <a href="javascript: void(0)" *ngFor="let page of pageArray" (click)="goToPage(page)"
+          [ngClass]="{'active': currentPage == page, 'no-page': page == 0}">
+          {{page == 0 ? "..." : page}}
+        </a>
+        <a href="javascript: void(0)" style="color: #333333;" (click)="goToPage(currentPage + 1)"><u>Next</u></a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<ng-template #responseModel let-modal>
+  <div class="modal-body pb-4">
+    <div class="row mx-0 text-left">
+      <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+        <img src="assets/img/common/cross.svg">
+        {{this.errorMessage}}
+      </div>
+    </div>
+  </div>
+  <div class="w-100 text-center">
+    <button class="btn btn-prop color-white bg-red w-50" type="button" data-dismiss="modal"
+      (click)="closeModal()">Close</button>
+  </div>
+</ng-template>
+
+<ng-template #deleteModel let-modal>
+  <div class="modal-body pb-4">
+    <div class="row mx-0 text-left">
+      <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+        {{this.deleteMessage}}
+      </div>
+    </div>
+  </div>
+  <div class="w-100 text-center row">
+    <button class="btn btn-prop bg-green button-cancel fs15 fw500 cancel-btn" type="button" data-dismiss="modal"
+      (click)="closeModal()">Cancel </button>
+    <button class="btn btn-prop color-white bg-red delete-button" type="button" data-dismiss="modal"
+      (click)="confirmDelete()">Delete </button>
+  </div>
+</ng-template>
+
+<ng-template #successModel let-modal>
+  <div class="modal-body pb-4">
+    <div class="row mx-0 text-left">
+      <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+        <img src="assets/img/common/tick.svg">
+        {{this.successMessage}}
+      </div>
+    </div>
+  </div>
+  <div class="w-100 text-center">
+    <button class="btn btn-prop close-button color-white bg-green w-50" type="button" data-dismiss="modal"
+      (click)="closeModal()">Close</button>
+  </div>
+</ng-template>

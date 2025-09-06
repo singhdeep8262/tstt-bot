@@ -1,0 +1,135 @@
+<div class="section-container">
+  <div class="card user-card p-0 mb-5">
+    <div class="row mx-0 user-row user-container">
+      <div class="col-10 d-flex align-items-center">
+        <div class="pointer" (click)="goBack()">
+          <img src="assets/img/common/back.png" width="7px" class="mr-3">
+        </div>
+        <div class="fs25 fw600 color-dark-grey px-3">{{this.isEditScreen==false ? 'Add New Alert' : 'Edit Alert'}}
+        </div>
+
+      </div>
+
+    </div>
+    <div class=" pb-4 pt-0">
+      <div class="row mx-0 justify-content-center" [formGroup]="uploadForm">
+        <div class="col-sm-12 col-md-6 col-lg-6 px-0 justify-content-center text">
+          <div class="my-3 row">
+            <div class="col-12 enteries">
+              <label>Subject <span class="asterisk ">*</span></label>
+              <input (keydown)="spaceRestrict($event)" class="form-control" type="text" maxlength="80"
+                formControlName="subject" [ngClass]="{'redBorder': this.uploadForm.get('subject').invalid &&
+                        (this.uploadForm.get('subject').dirty || this.uploadForm.get('subject').touched) ||
+                        ( this.submitted && this.uploadForm.get('subject').invalid )}" />
+              <div class="messageDiv uxErrorMessage"
+                *ngIf="this.uploadForm.get('subject').invalid &&
+                            (this.uploadForm.get('subject').dirty || this.uploadForm.get('subject').touched) || ( this.submitted && this.uploadForm.get('subject').invalid )">
+                <small>Subject is required</small>
+              </div>
+            </div>
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-2">
+
+              <label>Description <span class="asterisk">*</span></label>
+              <div class="description-box">
+                <textarea maxlength="160" formControlName="body" id="description-input" (keydown)="spaceRestrict($event)" [ngClass]="{'redBorder': this.uploadForm.get('body').invalid &&
+        (this.uploadForm.get('body').dirty || this.uploadForm.get('body').touched) ||
+        ( this.submitted && this.uploadForm.get('body').invalid )}" rows="3" cols="50"></textarea>
+              </div>
+              <div class="messageDiv uxErrorMessage" *ngIf="this.uploadForm.get('body').invalid &&
+      (this.uploadForm.get('body').dirty || this.uploadForm.get('body').touched) ||
+      ( this.submitted && this.uploadForm.get('body').invalid )">
+                <small>Description is required</small>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="row mx-0 justify-content-center mb-3">
+        <div class="col-lg-2 col-sm-3 col-4">
+          <button class="btn btn-prop fs15 fw500 cancel-btn" type="button" (click)="goBack()">
+            Cancel
+          </button>
+        </div>
+        <div class="col-lg-2 col-sm-3 col-4">
+          <button class="btn btn-prop bg-green fs15 fw500 search-btn" type="button" (click)="addAlertDetails()">
+            Continue
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #responseModel let-modal>
+    <div class="modal-body pb-4">
+      <div class="row mx-0 text-left">
+        <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+          <img src="assets/img/common/cross.svg">
+          {{this.errorMessage}}
+        </div>
+      </div>
+    </div>
+    <div class="w-100 text-center">
+      <button class="btn btn-prop color-white bg-red w-50" type="button" data-dismiss="modal"
+        (click)="closeModal()">Close</button>
+    </div>
+  </ng-template>
+
+  <ng-template #successModel let-modal>
+    <div class="modal-body pb-4">
+      <div class="row mx-0 text-left">
+        <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+          <img src="assets/img/common/tick.svg">
+          {{this.successMessage}}
+        </div>
+      </div>
+    </div>
+    <div class="w-100 text-center">
+      <button class="btn btn-prop close-button color-white bg-green w-50" type="button" data-dismiss="modal"
+        (click)="close()">Close</button>
+    </div>
+  </ng-template>
+
+  <ng-template #confirmationModal let-modal>
+    <div class="modal-body pb-2 pt-2">
+      <div class="row mx-0 text-left">
+        <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+          <div class="modal-text fs15 color-green details pb-3">
+            <div>Are you sure you want to add new alert ?</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mx-0">
+      <div class="col-6 px-1 mb-2">
+        <button class="btn btn-prop cancel-btn" type="button" data-dismiss="modal" (click)="back()">Cancel</button>
+      </div>
+      <div class="col-6 px-1 mb-2">
+        <button class="btn btn-prop bg-green" type="button" data-dismiss="modal"
+          (click)="confirmUpload()">Confirm</button>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #editConfirmationModal let-modal>
+    <div class="modal-body pb-2 pt-2">
+      <div class="row mx-0 text-left">
+        <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+          <div class="modal-text fs15 color-green details pb-3">
+            <div>Are you sure you want to edit this alert ?</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mx-0">
+      <div class="col-6 px-1 mb-2">
+        <button class="btn btn-prop cancel-btn" type="button" data-dismiss="modal" (click)="back()">Cancel</button>
+      </div>
+      <div class="col-6 px-1 mb-2">
+        <button class="btn btn-prop bg-green" type="button" data-dismiss="modal"
+          (click)="confirmEdit()">Confirm</button>
+      </div>
+    </div>
+  </ng-template>

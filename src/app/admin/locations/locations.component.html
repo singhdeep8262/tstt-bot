@@ -1,0 +1,319 @@
+<div class="section-container">
+  <div class="card user-card p-0">
+    <div class="row mx-0 user-row user-container">
+      <div class="col-lg-10 col-sm-8 col-5 d-flex align-items-center">
+        <div class="fs25 fw600 color-dark-grey ml-2">Store Locations
+        </div>
+      </div>
+      <div class="col-lg-2 col-sm-4 col-7" *ngIf="this.createUserAccess == true">
+        <button class="btn btn-prop add-user-btn fs15 fw500" type="button" (click)="openPromoModal()">
+          <img src="assets/img/common/add.png" class="mr-2 add-img">
+          Add Location
+        </button>
+      </div>
+    </div>
+
+
+    <div class="accordion section-wrapper">
+      <div class="accordion-item mb-3" *ngFor="let data of this.bannerList; let i = index">
+        <div class="accordion-header px-2" [attr.id]="'heading' + i">
+          <div class="" data-bs-toggle="collapse" [attr.data-target]="'#collapse' + i" aria-expanded="true"
+            [attr.aria-controls]="'collapse' + i">
+            <div class="col-12 pb-2 d-flex align-items-center pt-2 web-view">
+              <div class="px-2 py-3 border-right-grey color-dark-grey text-left">
+                <img src="assets/img/locations/Locations.svg">
+              </div>
+              <div class="col-3 pl-3 pr-0 color-dark-grey fs17 fw600  align-items-center">
+                <div class="text-left fs18 fw600">{{data.title}}</div>
+                <div class="text-left color-light-grey fs14 fw500 w-100">{{data.street}}, {{data.city}}, {{data.region}}
+                </div>
+              </div>
+
+
+
+              <div class="col-2 d-flex color-dark-grey align-items-center fs15 fw500">
+                <div class="col-1 px-0 border-right-grey color-dark-grey text-center">
+                  <img src="assets/img/common/phoneIcon.svg">
+                </div>
+                <div class="fw600 ms-2">
+
+                  <div class="dropdown">
+                    {{data.phone[0]}}
+                    <a class="dropdown-toggle more" id="phoneNumbersDropdown" *ngIf="data.phone.length>1"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                      &nbsp; +{{ data.phone.length-1}} More
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="phoneNumbersDropdown">
+                      <li *ngFor="let mobile of data.phone | slice:1:data.phone.length">
+                        <a class="dropdown-item">{{ mobile }}</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="col-2 d-flex color-dark-grey align-items-center  fs15 fw500">
+                <div class="col-1 px-0 border-right-grey color-dark-grey text-center">
+                  <img src="assets/img/common/emailIcon.svg">
+                </div>
+                <div class="fw600 ms-2">
+                  <div class="dropdown">
+                    {{data.email[0]}}
+                    <a class="dropdown-toggle more" id="phoneNumbersDropdown" *ngIf="data.email.length>1"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                      &nbsp; +{{ data.email.length-1 }} More
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="phoneNumbersDropdown">
+                      <li *ngFor="let emails of data.email | slice:1:data.email.length">
+                        <a class="dropdown-item">{{ emails }}</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-5 d-flex align-items-center  justify-content-start">
+                <div class="col-4 d-flex color-light-blue me-2">
+                  <div class="col-2 ms-2 image-align"><img src="assets/img/locations/Longitude.svg" width="25px"></div>
+                  <div class="col-6 ms-2 px-0 image-container">
+                    <div class="fs13 fw600 txt-label">Longitude</div>
+                    <div class="fs14 fw600 color-dark-grey">{{data.lng}}</div>
+                  </div>
+                </div>
+                <div class="col-4 d-flex color-light-pink ms-2">
+                  <div class="col-2 ms-2 image-align"><img src="assets/img/locations/Latitude.svg" width="25px"></div>
+                  <div class="col-6 ms-2 px-0 image-container">
+                    <div class="fs13 fw600 txt-label">Latitude</div>
+                    <div class="fs14 fw600 color-dark-grey">{{data.lat}}</div>
+                  </div>
+                </div>
+                <div class="col-2 text-end d-flex align-items-center mt-2 ms-3 icons">
+                  <img class="pointer" src="assets/img/promotion/edit.svg" width="22px"
+                    (click)="openEditScreen(data.id)">
+                  <img class="ms-2 pointer" src="assets/img/promotion/delete.svg" width="22px"
+                    (click)="deletebanner(data?.id)">
+                  <div class=" ms-2 cursor-pointer" (click)='openAccordion[i] = !openAccordion[i]'>
+                    <img src="assets/img/common/down_arrow.svg" id="downArrow" *ngIf="!openAccordion[i] == true ">
+                    <img src="assets/img/common/up_arrow.svg" id="upArrow" *ngIf="openAccordion[i] == true">
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="mbl-view ps-3">
+              <div class="row col-12 pb-2 d-flex align-items-center pt-2">
+                <div class="col-1 px-2 py-3 border-right-grey color-dark-grey text-left">
+                  <img src="assets/img/locations/Locations.svg">
+                </div>
+                <div class="col-4 pl-3 pr-0 color-dark-grey fs17 fw600  align-items-center">
+                  <div class="text-left fs18 fw600">{{data.title}}</div>
+                  <div class="text-left color-light-grey fs14 fw500 w-100">{{data.street}}, {{data.city}}, {{data.region}}
+                  </div>
+                </div>
+                <div class="col-6 d-flex align-items-center  justify-content-start">
+                  <div class="col-5 d-flex color-light-blue me-2">
+                    <div class="col-2 ms-2 image-align"><img src="assets/img/locations/Longitude.svg" width="25px"></div>
+                    <div class="col-6 ms-2 px-0 image-container">
+                      <div class="fs13 fw600 txt-label">Longitude</div>
+                      <div class="fs14 fw600 color-dark-grey " style="white-space: nowrap;">{{data.lng}}</div>
+                    </div>
+                  </div>
+                  <div class="col-5 d-flex color-light-pink ms-2">
+                    <div class="col-2 ms-2 image-align"><img src="assets/img/locations/Latitude.svg" width="25px"></div>
+                    <div class="col-6 ms-2 px-0 image-container">
+                      <div class="fs13 fw600 txt-label">Latitude</div>
+                      <div class="fs14 fw600 color-dark-grey" style="white-space: nowrap;">{{data.lat}}</div>
+                    </div>
+                  </div>
+                  <div class="col-2 text-end d-flex align-items-center mt-2 ms-3 icons">
+                    <img class="pointer" src="assets/img/promotion/edit.svg" width="22px"
+                      (click)="openEditScreen(data.id)">
+                    <img class="ms-2 pointer" src="assets/img/promotion/delete.svg" width="22px"
+                      (click)="deletebanner(data?.id)">
+                    <div class=" ms-2 cursor-pointer" (click)='openAccordion[i] = !openAccordion[i]'>
+                      <img src="assets/img/common/down_arrow.svg" id="downArrow" *ngIf="!openAccordion[i] == true ">
+                      <img src="assets/img/common/up_arrow.svg" id="upArrow" *ngIf="openAccordion[i] == true">
+                    </div>
+                  </div>
+  
+                </div>
+              </div>
+              <div class="row col-12 pb-2 d-flex align-items-center pt-2">
+
+                <div class="col-4 d-flex color-dark-grey align-items-center fs15 fw500">
+                  <div class="col-1 px-0 border-right-grey color-dark-grey text-center">
+                    <img src="assets/img/common/phoneIcon.svg">
+                  </div>
+                  <div class="fw600 ms-2">
+  
+                    <div class="dropdown">
+                      {{data.phone[0]}}
+                      <a class="dropdown-toggle more" id="phoneNumbersDropdown" *ngIf="data.phone.length>1"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        &nbsp; +{{ data.phone.length-1}} More
+                      </a>
+                      <ul class="dropdown-menu" aria-labelledby="phoneNumbersDropdown">
+                        <li *ngFor="let mobile of data.phone | slice:1:data.phone.length">
+                          <a class="dropdown-item">{{ mobile }}</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+  
+  
+  
+                <div class="col-8 d-flex color-dark-grey align-items-center  fs15 fw500">
+                  <div class="col-1 px-0 border-right-grey color-dark-grey text-center">
+                    <img src="assets/img/common/emailIcon.svg">
+                  </div>
+                  <div class="fw600 ms-2">
+                    <div class="dropdown">
+                      {{data.email[0]}}
+                      <a class="dropdown-toggle more" id="phoneNumbersDropdown" *ngIf="data.email.length>1"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        &nbsp; +{{ data.email.length-1 }} More
+                      </a>
+                      <ul class="dropdown-menu" aria-labelledby="phoneNumbersDropdown">
+                        <li *ngFor="let emails of data.email | slice:1:data.email.length">
+                          <a class="dropdown-item">{{ emails }}</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              
+            </div>
+          </div>
+          <div [attr.id]="'collapse' + i" class="accordion-collapse collapse" [class.show]='openAccordion[i]'
+            [attr.aria-labelledby]="'heading' + i" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <div class="row d-flex days-container">
+                <div class="days-width px-2 border-none">
+                  <div class="fs16 fw600 color-dark-grey">Monday</div>
+                  <div *ngIf="data.openHours.MON !=false" class="fs15 fw500 txt-label">
+                    {{data?.openHours?.MON?.openingHours}} -
+                    {{data?.openHours?.MON?.closingHours}}</div>
+                  <div *ngIf="data.openHours.MON == false" class="fs15 fw500 txt-label"> CLOSED </div>
+                </div>
+                <div class="days-width px-2">
+                  <div class="fs16 fw600 color-dark-grey">Tuesday</div>
+                  <div *ngIf="data.openHours.TUE !=false" class="fs15  fw500 txt-label">
+                    {{data?.openHours?.TUE?.openingHours}} -
+                    {{data?.openHours?.TUE?.closingHours}}</div>
+                  <div *ngIf="data.openHours.TUE == false" class="fs15  fw500 txt-label"> CLOSED </div>
+                </div>
+                <div class="days-width px-2">
+                  <div class="fs16 fw600 color-dark-grey">Wednesday</div>
+                  <div *ngIf="data.openHours.WED !=false" class="fs15 fw500 txt-label">
+                    {{data?.openHours?.WED?.openingHours}} -
+                    {{data?.openHours?.WED?.closingHours}}</div>
+                  <div *ngIf="data.openHours.WED == false" class="fs15 fw500 txt-label"> CLOSED </div>
+                </div>
+                <div class="days-width px-2">
+                  <div class="fs16 fw600 color-dark-grey">Thursday</div>
+                  <div *ngIf="data.openHours.THU !=false" class="fs15 fw500 txt-label">
+                    {{data?.openHours?.THU?.openingHours}} -
+                    {{data?.openHours?.THU?.closingHours}}</div>
+                  <div *ngIf="data.openHours.THU == false" class="fs15 fw500 txt-label"> CLOSED </div>
+                </div>
+                <div class="days-width px-2 border-left-none">
+                  <div class="fs16 fw600 color-dark-grey">Friday</div>
+                  <div *ngIf="data.openHours.FRI !=false" class="fs15 fw500 txt-label">
+                    {{data?.openHours?.FRI?.openingHours}} -
+                    {{data?.openHours?.FRI?.closingHours}}</div>
+                  <div *ngIf="data.openHours.FRI == false" class="fs15 fw500 txt-label"> CLOSED </div>
+                </div>
+                <div class="days-width px-2">
+                  <div class="fs16 fw600 color-dark-grey">Saturday</div>
+                  <div *ngIf="data.openHours.SAT !=false" class="fs15  fw500 txt-label">
+                    {{data?.openHours?.SAT?.openingHours}} -
+                    {{data?.openHours?.SAT?.closingHours}}</div>
+                  <div *ngIf="data.openHours.SAT == false" class="fs15 fw500 txt-label"> CLOSED </div>
+                </div>
+                <div class="days-width px-2">
+                  <div class="fs16 fw600 color-dark-grey">Sunday</div>
+                  <div *ngIf="data.openHours.SUN !=false" class="fs15 fw500 txt-label">
+                    {{data?.openHours?.SUN?.openingHours}} -
+                    {{data?.openHours?.SUN?.closingHours}}</div>
+                  <div *ngIf="data.openHours.SUN == false" class="fs15 fw500 txt-label"> CLOSED </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="text-center d-flex justify-content-center mb-2" *ngIf="this.bannerList?.length > 0">
+      <div class="pagination">
+        <a href="javascript: void(0)" style="color: #333333;" (click)="goToPage(currentPage - 1)"><u>Prev</u></a>
+        <a href="javascript: void(0)" *ngFor="let page of pageArray" (click)="goToPage(page)"
+          [ngClass]="{'active': currentPage == page, 'no-page': page == 0}">
+          {{page == 0 ? "..." : page}}
+        </a>
+        <a href="javascript: void(0)" style="color: #333333;" (click)="goToPage(currentPage + 1)"><u>Next</u></a>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #responseModel let-modal>
+    <div class="modal-body pb-4">
+      <div class="row mx-0 text-left">
+        <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+          <img src="assets/img/common/cross.svg">
+          {{this.errorMessage}}
+        </div>
+      </div>
+    </div>
+    <div class="w-100 text-center">
+      <button class="btn btn-prop color-white bg-red w-50" type="button" data-dismiss="modal"
+        (click)="closeModal()">Close</button>
+    </div>
+  </ng-template>
+
+  <ng-template #successModel let-modal>
+    <div class="modal-body pb-4">
+      <div class="row mx-0 text-left">
+        <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+          <img src="assets/img/common/tick.svg">
+          {{this.successMessage}}
+        </div>
+      </div>
+    </div>
+    <div class="w-100 text-center">
+      <button class="btn btn-prop color-white bg-green close-button w-50" type="button" data-dismiss="modal"
+        (click)="close()">Close</button>
+    </div>
+  </ng-template>
+
+
+  <ng-template #deleteconfirmationModal let-modal>
+    <div class="modal-body pb-4 pt-2">
+      <div class="row mx-0 text-left">
+        <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+          <div class="modal-text fs15">
+            <div>Are you sure you want to delete?</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mx-0">
+      <div class="col-6 px-1 mb-2">
+        <button class="btn btn-prop cancel-btn" type="button" data-dismiss="modal"
+          (click)="closeModal()">Cancel</button>
+      </div>
+      <div class="col-6 px-1 mb-2">
+        <button class="btn btn-prop color-white bg-red" type="button" data-dismiss="modal"
+          (click)="confirmDelete()">Delete</button>
+      </div>
+    </div>
+  </ng-template>

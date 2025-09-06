@@ -1,0 +1,110 @@
+<div class="section-container">
+  <div class="card user-card p-0 mb-5">
+    <div class="row mx-0 user-row user-container">
+      <div class="col-10 d-flex align-items-center">
+        <div class="pointer" (click)="goBack()">
+          <img src="assets/img/common/back.png" width="7px" class="mr-3">
+        </div>
+        <div class="fs25 fw600 color-dark-grey px-3">Role
+        </div>
+        <div>
+          <img src="assets/img/common/right-icon.png" width="7px" class="mr-3">
+        </div>
+        <div class="fs18 fw500 color-dark-grey ml-2 mt-1">Create New Role
+        </div>
+      </div>
+
+    </div>
+    <div class="row mx-0 user-row" [formGroup]="createRoleForm">
+      <div class="col-6">
+        <div class="mb-3">
+          <label class="fs12 fw500 label">Role Name <span class="asterisk">*</span></label>
+          <input type="text" class="form-control" formControlName="roleName" placeholder="Role Name" required (keydown)="spaceRestrict($event)" [ngClass]="{'redBorder': this.createRoleForm.get('roleName').invalid &&
+          (this.createRoleForm.get('roleName').dirty || this.createRoleForm.get('roleName').touched) ||
+          ( this.submitted && this.createRoleForm.get('roleName').invalid )}">
+        </div>
+      </div>
+      <!-- <div class="col-6">
+        <div class="mb-3">
+          <label class="fs12 fw500 label">Role <span class="asterisk">*</span></label>
+          <input type="text" class="form-control  " formControlName="role" placeholder="Role" required [ngClass]="{'redBorder': this.createRoleForm.get('role').invalid &&
+          (this.createRoleForm.get('role').dirty || this.createRoleForm.get('role').touched) ||
+          ( this.submitted && this.createRoleForm.get('role').invalid )}">
+        </div>
+      </div> -->
+    </div>
+
+    <div class="card table-card mb-4 inform scroller" id="customscrollbar">
+      <table class="table user-table mb-0 text-center">
+        <thead>
+          <tr class="rowAlign fs15 fw500">
+            <th>Module</th>
+            <th>Create</th>
+            <th>Edit</th>
+            <th>Delete</th>
+            <th>List</th>
+            <th>View</th>
+          </tr>
+        </thead>
+        <tbody class="fs15 fw500" *ngFor="let list of this.moduleList; let i=index">
+          <tr class="trBody cursor-hand">
+            <td class="text-left">{{list.value}}</td>
+            <td><input class="form-check-input" type="checkbox" [disabled]="list.features.create == false ? true : false"
+                (change)="getChange($event,'create')" value={{list.id}} id="create"></td>
+            <td><input class="form-check-input" type="checkbox" [disabled]="list.features.edit == false ? true : false"
+                (change)="getChange($event,'edit')" value={{list.id}} id="edit"></td>
+            <td><input class="form-check-input" type="checkbox" [disabled]="list.features.delete == false ? true : false"
+                (change)="getChange($event,'delete')" value={{list.id}} id="delete"></td>
+            <td><input class="form-check-input" type="checkbox" [disabled]="list.features.list == false ? true : false"
+                (change)="getChange($event,'list')" value={{list.id}} id="list"></td>
+            <td><input class="form-check-input" type="checkbox" [disabled]="list.features.view == false ? true : false"
+                (change)="getChange($event,'view')" value={{list.id}} id="view"></td>
+          </tr>
+        </tbody>
+
+      </table>
+    </div>
+
+    <div class="row mx-0 justify-content-center mb-3">
+      <div class="col-lg-2 col-sm-4 col-4">
+        <button class="btn btn-prop bg-green fs15 fw500 cancel-btn" type="button" (click)="goBack()">
+          Cancel
+        </button>
+      </div>
+      <div class="col-lg-2 col-sm-4 col-4">
+        <button class="btn btn-prop bg-green fs15 fw500 search-btn" type="button" (click)="roleCreation()">
+          Create
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #responseModel let-modal>
+  <div class="modal-body pb-4">
+    <div class="row mx-0 text-left">
+      <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+        <img src="assets/img/common/cross.svg">
+        {{this.errorMessage}}
+      </div>
+    </div>
+  </div>
+  <div class="w-100 text-center">
+    <button class="btn btn-prop color-white bg-red w-50" type="button" data-dismiss="modal"
+      (click)="closeModal()">Close</button>
+  </div>
+</ng-template>
+
+<ng-template #successModel let-modal>
+  <div class="modal-body pb-4">
+    <div class="row mx-0 text-left">
+      <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+        <img src="assets/img/common/tick.svg">
+        {{this.successMessage}}
+      </div>
+    </div>
+  </div>
+  <div class="w-100 text-center">
+    <button class="btn btn-prop close-button color-white bg-green w-50" type="button" data-dismiss="modal"
+      (click)="close()">Close</button>
+  </div>
+</ng-template>

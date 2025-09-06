@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+  <g id="Layer_2" data-name="Layer 2" transform="translate(-0.421 -0.421)">
+    <g id="clock">
+      <rect id="Rectangle_733" data-name="Rectangle 733" width="28" height="28" transform="translate(28.421 28.421) rotate(180)" fill="#00e556" opacity="0"/>
+      <path id="Path_27197" data-name="Path 27197" d="M14.017,2A12.017,12.017,0,1,0,26.035,14.017,12.017,12.017,0,0,0,14.017,2Zm4.807,13.219H14.017a1.2,1.2,0,0,1-1.2-1.2V9.21a1.2,1.2,0,0,1,2.4,0v3.605h3.605a1.2,1.2,0,1,1,0,2.4Z" transform="translate(0.403 0.403)" fill="#00e556"/>
+    </g>
+  </g>
+</svg>

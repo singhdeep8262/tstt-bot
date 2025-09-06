@@ -1,0 +1,29 @@
+<div class="section-container">
+    <div class="card user-card p-0">
+        <div class="row filter-row" *ngIf="this.CardDetails.length > 0">
+            <div class="card-container pe-0 pt-1 details-card " *ngFor="let data of this.CardDetails">
+                <div class=" padding"  [ngClass]="{'background_master' : data?.cardType=='MASTER', 'background_visa' :data?.cardType=='VISA'}">
+                    <div class="">
+                        <img *ngIf="data?.cardType=='MASTER'" width="50px" class="logo_master" src="/assets/img/cardsImg/master-card-logo.png" alt="">
+                        <img *ngIf="data?.cardType=='VISA'" width="50px" class="logo_visa" src="/assets/img/cardsImg/visa-logo.png" alt="">
+                        <div class="float-right fs13 color-red" *ngIf="data?.isExpired==true">EXPIRED</div>
+                        <div class="account-number  fw700 " [ngClass]="{'text-color' : data?.cardType=='MASTER', 'text-color-visa' :data?.cardType=='VISA'}">
+                            {{data?.cardNumber}}</div>
+                        <div class="pt-4">
+                            <span class=" fs11" [ngClass]="{'text-color' : data?.cardType=='MASTER', 'text-color-visa' :data?.cardType=='VISA'}">CARD HOLDER</span>
+                            <span class=" float-right fs11" [ngClass]="{'text-color' : data?.cardType=='MASTER', 'text-color-visa' :data?.cardType=='VISA'}">EXPIRES</span>
+                        </div>
+                        <div class="pt-0">
+                            <span class="fw500 " [ngClass]="{'text-color' : data?.cardType=='MASTER', 'text-color-visa' :data?.cardType=='VISA'}"> {{data?.cardHolderName}}</span>
+                            <span class="float-right fw500 " [ngClass]="{'text-color' : data?.cardType=='MASTER', 'text-color-visa' :data?.cardType=='VISA'}"> {{ data?.expiryDate}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row filter-row mx-0 img-position pt-5" *ngIf="this.CardDetails.length == 0"><img
+            src="assets/img/Cards/no-card-found.png" class="w-100">
+        <div class="fs20 fw500 color-dark-grey text-center">No Added Cards</div>
+    </div>
+    </div>
+</div>

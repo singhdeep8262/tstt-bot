@@ -1,0 +1,208 @@
+<div class="section-container">
+    <div class="card user-card p-0" [formGroup]="createUser">
+        <div class="row mx-0 user-row user-container mb-4">
+            <div class="col-10 d-flex align-items-center">
+                <div class="pointer" (click)="goBack()">
+                    <img src="assets/img/common/back.png" width="7px" class="me-2">
+                </div>
+                <div class="fs25 fw600 color-dark-grey px-2">Users
+                </div>
+                <div>
+                    <img src="assets/img/common/right-icon.png" width="7px" class="mx-2">
+                </div>
+                <div class="fs18 fw500 color-dark-grey ml-2 mt-1">Create New User
+                </div>
+            </div>
+
+        </div>
+        <div class="row mx-0 mt-4 px-4">
+            <div class="col-lg-3 col-md-3 col-sm-6">
+                <div class="form-group ">
+                    <label class="fontsCsshead">Username <span class="asterisk">*</span></label>
+                    <input type="text" tabindex="1" class="form-control fontsCss" formControlName="username" required (keydown)="spaceRestrict($event)"
+                        [ngClass]="{'redBorder': this.createUser.get('username').invalid &&
+                    (this.createUser.get('username').dirty || this.createUser.get('username').touched) ||
+                    ( this.submitted && this.createUser.get('username').invalid )}" />
+                    <div class="messageDiv uxErrorMessage" *ngIf="this.createUser.get('username').invalid &&
+                        (this.createUser.get('username').dirty || this.createUser.get('username').touched) ||
+                        ( this.submitted && this.createUser.get('username').invalid )">
+                        <small >Username is required</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6">
+                <div class="form-group">
+                    <label class="fontsCsshead">First Name <span class="asterisk">*</span></label>
+                    <input type="text" tabindex="1" class="form-control fontsCss" formControlName="firstName" required (keydown)="spaceRestrict($event)"
+                    oninput="this.value=this.value.replace(/[^[a-zA-Z ]*$]/g,'');" (keypress)="letterOnly($event)" [ngClass]="{'redBorder': this.createUser.get('firstName').invalid &&
+                    (this.createUser.get('firstName').dirty || this.createUser.get('firstName').touched) ||
+                    ( this.submitted && this.createUser.get('firstName').invalid )}" />
+                    <div class="messageDiv uxErrorMessage" *ngIf="this.createUser.get('firstName').invalid &&
+                        (this.createUser.get('firstName').dirty || this.createUser.get('firstName').touched) ||
+                        ( this.submitted && this.createUser.get('firstName').invalid )">
+                        <small >First Name is required</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6">
+                <div class="form-group">
+                    <label class="fontsCsshead">Last Name <span class="asterisk">*</span></label>
+                    <input type="text" tabindex="1" class="form-control fontsCss" formControlName="lastName" required (keydown)="spaceRestrict($event)"
+                    oninput="this.value=this.value.replace(/[^[a-zA-Z ]*$]/g,'');" (keypress)="letterOnly($event)"  [ngClass]="{'redBorder': this.createUser.get('lastName').invalid &&
+                    (this.createUser.get('lastName').dirty || this.createUser.get('lastName').touched) ||
+                    ( this.submitted && this.createUser.get('lastName').invalid )}" />
+                    <div class="messageDiv uxErrorMessage" *ngIf="this.createUser.get('lastName').invalid &&
+                        (this.createUser.get('lastName').dirty || this.createUser.get('lastName').touched) ||
+                        ( this.submitted && this.createUser.get('lastName').invalid )">
+                        <small >Last Name is required</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6">
+                <div class="form-group ">
+                    <label class="fontsCsshead">Email <span class="asterisk">*</span></label>
+                    <input type="text" tabindex="1" class="form-control fontsCss" formControlName="Email" required (keydown)="spaceRestrict($event)"
+                        [ngClass]="{'redBorder': this.createUser.get('Email').invalid &&
+                        (this.createUser.get('Email').dirty || this.createUser.get('Email').touched) ||
+                        ( this.submitted && this.createUser.get('Email').invalid )}" />
+                    <div class="messageDiv uxErrorMessage" *ngIf="this.createUser.get('Email').invalid &&
+                        (this.createUser.get('Email').dirty || this.createUser.get('Email').touched) ||
+                        ( this.submitted && this.createUser.get('Email').invalid )">
+                        <small *ngIf="this.createUser.controls.Email.errors?.pattern || this.submitted" >Please enter
+                            a valid email </small>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-6">
+                <div class="form-group ">
+                    <label class="fontsCsshead">Mobile <span class="asterisk">*</span></label>
+                    <select #mobile class="mobileDropdown" formControlName="mobileDropdown" required [ngClass]="{'redBorder': this.createUser.get('mobileDropdown').invalid &&
+                    (this.createUser.get('mobileDropdown').dirty || this.createUser.get('mobileDropdown').touched) ||
+                    ( this.submitted && this.createUser.get('mobileDropdown').invalid )}">
+                        <option *ngFor="let code of this.mobileCode" [attr.value]="code.key" [selected]="this.createUser.get('mobileDropdown').value == code.key">{{code.value}}</option>
+                    </select>
+                    <input formControlName="mobile" maxlength="10" type="text" (keydown)="spaceRestrict($event)"
+                        oninput="this.value=this.value.replace(/[^0-9]/g,'');" taopenbindex="1" maxlength="10"
+                        class="form-control fontsCss" [style.paddingLeft.px]="(mobile?.offsetWidth + 7)" required [ngClass]="{'redBorder': this.createUser.get('mobile').invalid &&
+                        (this.createUser.get('mobile').dirty || this.createUser.get('mobile').touched) ||
+                        ( this.submitted && this.createUser.get('mobile').invalid )}" />
+                        <div class="messageDiv uxErrorMessage" *ngIf="this.createUser.get('mobile').invalid &&
+                        (this.createUser.get('mobile').dirty || this.createUser.get('mobile').touched) ||
+                        ( this.submitted && this.createUser.get('mobile').invalid )">
+                        <small >Mobile number is required</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6">
+                <div class="form-group mb-1">
+                    <label class="fontsCsshead">Password <span class="asterisk">*</span></label>
+                    <input type="text" tabindex="1" class="form-control fontsCss" formControlName="password" required (keydown)="spaceRestrict($event)"
+                        [ngClass]="{'redBorder': this.createUser.get('password').invalid &&
+                        (this.createUser.get('password').dirty || this.createUser.get('password').touched) ||
+                        ( this.submitted && this.createUser.get('password').invalid ), 'passworField': this.hidePin }" />
+                        <div class="messageDiv uxErrorMessage" *ngIf="this.createUser.get('password').invalid &&
+                        (this.createUser.get('password').dirty || this.createUser.get('password').touched) ||
+                        ( this.submitted && this.createUser.get('password').invalid )">
+                        <small >Password is required</small>
+                    </div>
+                    <img src="assets\img\users\hide-password.svg" class="closed-eye-img pointer" *ngIf="this.hidePin"
+                        (click)="showPin()">
+                    <img src="assets\img\users\eyeopen.svg" class="open-eye-img pointer" *ngIf="!this.hidePin"
+                        (click)="showPin()">
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6">
+                <div class="form-group ">
+                    <label class="fontsCsshead">Confirm Password <span class="asterisk">*</span></label>
+                    <input type="text" tabindex="1" class="form-control fontsCss " formControlName="confirmPassword" (keydown)="spaceRestrict($event)"
+                        required
+                        [ngClass]="{'redBorder': this.createUser.get('confirmPassword').invalid &&
+                        (this.createUser.get('confirmPassword').dirty || this.createUser.get('confirmPassword').touched) ||
+                        ( this.submitted && this.createUser.get('confirmPassword').invalid ), 'passworField': this.hideConfirmpin }" />
+                        <div class="messageDiv uxErrorMessage" *ngIf="this.createUser.get('confirmPassword').invalid &&
+                        (this.createUser.get('confirmPassword').dirty || this.createUser.get('confirmPassword').touched) ||
+                        ( this.submitted && this.createUser.get('confirmPassword').invalid )">
+                        <small >Confirm Password is required</small>
+                    </div>
+                    <div class="messageDiv uxErrorMessage"
+                                *ngIf="(this.createUser.get('confirmPassword').value != this.createUser.get('password').value) && this.submitted && this.createUser.get('confirmPassword').valid">
+                                <small >Passwords do not match.</small>
+                            </div>
+                    <img src="assets\img\users\hide-password.svg" class="closed-eye-img  pointer" *ngIf="this.hideConfirmpin"
+                        (click)="showConfirmpin()">
+                    <img src="assets\img\users\eyeopen.svg" class="open-eye-img pointer" *ngIf="!this.hideConfirmpin"
+                        (click)="showConfirmpin()">
+                </div>
+            </div>
+
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <label class="fontsCsshead fs14">Add Roles <span class="asterisk">*</span></label>
+                <!-- <div class="rolesLabel fontsCsshead">Add Roles <span class="asterisk">*</span></div> -->
+                <div class="rolesParent"   [ngClass]="{'redBorder':  this.rolesSubmitted && this.rolesArray.length == 0}" >
+                <div class="rolesChild mx-1" *ngFor="let role of rolesArray; index as i">
+                        <div class="fs14">{{role.name}}
+                            <img src="assets\img\users\greenCross.svg" class='cursor-pointer crosspng' alt=""
+                                (click)="this.deleteRoles(i,role)">
+                        </div>
+                    </div>
+                    <div class="dropdown dropdownRoles">
+                        <div class=" dropdown-toggle pointer" data-bs-toggle="dropdown">
+                            <img src="assets\img\common\add.png" class='cursor-pointer crosspng' alt="">
+                            Add Role
+                        </div>
+                        <ul class="dropdown-menu inform scroller" id="customscrollbar">
+                            <li>
+                                <a class="dropdown-item cursor-pointer" [class.disabled]="isDisabled(roleValue.name)"
+                                    *ngFor="let roleValue of rolesValuearray; index as i"
+                                    (click)="this.rolesArraypush(roleValue)">{{roleValue.name}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="px-0 messageDiv uxErrorMessage" *ngIf="this.rolesSubmitted && this.rolesArray.length == 0">
+                    <small class="px-0">Please add a role</small>
+                </div>
+            </div>
+      </div>
+        <div class="row mx-0 my-4">
+            <div class="col-md-12 text-center">
+                <button type="button" class="btn fs15 fw500 me-2 cancelBtn" (click)="goBack()">Cancel</button>
+                <button type="button" class="btn fs15 fw500 ms-2 submitBtn bg-green close-button"
+                    (click)="userCreation()">Create
+                    User</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #responseModel let-modal>
+    <div class="modal-body pb-4">
+        <div class="row mx-0 text-left">
+            <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+                <img src="assets/img/common/cross.svg">
+                {{this.errorMessage}}
+            </div>
+        </div>
+    </div>
+    <div class="w-100 text-center">
+        <button class="btn btn-prop color-white bg-red w-50" type="button" data-dismiss="modal"
+            (click)="closeModal()">Close</button>
+    </div>
+</ng-template>
+
+<ng-template #successModel let-modal>
+    <div class="modal-body pb-4">
+        <div class="row mx-0 text-left">
+            <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+                <img src="assets/img/common/tick.svg">
+                {{this.successMessage}}
+            </div>
+        </div>
+    </div>
+    <div class="w-100 text-center">
+        <button class="btn btn-prop color-white bg-green close-button w-50" type="button" data-dismiss="modal"
+            (click)="close()">Close</button>
+    </div>
+</ng-template>

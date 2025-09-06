@@ -1,0 +1,146 @@
+<div class="section-container">
+    <div class="card user-card p-0">
+        <div class="row mx-0 user-row user-container">
+            <div class="col-lg-10 col-sm-8 col-8 d-flex align-items-center">
+                <div class="fs25 fw600 color-dark-grey ml-2">Influencer Coupon Report
+                </div>
+            </div>
+        </div>
+
+        <div class="row mx-0 filter-row d-flex " [formGroup]="influencerCouponReport">
+            <!-- <div class="col-lg-2 col-md-4 col-sm-4 filter-padding"
+          [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2': this.isScreenMobile() == true}">
+          <div class="w-100" style="margin-bottom: 9px;">
+            <label class="fw500 mb-0 fs14 labels">Date From</label>
+            <input type="text" class="form-control-date img cursor-pointer" (keydown)="restrictAlphas($event)"
+              maxlength="10" formControlName="dateFrom" bsDatepicker placeholder="DD-MM-YYYY"
+              style="background-image:url('/assets/img/common/calendar.png')" [maxDate]="today"
+              [bsConfig]="{dateInputFormat: 'DD-MM-YYYY', showClearButton: true, clearPosition: 'right', showTodayButton: true, todayPosition: 'left',allowInput: false }"
+              #dp="bsDatepicker" [bsValue]="bsValue">
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-4 filter-padding"
+          [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2': this.isScreenMobile() == true}">
+          <div class="w-100" style="margin-bottom: 9px;">
+            <label class="fw500 mb-0 fs14 labels">Date To</label>
+            <input type="text" class="form-control-date img cursor-pointer" (keydown)="restrictAlphas($event)"
+              maxlength="10" formControlName="dateTo" placeholder="DD-MM-YYYY" bsDatepicker
+              style="background-image:url('/assets/img/common/calendar.png')" [maxDate]="today"
+              [bsConfig]="{dateInputFormat: 'DD-MM-YYYY', showClearButton: true, clearPosition: 'right' , showTodayButton: true, todayPosition: 'left' }">
+          </div>
+        </div> -->
+            <div class="col-lg-2 col-md-4 col-sm-4 filter-padding "
+                [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2 mb-3': this.isScreenMobile() == true}">
+                <div class="mb-3">
+                    <label class="fw500 mb-0 fs14 labels">Coupon Code</label>
+                    <input type="text" class="form-control img input4" formControlName="couponCode"
+                        placeholder="Coupon Code">
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-4 col-sm-4 filter-padding "
+                [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2 mb-3': this.isScreenMobile() == true}">
+                <div class="mb-3">
+                    <label class="fw500 mb-0 fs14 labels">Influencer Name</label>
+                    <input type="text" class="form-control img input4" formControlName="influencerName"
+                        placeholder="Influencer Name">
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-4 col-sm-4 filter-padding "
+                [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2 mb-3': this.isScreenMobile() == true}">
+                <div class="mb-3">
+                    <label class="fw500 mb-0 fs14 labels">Coupon Name</label>
+                    <input type="text" class="form-control img input4" formControlName="couponName"
+                        placeholder="Coupon Name">
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-4 col-sm-4 filter-padding mt-4 pt-1">
+                <button class="btn btn-prop cancle-btn fs15 fw500 btn-search  resetBtn" type="button"
+                    (click)="resetData()">
+                    Reset
+                </button>
+            </div>
+
+            <div class="col-lg-2 col-md-4 col-sm-4 filter-padding mt-4 pt-1">
+                <button class="btn btn-prop bg-green fs15 fw500 search-btn btn-search " type="button"
+                    (click)="search(1)">
+                    Search
+                </button>
+            </div>
+
+            <div class="col-lg-2 col-md-4 col-sm-4 filter-padding mt-4 pt-1">
+                <button class="btn btn-prop fs15 fw500 cancel-button button-cancel btn-search " type="button"
+                  data-dismiss="modal" (click)="exportInfluencerCouponReport()">
+                  <img src="assets/img/common/download.svg" width="15px" class="me-2 download-img">Export
+                </button>
+              </div>
+
+        </div>
+
+
+        <table class="table mb-4 user-table pl-2">
+            <thead>
+                <tr class="rowAlign fs15 fw500">
+                    <th>S. No.</th>
+                    <th>Start Date and Time</th>
+                    <th>End Date and Time</th>
+                    <th>Coupon Code</th>
+                    <th>Coupon Count</th>
+                    <th>Coupon Name</th>
+                    <th>Influencer Name</th>
+                    <th>Redeem Count</th>
+                    <th>Discount Percent</th>
+                    <th>Is Active</th>
+                    <th>Is Deleted</th>
+                </tr>
+            </thead>
+            <tbody class="fs15 fw500">
+                <tr class="trBody cursor-hand" *ngFor="let data of this.influencerCouponDetails; let i = index;">
+                    <td>{{((this.currentPage || 1) - 1) * 10 + i + 1 }}</td>
+                    <td>{{data?.startDateTime}}</td>
+                    <td>{{data?.endDateTime}}</td>
+                    <td>{{data?.couponCode}}</td>
+                    <td>{{data?.couponCount}}</td>
+                    <td>{{data?.promotionName}}</td>
+                    <td>{{data?.influencerName}}</td>
+                    <td>{{data?.redeemCount}}</td>
+                    <td>{{data?.discountPercent | number : '.2'}}</td>
+                    <td>{{data?.activeYn === 1 ? 'Yes' : 'No' }}</td>
+                    <td>{{data?.isDeletedYn === 1 ? 'Yes' : 'No' }}</td>
+                </tr>
+                <tr *ngIf="this.influencerCouponDetails?.length == 0" style="border-bottom:1px solid #ccc">
+                    <td class="text-center" colspan="12">No Data Found</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="text-center d-flex justify-content-center mb-2" *ngIf="influencerCouponDetails?.length > 0">
+            <div class="pagination">
+                <a href="javascript: void(0)" style="color: #333333;"
+                    (click)="goToPage(this.currentPage - 1)"><u>Prev</u></a>
+                <a href="javascript: void(0)" *ngFor="let page of pageArray" (click)="goToPage(page)"
+                    [ngClass]="{'active': this.currentPage == page, 'no-page': page == 0}">
+                    {{page == 0 ? "..." : page}}
+                </a>
+                <a href="javascript: void(0)" style="color: #333333;"
+                    (click)="goToPage(this.currentPage + 1)"><u>Next</u></a>
+            </div>
+        </div>
+    </div>
+
+</div>
+<ng-template #responseModel let-modal>
+    <div class="modal-body pb-4">
+        <div class="row mx-0 text-left">
+            <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+                <img src="assets/img/common/cross.svg">
+                {{this.errorMessage}}
+            </div>
+        </div>
+    </div>
+    <div class="w-100 text-center">
+        <button class="btn btn-prop color-white bg-red w-50" type="button" data-dismiss="modal"
+            (click)="closeModal()">Close</button>
+    </div>
+</ng-template>

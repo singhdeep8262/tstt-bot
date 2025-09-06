@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24.206" height="28.02" viewBox="0 0 24.206 28.02">
+  <g id="Group_10321" data-name="Group 10321" transform="translate(-708.765 -443.488)">
+    <g id="noun-smartphone-5129391" transform="translate(708.765 443.488)">
+      <path id="Path_27173" data-name="Path 27173" d="M193.615,0h-8.378a2.364,2.364,0,0,0-2.363,2.363V19.595a2.364,2.364,0,0,0,2.363,2.363h8.374a2.364,2.364,0,0,0,2.363-2.363V2.363A2.363,2.363,0,0,0,193.615,0ZM184.25,5.3H194.6V16.658H184.25Zm.986-3.923h8.374a.991.991,0,0,1,.99.99V3.923H184.25V2.363a.99.99,0,0,1,.986-.99Zm8.378,19.209h-8.378a.991.991,0,0,1-.991-.99V18.03H194.6v1.561a.99.99,0,0,1-.986.99Z" transform="translate(-182.874)" fill="#ba42bf"/>
+      <path id="Path_27174" data-name="Path 27174" d="M308.356,51.466H310.3a.686.686,0,1,0,0-1.372h-1.947a.686.686,0,0,0,0,1.372Z" transform="translate(-302.778 -48.13)" fill="#ba42bf"/>
+    </g>
+    <g id="Group_10311" data-name="Group 10311" transform="translate(714.661 453.199)">
+      <circle id="Ellipse_64" data-name="Ellipse 64" cx="9.155" cy="9.155" r="9.155" transform="translate(0 0)" fill="#fff"/>
+      <path id="Icon_ionic-ios-refresh" data-name="Icon ionic-ios-refresh" d="M15.874,10.166a.46.46,0,0,0-.459.419A5,5,0,1,1,10.3,5.194a.121.121,0,0,1,.126.123v1.55a.494.494,0,0,0,.758.416l2.965-2.074a.493.493,0,0,0,0-.835L11.185,2.327a.494.494,0,0,0-.758.416V4.152a.121.121,0,0,1-.12.123,5.893,5.893,0,1,0,6.026,6.386.458.458,0,0,0-.459-.5Z" transform="translate(-1.401 -1.419)" fill="#ba42bf" stroke="#ba42bf" stroke-width="0.4"/>
+    </g>
+  </g>
+</svg>

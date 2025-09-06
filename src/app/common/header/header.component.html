@@ -1,0 +1,186 @@
+<div class="">
+  <nav id="myNavbar" class="header-wrapper navbar navbar-expand-lg web-view">
+    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+      <span class="navbar-toggler-icon"></span>
+      <span class="navbar-toggler-icon mb-0"></span>
+    </button> -->
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <ul class="navbar-nav">
+        <div class="d-flex"><img src="assets/img/common/header-logo.svg" alt="" class="header-logo me-5"></div>
+        <li *ngIf="getAccess('USER')" class="nav-item"
+          [class.active]="returnUrl() ==='/admin/users' || returnUrl() === '/admin/create-user'"><a class="nav-link"
+            href="javascript:void(0)" (click)="goToPath('admin/users')">Users</a></li>
+        <li *ngIf="getAccess('ROLE')" class="nav-item"
+          [class.active]="returnUrl() ==='/admin/roles' || returnUrl() === '/admin/create-role'"><a class="nav-link"
+            href="javascript:void(0)" (click)="goToPath('admin/roles')">Roles</a></li>
+            <li *ngIf="getAccess('MODULE')" class="nav-item"
+            [class.active]="returnUrl() ==='/admin/modules' || returnUrl() === '/admin/create-module'"><a class="nav-link"
+              href="javascript:void(0)" (click)="goToPath('admin/modules')">Module</a></li>
+          <li *ngIf="getAccess('CMS')" class="nav-item" [class.active]="returnUrl() ==='/admin/customer-management'"><a
+              class="nav-link" href="javascript:void(0)" (click)="goToPath('admin/customer-management')">Customer
+              Management</a></li>
+        <li class="nav-item" *ngIf="getAccess('ALERTS')" [class.active]="returnUrl() ==='/admin/alert'"><a
+            class="nav-link" href="javascript:void(0)" (click)="goToPath('admin/alert')">Alerts</a></li>
+        <li class="nav-item" *ngIf="getAccess('PROMOTIONS')" [class.active]="returnUrl() ==='/admin/promotions'"><a
+            class="nav-link" href="javascript:void(0)" (click)="goToPath('admin/promotions')">Promotions</a></li>
+        <li
+          *ngIf="getAccess('CUSTOMER_TRANSACTION_HISTORY') || getAccess('REFUND_PAYMENT_REPORT') || getAccess('COUPON_TRANSACTION_HISTORY') || getAccess('REDEEMED_COUPON_TRANSACTION_HISTORY') || getAccess('INFLUENCER_COUPON_TRANSACTION_HISTORY')"
+          class="nav-item"
+          [class.active]="returnUrl() ==='/admin/users-transaction-history' || returnUrl() === '/admin/refund-payment' || returnUrl() ==='/admin/coupon-transaction-history' || returnUrl() ==='/admin/redeemed-coupon-transaction-history' || returnUrl() ==='/admin/influencer-coupon-transaction-report'">
+
+          <a class="profile-icon nav-link dropdown-toggle reports-button" href="#" type="button"
+            id="dropdownMenuButton2" data-bs-toggle="dropdown" height="27px" aria-expanded="false">
+            Reports
+          </a>
+          <div class="dropdown-menu dropdown-option py-0" aria-labelledby="dropdownMenuButton2"
+            style="position: absolute;top: 3.2rem;">
+            <a class="nav-link reports-button-menu  px-3 py-2 border-bottom-lightgrey"
+              *ngIf="getAccess('PLATFORM_REPORTS')" (click)="goToPath('admin/platform-reports')"
+              href="javascript:void(0)" [class.active-menu]="returnUrl() ==='/admin/platform-reports'"><img class="me-2"
+                [src]="returnUrl() ==='/admin/platform-reports' ? 'assets/img/common/active-transaction-history.svg' : 'assets/img/common/inactive-transaction-history.svg'"
+                alt="" width="20px">Platform Reports</a>
+
+            <a class="nav-link reports-button-menu  px-3 py-2 border-bottom-lightgrey"
+              *ngIf="getAccess('CUSTOMER_TRANSACTION_HISTORY')" (click)="goToPath('admin/users-transaction-history')"
+              href="javascript:void(0)" [class.active-menu]="returnUrl() ==='/admin/users-transaction-history'"><img
+                class="me-2"
+                [src]="returnUrl() ==='/admin/users-transaction-history' ? 'assets/img/common/active-customer-2.svg' : 'assets/img/common/inactive-customer-2.svg'"
+                alt="" width="20px"> Customer Transaction
+              History</a>
+
+            <a class="nav-link reports-button-menu  px-3 py-2 border-bottom-lightgrey"
+              *ngIf="getAccess('COUPON_TRANSACTION_HISTORY')" (click)="goToPath('admin/coupon-transaction-history')"
+              href="javascript:void(0)" [class.active-menu]="returnUrl() ==='/admin/coupon-transaction-history'"><img
+                class="me-2"
+                [src]="returnUrl() ==='/admin/coupon-transaction-history' ? 'assets/img/common/active-coupon-history-2.svg' : 'assets/img/common/inactive-coupon-history-2.svg'"
+                alt="" width="20px"> Coupon Transaction
+              History</a>
+
+            <a class="nav-link reports-button-menu  px-3 py-2 border-bottom-lightgrey"
+              *ngIf="getAccess('REDEEMED_COUPON_TRANSACTION_HISTORY')"
+              (click)="goToPath('admin/redeemed-coupon-transaction-history')" href="javascript:void(0)"
+              [class.active-menu]="returnUrl() ==='/admin/redeemed-coupon-transaction-history'"><img class="me-2"
+                [src]="returnUrl() ==='/admin/redeemed-coupon-transaction-history' ? 'assets/img/common/active-redeem-coupon-2.svg' : 'assets/img/common/inactive-redeem-coupon-2.svg'"
+                alt="" width="20px"> Redeemed Coupon Transaction
+              History</a>
+
+            <a class="nav-link reports-button-menu  px-3 py-2 border-bottom-lightgrey"
+              *ngIf="getAccess('INFLUENCER_COUPON_TRANSACTION_HISTORY')"
+              (click)="goToPath('admin/influencer-coupon-transaction-report')" href="javascript:void(0)"
+              [class.active-menu]="returnUrl() ==='/admin/influencer-coupon-transaction-report'"><img class="me-2"
+                [src]="returnUrl() ==='/admin/influencer-coupon-transaction-report' ? 'assets/img/common/active-influencer-2.svg' : 'assets/img/common/inactive-influencer-2.svg'"
+                alt="" width="20px"> Influencer Coupon Report</a>
+
+            <a class="nav-link reports-button-menu  px-3 py-2 border-bottom-lightgrey"
+              *ngIf="getAccess('REFUND_PAYMENT_REPORT')" (click)="goToPath('admin/refund-payment')"
+              href="javascript:void(0)" [class.active-menu]="returnUrl() === '/admin/refund-payment'"><img class="me-2"
+                [src]="returnUrl() ==='/admin/refund-payment' ? 'assets/img/common/active-refund-history.svg' : 'assets/img/common/inactive-refund-history.svg'"
+                alt="" width="22px">Refund Payment
+              History</a>
+          </div>
+
+
+        </li>
+
+
+
+        <li *ngIf="getAccess('LOCATIONS') || getAccess('BUNDLE_MANAGEMENT') || getAccess('PUSH_NOTIFICATIONS') || getAccess('FAQ_MANAGEMENT') || getAccess('SURVEY_MANAGEMENT')" class="nav-item"
+          [class.active]="returnUrl() ==='/admin/locations' || returnUrl() ==='/admin/bundles' || returnUrl() ==='/admin/push-notification'|| returnUrl() ==='/admin/faq' || returnUrl() ==='/admin/survey-management'">
+
+          <a class="profile-icon nav-link dropdown-toggle reports-button" href="#" type="button"
+            id="dropdownMenuButton2" data-bs-toggle="dropdown" height="27px" aria-expanded="false">
+            Others
+          </a>
+          <div class="dropdown-menu dropdown-option py-0" aria-labelledby="dropdownMenuButton2"
+            style="position: absolute;top: 3.2rem;">
+            <a class="nav-link reports-button-menu  px-3 py-2 border-bottom-lightgrey" *ngIf="getAccess('LOCATIONS')"
+              (click)="goToPath('admin/locations')" href="javascript:void(0)"
+              [class.active-menu]="returnUrl() ==='/admin/locations'">Manage Stores</a>
+
+            <a class="nav-link reports-button-menu  px-3 py-2 border-bottom-lightgrey"
+              *ngIf="getAccess('BUNDLE_MANAGEMENT')" (click)="goToPath('admin/bundles')" href="javascript:void(0)"
+              [class.active-menu]="returnUrl() ==='/admin/bundles'">Manage Bundles</a>
+
+              <a class="nav-link reports-button-menu  px-3 py-2 border-bottom-lightgrey"
+              *ngIf="getAccess('PUSH_NOTIFICATIONS')" (click)="goToPath('admin/push-notification')" href="javascript:void(0)"
+              [class.active-menu]="returnUrl() ==='/admin/push-notification'">Push Notifications</a>
+
+              <a class="nav-link reports-button-menu  px-3 py-2 border-bottom-lightgrey"
+              *ngIf="getAccess('FAQ_MANAGEMENT')" (click)="goToPath('admin/faq')" href="javascript:void(0)"
+              [class.active-menu]="returnUrl() ==='/admin/faq'">FAQ Management</a>
+              
+              <a class="nav-link reports-button-menu  px-3 py-2 border-bottom-lightgrey"
+              *ngIf="getAccess('SURVEY_MANAGEMENT')" (click)="goToPath('admin/survey-management')" href="javascript:void(0)"
+              [class.active-menu]="returnUrl() ==='/admin/survey-management'">Survey Management</a>
+          </div>
+
+        </li>
+        <!--                 <li class="nav-item logout" ><img src="assets/img/users/log-out.svg" class="logOut-img"><a class="nav-link logoutIcon" href="javascript:void(0)" (click)="logoutModalopen()">LogOut </a></li> -->
+        <li class="nav-item dropdown logout">
+          <a class="nav-link dropdown-toggle" href="#" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <img src="assets/img/Profile.svg" height="27px" class="profile-icon mx-1 mb-1">
+          </a>
+          <div class="dropdown-menu logout-dropdown" aria-labelledby="dropdownMenuButton1">
+            <a class="nav-link px-3 pb-2 border-bottom-lightgrey" href="javascript:void(0)"
+              (click)="goToPath('/admin/change-password')"> Change Password</a>
+            <a class="nav-link px-3 pt-2" href="javascript:void(0)" (click)="logout()"> Logout</a>
+          </div>
+          <!-- <div class="dropdown show">
+                  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dropdown link
+                  </a>
+                
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </div>
+                </div> -->
+        </li>
+      </ul>
+
+    </div>
+
+  </nav>
+</div>
+
+<ng-template #logoutModal let-modal>
+  <div class="modal-body pb-4 pt-2">
+    <div class="row mx-0 text-left">
+      <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+        <div class="mb-2 ">
+          <img src="assets/img/users/log-out2.svg" class="logout-img"><span class="logoutIcon fs20 fw700">Logout
+            Confirmation</span>
+        </div>
+        <div class="modal-text fs15">
+          <div>Are you sure, you want to Logout?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mx-0">
+    <div class="col-6 px-1 mb-2">
+      <button class="btn btn-prop btn-secondary" type="button" data-dismiss="modal" (click)="closeModal()">No,
+        don't</button>
+    </div>
+    <div class="col-6 px-1 mb-2">
+      <button class="btn btn-prop color-white bg-red" type="button" data-dismiss="modal" (click)="logout()">Yes,
+        Logout</button>
+    </div>
+  </div>
+</ng-template>
+
+<!-- <ng-template #responseModal let-modal>
+    <div class="modal-body pb-4">
+      <div class="row mx-0 text-left">
+        <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-center color-grey">
+          <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {{this.errorMessage}}
+        </div>
+      </div>
+    </div>
+    <div class="w-100 text-center">
+      <button class="btn btn-prop bg-red w-50" type="button" data-dismiss="modal" (click)="closeModal()">Close</button>
+    </div>
+  </ng-template> -->

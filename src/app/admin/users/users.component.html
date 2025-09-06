@@ -1,0 +1,127 @@
+<div class="section-container">
+  <div class="card user-card p-0" [formGroup]="userForm">
+    <div class="row mx-0 user-row user-container">
+      <div class="col-lg-10 col-sm-8 col-5 d-flex align-items-center">
+        <div class="fs25 fw600 color-dark-grey ml-2">Users
+        </div>
+      </div>
+      <div class="col-lg-2 col-sm-4 col-7" *ngIf="this.createUserAccess">
+        <button class="btn btn-prop add-user-btn fs15 fw500" type="button" (click)="gotoCreateUser()">
+          <img src="assets/img/common/add.png" class="mr-2 add-img">
+          Add User
+        </button>
+      </div>
+    </div>
+    <div class="row mx-0 user-row">
+      <div class="col-lg-2 col-sm-6">
+        <div class="mb-3">
+          <label class="fw500 mb-0 fs14 labels">Username</label>
+          <input type="text" class="form-control img input1" placeholder="Username" formControlName="name" (keydown)="spaceRestrict($event)">
+        </div>
+      </div>
+      <!-- <div class="col-lg-2 col-sm-6">
+        <div class="mb-3">
+          <input type="text" class="form-control img input2" style="background-image:url('/assets/img/users/id.svg')"
+            placeholder="User ID" formControlName="userId">
+        </div>
+      </div> -->
+      <div class="col-lg-2 col-sm-6">
+        <div class="mb-3">
+          <label class="fw500 mb-0 fs14 labels">Email</label>
+          <input type="text" class="form-control img input3" placeholder="Email" formControlName="email" (keydown)="spaceRestrict($event)">
+        </div>
+      </div>
+      <div class="col-lg-2 col-sm-6">
+        <div class="mb-3">
+          <label class="fw500 mb-0 fs14 labels">Mobile</label>
+          <input type="text" class="form-control img input4" oninput="this.value=this.value.replace(/[^0-9]/g,'');" taopenbindex="1" placeholder="Mobile" formControlName="phone" (keydown)="spaceRestrict($event)">
+        </div>
+      </div>
+      <div class="" [ngClass]="{'w-100': isScreenMobile() == true, 'ipad-view':  isScreenipad() == true,'w-20':this.userForm.controls.roles.value.length == 0 && isScreenMobile() == false,'w-max':this.userForm.controls.roles.value.length > 0 && isScreenMobile() == false}">
+        <div class="mb-3">
+          <label class="fw500 mb-0 fs14 labels">Roles</label>
+          <ng-select class="form-control img input5 scroller" formControlName="roles" placeholder="All Roles"
+            [items]="this.rolesList" bindLabel="value" [scrollLeft]="true" [addTag]="true" appendTo="body"
+            [multiple]="true">
+            <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+              <div class="ng-value" *ngFor="let item of items | slice:0:1">
+                <span class="ng-value-label"> {{item.value}}</span>
+                <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+              </div>
+              <div class="ng-value" *ngIf="items.length > 1">
+                <span class="ng-value-label">{{items.length - 1}} more...</span>
+              </div>
+            </ng-template>
+          </ng-select>
+        </div>
+      </div>
+      <div class="col-lg-2 col-sm-12 button-search">
+        <div class="mb-3">
+          <button class="btn btn-prop bg-green fs15 fw500 search-btn" type="button" (click)="search(1)">
+            Search
+          </button>
+        </div>
+      </div>
+    </div>
+    <table class="table mb-4 user-table">
+      <thead>
+        <tr class="rowAlign fs15 fw500">
+          <th style="width: 5%;">S. No.</th>
+          <th>User Name</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Mobile</th>
+          <th class="roles">Roles</th>
+          <th>Status</th>
+          <th *ngIf=" this.editUserAccess"></th>
+        </tr>
+      </thead>
+      <tbody class="fs15 fw500">
+        <tr class="trBody cursor-hand" *ngFor="let data of this.userList; let i = index;">
+          <td>{{(this.currentPage-1)*10+i+1}}</td>
+          <td>{{data?.username}}</td>
+          <td>{{data?.firstName}}</td>
+          <td>{{data?.lastName}}</td>
+          <td>{{data?.email}}</td>
+          <td>{{data?.phone}}</td>
+          <td>
+            <div class="user-role bg-light-green" *ngFor="let td of data.roles">{{td.name}}</div>
+          </td>
+          <td [ngClass]="{'color-green': data?.status == 'ACTIVE', 'text-red': data?.status == 'INACTIVE'}">{{getLookups(data?.status)}}</td>
+          <td *ngIf=" this.editUserAccess" class="color-blue cursor-pointer" (click)="editUser(data.id)"><img
+              src="assets/img/common/Edit.svg" class="ms-2 update-icon">Edit</td>
+        </tr>
+        <tr *ngIf="this.userList.length == 0">
+          <td class="text-center" colspan="12">No Data Found</td>
+        </tr>
+      </tbody>
+
+    </table>
+    <div class="text-center d-flex justify-content-center mb-2" *ngIf="this.userList.length > 0">
+      <div class="pagination">
+        <a href="javascript: void(0)" style="color: #333333;" (click)="goToPage(currentPage - 1)"><u>Prev</u></a>
+        <a href="javascript: void(0)" *ngFor="let page of pageArray" (click)="goToPage(page)"
+          [ngClass]="{'active': currentPage == page, 'no-page': page == 0}">
+          {{page == 0 ? "..." : page}}
+        </a>
+        <a href="javascript: void(0)" style="color: #333333;" (click)="goToPage(currentPage + 1)"><u>Next</u></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #responseModel let-modal>
+  <div class="modal-body pb-4">
+    <div class="row mx-0 text-left">
+      <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+        <img src="assets/img/common/cross.svg">
+        {{this.errorMessage}}
+      </div>
+    </div>
+  </div>
+  <div class="w-100 text-center">
+    <button class="btn btn-prop color-white bg-red w-50" type="button" data-dismiss="modal"
+      (click)="closeModal()">Close</button>
+  </div>
+</ng-template>

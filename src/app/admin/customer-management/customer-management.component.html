@@ -1,0 +1,174 @@
+<div class="section-container">
+  <div class="card user-card p-0" [formGroup]="userSearchForm">
+    <div class="row mx-0 user-row user-container">
+      <div class="col-12 d-flex align-items-center">
+        <div class="fs25 fw600 color-dark-grey ml-2">Customer Management
+        </div>
+      </div>
+    </div>
+    <div class="row mx-0 user-row">
+      <div class="col-lg-2 col-sm-6 filter-padding"
+        [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2': this.isScreenMobile() == true}">
+        <div class="w-100" style="margin-bottom: 9px;">
+          <label class="fw500 mb-0 fs14 labels">Date From</label>
+          <input type="text" class="form-control-date img cursor-pointer" (keydown)="restrictAlphas($event)"
+            maxlength="10" formControlName="dateFrom" bsDatepicker placeholder="DD-MM-YYYY"
+            style="background-image:url('/assets/img/common/calendar.png')" [maxDate]="today"
+            [bsConfig]="{dateInputFormat: 'DD-MM-YYYY', showClearButton: true, clearPosition: 'right', showTodayButton: true, todayPosition: 'left',allowInput: false }"
+            #dp="bsDatepicker" [bsValue]="bsValue">
+          <!-- <input type="text"
+            class="form-control"
+            #dp="bsDatepicker"
+            bsDatepicker
+            formControlName="dateFrom"
+            [bsValue]="maxDate"
+            [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',containerClass: 'theme-orange', showClearButton: true, clearPosition: 'right' }"> -->
+        </div>
+      </div>
+      <div class="col-lg-2 col-sm-6 filter-padding"
+        [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2': this.isScreenMobile() == true}">
+        <div class="w-100" style="margin-bottom: 9px;">
+          <label class="fw500 mb-0 fs14 labels">Date To</label>
+          <input type="text" class="form-control-date img cursor-pointer" (keydown)="restrictAlphas($event)"
+            maxlength="10" formControlName="dateTo" placeholder="DD-MM-YYYY" bsDatepicker
+            style="background-image:url('/assets/img/common/calendar.png')" [maxDate]="today"
+            [bsConfig]="{dateInputFormat: 'DD-MM-YYYY', showClearButton: true, clearPosition: 'right' , showTodayButton: true, todayPosition: 'left' }">
+          <!-- <input type="text"
+            class="form-control"
+            #dp="bsDatepicker"
+            bsDatepicker
+            [bsValue]="bsValue"
+            [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',containerClass: 'theme-orange', showClearButton: true, clearPosition: 'right' }">
+            <input type="text" class="form-control mb-3" placeholder="Datepicker" bsDatepicker formControlName="date" /> -->
+        </div>
+      </div>
+      <div class="col-lg-2 col-sm-6 filter-padding">
+        <div class="mb-3">
+          <label class="fw500 mb-0 fs14 labels">First Name</label>
+          <input type="text" class="form-control img input1"
+            oninput="this.value=this.value.replace(/[^[a-zA-Z ]*$]/g,'');" (keypress)="letterOnly($event)"
+            (keydown)="spaceRestrict($event)" placeholder="First Name" formControlName="firstName">
+        </div>
+      </div>
+      <div class="col-lg-2 col-sm-6 filter-padding">
+        <div class="mb-3">
+          <label class="fw500 mb-0 fs14 labels">Last Name</label>
+          <input type="text" class="form-control img input1"
+            oninput="this.value=this.value.replace(/[^[a-zA-Z ]*$]/g,'');" (keypress)="letterOnly($event)"
+            (keydown)="spaceRestrict($event)" placeholder="Last Name" formControlName="lastName">
+        </div>
+      </div>
+      <div class="col-lg-2 col-sm-6 filter-padding">
+        <div class="mb-3">
+          <label class="fw500 mb-0 fs14 labels">Email</label>
+          <input type="text" class="form-control img input3" (keydown)="spaceRestrict($event)" placeholder="Email"
+            formControlName="email">
+        </div>
+      </div>
+      <div class="col-lg-2 col-sm-6 filter-padding">
+        <div class="mb-3">
+          <label class="fw500 mb-0 fs14 labels">Mobile</label>
+          <input type="text" class="form-control img input4" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+            taopenbindex="1" (keydown)="spaceRestrict($event)" placeholder="Mobile" formControlName="phone">
+        </div>
+      </div>
+      <div class="col-lg-2 col-sm-6 filter-padding">
+        <div class="mb-3">
+          <label class="fw500 mb-0 fs14 labels">Customer ID</label>
+          <input type="text" class="form-control img input4" placeholder="Customer ID" formControlName="customerId">
+        </div>
+      </div>
+      <div class="col-lg-2 col-sm-6 filter-padding">
+        <div class="mb-3">
+          <label class="fw500 mb-0 fs14 labels">Status</label>
+          <select class="img input5 select-status" formControlName="status" placeholder="All Roles">
+            <option value="" selected>All</option>
+            <option *ngFor="let role of this.cmsStatus" [attr.value]="role.key">
+              {{ role.value }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-lg-2 col-sm-12 button-search">
+        <div class="mb-3 ipad-view">
+          <button class="btn btn-prop bg-green fs15 fw500 search-btn" type="button" (click)="search(1)">
+            Search
+          </button>
+        </div>
+      </div>
+      <div class="col-lg-2 col-sm-12 button-search">
+        <div class="mb-3 ipad-view">
+        <button class="btn btn-prop fs15 fw500 cancel-button button-cancel search-btn " type="button"
+          data-dismiss="modal" (click)="exportCmshistory()" >
+          <img src="assets/img/common/download.svg" width="15px" class="me-2 download-img">Export
+        </button>
+        </div>
+      </div>
+    </div>
+    <!-- </div> -->
+    <table class="table mb-4 user-table">
+      <thead>
+        <tr class="rowAlign fs15 fw500">
+          <th>S. No.</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Signup Method</th>
+          <th>Mobile</th>
+          <th>Customer ID</th>
+          <th>Email</th>
+          <th>Creation Date</th>
+          <th>Status</th>
+          <th *ngIf=" this.viewAccess"></th>
+        </tr>
+      </thead>
+      <tbody class="fs15 fw500">
+        <tr class="trBody cursor-hand pointer" *ngFor="let data of this.userList; let i = index;"
+          (click)="viewData(data?.id)">
+          <td>{{(this.currentPage-1)*10+i+1}}</td>
+          <td>{{data?.firstName}}</td>
+          <td>{{data?.lastName}}</td>
+          <td>{{getLookups(data?.signupMethod,'SIGNUP METHOD')}}</td>
+          <td>{{data?.phone}}</td>
+          <td>{{data?.customerId}}</td>
+          <td>{{data?.email}}</td>
+          <td>{{data?.creationDate}}</td>
+          <td
+            [ngClass]="{'color-green': data?.status == 'ACTIVE', 'text-red': data?.status == 'DEACTIVATED', 'text-orange': data?.status == 'INACTIVE'}">
+            {{getLookups(data?.status,'STATUS')}}</td>
+          <td *ngIf=" this.viewAccess"><button type="button" class="btn viewButton fs15 fw500"
+              (click)="viewData(data?.id)"> <img class="me-1 viewBtnImg" src="assets/img/common/View_Green.svg" alt=""
+                srcset=""><img class="me-1 viewHoverBtnImg" src="assets/img/common/View_White.svg" alt="" srcset="">
+              View</button></td>
+        </tr>
+        <tr *ngIf="this.userList.length == 0">
+          <td class="text-center" colspan="12">No Data Found</td>
+        </tr>
+      </tbody>
+
+    </table>
+    <div class="text-center d-flex justify-content-center mb-2" *ngIf="this.userList.length > 0">
+      <div class="pagination">
+        <a href="javascript: void(0)" style="color: #333333;" (click)="goToPage(currentPage - 1)"><u>Prev</u></a>
+        <a href="javascript: void(0)" *ngFor="let page of pageArray" (click)="goToPage(page)"
+          [ngClass]="{'active': currentPage == page, 'no-page': page == 0}">
+          {{page == 0 ? "..." : page}}
+        </a>
+        <a href="javascript: void(0)" style="color: #333333;" (click)="goToPage(currentPage + 1)"><u>Next</u></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #responseModel let-modal>
+  <div class="modal-body pb-4">
+    <div class="row mx-0 text-left">
+      <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+        <img src="assets/img/common/cross.svg">
+        {{this.errorMessage}}
+      </div>
+    </div>
+  </div>
+  <div class="w-100 text-center">
+    <button class="btn btn-prop color-white bg-red w-50" type="button" data-dismiss="modal"
+      (click)="closeModal()">Close</button>
+  </div>
+</ng-template>

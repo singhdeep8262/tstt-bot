@@ -1,0 +1,276 @@
+<div class="section-container">
+  <div class="card user-card p-0">
+    <div class="row mx-0 user-row user-container">
+      <div class="col-lg-10 col-sm-8 col-8 d-flex align-items-center">
+        <div class="fs25 fw600 color-dark-grey ml-2">Refund Payment History
+        </div>
+      </div>
+
+    </div>
+    <div class="row mx-0 filter-row justify-content-center d-flex" [formGroup]="transactionHistory">
+
+      <div class="col-lg-2 col-md-4 col-sm-4 filter-padding"
+        [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2': this.isScreenMobile() == true}">
+        <div class="w-100" style="margin-bottom: 9px;">
+          <label class="fw500 mb-0 fs14 labels">Date From</label>
+          <input type="text" class="form-control-date img cursor-pointer" (keydown)="restrictAlphas($event)"
+            maxlength="10" formControlName="dateFrom" bsDatepicker placeholder="DD-MM-YYYY"
+            style="background-image:url('/assets/img/common/calendar.png')" [maxDate]="today"
+            [bsConfig]="{dateInputFormat: 'DD-MM-YYYY', showClearButton: true, clearPosition: 'right', showTodayButton: true, todayPosition: 'left',allowInput: false }"
+            #dp="bsDatepicker" [bsValue]="bsValue">
+          <!-- <input type="text"
+              class="form-control"
+              #dp="bsDatepicker"
+              bsDatepicker
+              formControlName="dateFrom"
+              [bsValue]="maxDate"
+              [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',containerClass: 'theme-orange', showClearButton: true, clearPosition: 'right' }"> -->
+        </div>
+      </div>
+
+      <div class="col-lg-2 col-md-4 col-sm-4 filter-padding"
+        [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2': this.isScreenMobile() == true}">
+        <div class="w-100" style="margin-bottom: 9px;">
+          <label class="fw500 mb-0 fs14 labels">Date To</label>
+          <input type="text" class="form-control-date img cursor-pointer" (keydown)="restrictAlphas($event)"
+            maxlength="10" formControlName="dateTo" placeholder="DD-MM-YYYY" bsDatepicker
+            style="background-image:url('/assets/img/common/calendar.png')" [maxDate]="today"
+            [bsConfig]="{dateInputFormat: 'DD-MM-YYYY', showClearButton: true, clearPosition: 'right' , showTodayButton: true, todayPosition: 'left' }">
+          <!-- <input type="text"
+              class="form-control"
+              #dp="bsDatepicker"
+              bsDatepicker
+              [bsValue]="bsValue"
+              [bsConfig]="{dateInputFormat: 'DD-MM-YYYY',containerClass: 'theme-orange', showClearButton: true, clearPosition: 'right' }">
+               <input type="text" class="form-control mb-3" placeholder="Datepicker" bsDatepicker formControlName="date" /> -->
+        </div>
+      </div>
+
+      <div class="col-lg-2 col-md-4 col-sm-4 filter-padding"
+        [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2 mb-3': this.isScreenMobile() == true}">
+        <div class="mb-3">
+          <label class="fw500 mb-0 fs14 labels">Customer ID</label>
+          <input type="text" class="form-control img input4" formControlName="customerId" placeholder="Customer ID">
+        </div>
+      </div>
+
+      <div class="col-lg-2 col-md-4 col-sm-4 filter-padding"
+        [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2 mb-3': this.isScreenMobile() == true}">
+        <div class="mb-3">
+          <label class="fw500 mb-0 fs14 labels">Account Number</label>
+          <input type="text" class="form-control img input4" formControlName="accountNumber" placeholder="Account Number">
+        </div>
+      </div>
+
+      <div class="col-lg-2 col-md-4 col-sm-4 filter-padding"
+        [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2 mb-3': this.isScreenMobile() == true}">
+        <div class="mb-3">
+          <label class="fw500 mb-0 fs14 labels">Mobile</label>
+          <input type="text" class="form-control img input4" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+            taopenbindex="1" placeholder="Mobile" formControlName="mobile" (keydown)="spaceRestrict($event)">
+        </div>
+      </div>
+
+      <div class="col-lg-2 col-md-4 col-sm-4 filter-padding"
+        [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2 mb-3': this.isScreenMobile() == true}">
+        <div class="mb-3">
+          <label class=" fw500 mb-0 fs14 labels">Transaction Type</label>
+          <select class="selectOption" formControlName="transactionType">
+            <option value="" selected>All</option>
+            <option value="" *ngFor="let item of this.transactionTypeVal" [attr.value]="item.key">{{ item.value }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-lg-2 col-md-4 col-sm-4 filter-padding"
+        [ngClass]="{'pr-0': this.isScreenMobile() == false, 'px-2 mb-3': this.isScreenMobile() == true}">
+        <div class="mb-3">
+          <label class="fw500 mb-0 fs14 labels">Status</label>
+          <select class="selectOption" formControlName="status">
+            <option value="" selected>All</option>
+            <option value="" *ngFor="let item of this.transactionStatus" [attr.value]="item.key">{{ item.value }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6 col-sm-12 fs15 searchButton mt-2 d-flex p-0"
+        [ngClass]="{'mb-3 ml-0': this.isScreenMobile() == true}">
+        <div class="mb-3 col-lg-12 d-flex outer-button-container">
+          <div class="col-lg-6 inner-button-container">
+            <button class="btn btn-prop bg-green fs15 fw500 search-btn btn-search me-2" type="button"
+              (click)="search(1)">
+              Search
+            </button>
+          </div>
+          <div class="col-lg-6 inner-button-container">
+            <button class="btn btn-prop fs15 fw500 cancel-button button-cancel btn-search mx-0" type="button"
+              data-dismiss="modal" (click)="exportTransactionHistory()">
+              <img src="assets/img/common/download.svg" width="15px" class="me-2 download-img">Export
+            </button>
+          </div>
+        </div>
+        <!-- <div class="mb-3 btn-export">
+          
+        </div> -->
+      </div>
+    </div>
+
+
+    <table class="table mb-4 user-table pl-2">
+      <thead>
+        <tr class="rowAlign fs15 fw500">
+
+          <th>S. No.</th>
+          <th>Transaction ID</th>
+          <th>Transaction Date</th>
+          <th class="color-green">Order ID</th>
+          <th>Customer ID</th>
+          <th>Account No.</th>
+          <th>Mobile</th>
+          <th>Card No.</th>
+          <th>Amount (TTD)</th>
+          <th>VAT (TTD)</th>
+          <th>Total Amount (TTD)</th>
+          <th>Transaction Type</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody class="fs15 fw500">
+        <tr class="trBody cursor-hand" *ngFor="let data of this.userTransactionList; let i = index;">
+          <td>{{(this.currentPage-1)*10+i+1}}</td>
+          <td>{{data?.transactionId}}</td>
+          <td>{{data?.transactionDatetime}}</td>
+          <td>{{data?.orderNumber}}</td>
+          <td>{{data?.customerId}}</td>
+          <td>{{data?.accountNumber}}</td>
+          <td>{{data?.mobileNumber}}</td>
+          <td>{{data?.cardNumber}}</td>
+          <td>{{data?.amount | number : '.2'}}</td>
+          <td>{{data?.tax | number : '.2'}}</td>
+          <td>{{data?.totalAmount | number : '.2'}}</td>
+          <td>{{getLookups(data?.transactionType,'transactionType')}}</td>
+          <td><span class="color-green fs15 fw500" *ngIf="data?.isRefunded == true">Refunded</span>
+            <button type="button" (click)="openrefundConfirmationModal(data?.id, data)"
+              class="btn btn-prop cancel-button ms-0 fs15 fw500 button-cancel refund-btn"
+              *ngIf="data?.isRefunded == false && this.editUserAccess">
+              <img src="assets/img/promotion/refund-icon.svg" class="add-img"> Refund
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="this.userTransactionList?.length == 0">
+          <td class="text-center" colspan="12">No Data Found</td>
+        </tr>
+      </tbody>
+
+    </table>
+    <div class="text-center d-flex justify-content-center mb-2" *ngIf="this.userTransactionList?.length > 0">
+      <div class="pagination">
+        <a href="javascript: void(0)" style="color: #333333;" (click)="goToPage(currentPage - 1)"><u>Prev</u></a>
+        <a href="javascript: void(0)" *ngFor="let page of pageArray" (click)="goToPage(page)"
+          [ngClass]="{'active': currentPage == page, 'no-page': page == 0}">
+          {{page == 0 ? "..." : page}}
+        </a>
+        <a href="javascript: void(0)" style="color: #333333;" (click)="goToPage(currentPage + 1)"><u>Next</u></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #responseModel let-modal>
+  <div class="modal-body pb-4">
+    <div class="row mx-0 text-left">
+      <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+        <img src="assets/img/common/cross.svg">
+        {{this.errorMessage}}
+      </div>
+    </div>
+  </div>
+  <div class="w-100 text-center">
+    <button class="btn btn-prop color-white bg-red w-50" type="button" data-dismiss="modal"
+      (click)="close()">Close</button>
+  </div>
+</ng-template>
+
+
+<ng-template #confirmationModal let-modal>
+  <div class="modal-body pb-2 pt-2 modal-contents">
+    <div class="row mx-0 text-left mb-2">
+      <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+        <div class="modal-text fs15 color-green fw500 fs16">
+          <div>Are you sure you want to continue?</div>
+        </div>
+      </div>
+    </div>
+    <div class="row mx-0">
+      <div class="col-6 fs15 fw500 ps-0">
+        <div class="grey-light align-label">Transaction ID</div>
+        <div class="color-dark-grey align-label">{{this.refundData?.transactionId}}</div>
+      </div>
+      <div class="col-6 fs15 fw500 ps-0">
+        <div class="grey-light align-label-end">Transaction Date</div>
+        <div class="color-dark-grey align-label-end">{{this.refundData?.transactionDatetime}}</div>
+      </div>
+      <div class="col-6 fs15 fw500 ps-0">
+        <div class="grey-light align-label ">Order ID</div>
+        <div class="color-dark-grey align-label">{{this.refundData?.orderNumber}}</div>
+      </div>
+      <div class="col-6 fs15 fw500 ps-0">
+        <div class="grey-light align-label-end">Account No.</div>
+        <div class="color-dark-grey align-label-end">{{this.refundData?.accountNumber}}</div>
+      </div>
+      <div class="col-6 fs15 fw500 ps-0">
+        <div class="grey-light align-label ">Mobile</div>
+        <div class="color-dark-grey align-label">{{this.refundData?.mobileNumber}}</div>
+      </div>
+      <div class="col-6 fs15 fw500 ps-0">
+        <div class="grey-light align-label-end">Card No.</div>
+        <div class="color-dark-grey align-label-end">{{this.refundData?.cardNumber}}</div>
+      </div>
+      <div class="col-6 fs15 fw500 ps-0">
+        <div class="grey-light align-label">Amount (TTD)</div>
+        <div class="color-dark-grey align-label">{{this.refundData?.amount | number : '.2'}}</div>
+      </div>
+      <div class="col-6 fs15 fw500 ps-0">
+        <div class="grey-light align-label-end">VAT (TTD)</div>
+        <div class="color-dark-grey align-label-end">{{this.refundData?.tax | number : '.2'}}</div>
+      </div>
+      <div class="col-6 fs15 fw500 ps-0">
+        <div class="grey-light align-label">Total Amount (TTD)</div>
+        <div class="color-dark-grey align-label">{{this.refundData?.totalAmount | number : '.2'}}</div>
+      </div>
+      <div class="col-6 fs15 fw500 ps-0">
+        <div class="grey-light align-label-end">Transaction Type</div>
+        <div class="color-dark-grey align-label-end">{{getLookups(this.refundData?.transactionType,'transactionType')}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mx-0 mt-3">
+    <div class="col-6 px-1 mb-2">
+      <button class="btn btn-prop cancel-button ms-0" type="button" data-dismiss="modal"
+        (click)="close()">Cancel</button>
+    </div>
+    <div class="col-6 px-1 mb-2">
+      <button class="btn btn-prop bg-green" type="button" data-dismiss="modal"
+        (click)="confirmRefund()">Confirm</button>
+    </div>
+  </div>
+</ng-template>
+
+
+<ng-template #successModel let-modal>
+  <div class="modal-body pb-4">
+    <div class="row mx-0 text-left">
+      <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+        <img src="assets/img/common/tick.svg">
+        {{this.successMessage}}
+      </div>
+    </div>
+  </div>
+  <div class="w-100 text-center">
+    <button class="btn btn-prop color-white bg-green close-button w-50" type="button" data-dismiss="modal"
+      (click)="close()">Close</button>
+  </div>
+</ng-template>

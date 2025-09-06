@@ -1,0 +1,149 @@
+<div class="section-container">
+    <div class="card user-card p-0 mb-5">
+        <div class="row mx-0 user-row user-container">
+            <div class="col-10 d-flex align-items-center">
+                <div class="pointer" (click)="cancelGeneration()">
+                    <img src="assets/img/common/back.png" width="7px" class="mr-3">
+                </div>
+                <div class="fs25 fw600 color-dark-grey px-3">Create Report
+                </div>
+            </div>
+
+        </div>
+
+        <div class=" mx-0 user-row align-items-center" [formGroup]="this.provideReportDetails">
+            <div class="row">
+                <div class=" col-lg-3 col-sm-6 mb-3">
+                    <label class="color-dark-grey">Report Name</label>
+                    <select class="selectOption" [formControl]="reportType"
+                        (change)="changeReport($event.target.value)">
+                        <option value="" selected>Select</option>
+                        <option *ngFor="let forms of this.metaData" [attr.value]="forms.reportType">{{ forms.reportName
+                            }}
+                        </option>
+                    </select>
+                </div>
+                <div class=" col-lg-3 col-sm-6 mb-3" *ngFor="let forms of this.filterData">
+                    <label class="color-dark-grey" *ngIf="forms.type =='String'">{{forms.name}}</label>
+                    <input *ngIf="forms.type =='String'" [type]="forms.type=='String'?'text':''"
+                        class="form-control number" formControlName={{forms.key}} [ngClass]="{'redBorder': this.provideReportDetails?.get(forms.name)?.invalid && (this.provideReportDetails?.get(forms.name)?.dirty || this.provideReportDetails?.get(forms.name)?.touched) ||
+            (  this.submitted && this.provideReportDetails?.get(forms.name)?.invalid )}">
+
+                    <label *ngIf="forms.type =='DATE'" class="color-dark-grey"
+                        style="z-index: 1;">{{forms.name}}</label>
+                    <input type="text" class="form-control-date img cursor-pointer" (keydown)="restrictAlphas($event)"
+                        *ngIf="forms.type =='DATE'" maxlength="10" formControlName={{forms.key}} bsDatepicker
+                        placeholder="DD-MM-YYYY" style="background-image:url('/assets/img/common/calendar.png')"
+                        [maxDate]="today"
+                        [bsConfig]="{dateInputFormat: 'DD-MM-YYYY', showClearButton: true, clearPosition: 'right', showTodayButton: true, todayPosition: 'left',allowInput: false }"
+                        #dp="bsDatepicker" [bsValue]="bsValue" [ngClass]="{'redBorder': this.provideReportDetails?.get(forms.name)?.invalid && (this.provideReportDetails?.get(forms.name)?.dirty || this.provideReportDetails?.get(forms.name)?.touched) ||
+            (  this.submitted && this.provideReportDetails?.get(forms.name)?.invalid )}">
+
+                    <label *ngIf="forms.type =='SELECT_LOOKUP'">{{forms.name}}</label>
+
+                    <select *ngIf="forms.type =='SELECT_LOOKUP'" class="selectOption" formControlName={{forms.key}}
+                        [ngClass]="{'redBorder': this.provideReportDetails?.get(forms.name)?.invalid && (this.provideReportDetails?.get(forms.name)?.dirty || this.provideReportDetails?.get(forms.name)?.touched) ||
+          (  this.submitted && this.provideReportDetails?.get(forms.name)?.invalid )}">
+                       <option value="" selected>{{ this.npsFormLabels ? 'Select' : 'All' }}</option>
+                        <option value="" *ngFor="let item of this.resDateArray.get(forms.lookupKey)"
+                            [attr.value]="item.key">{{
+                            item.value }}
+                        </option>
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="row col-lg-12 buttons-center mt-2" *ngIf="this.reportType.value!=''">
+                <div class="col-lg-2 col-sm-12 button-search" *ngIf="this.filterData.length>0">
+                    <div class="mb-3 reset">
+                        <button class="btn btn-prop fs15 fw500 cancelBtn button-cancel" type="button"
+                            (click)="resetData()">
+                            Reset
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-sm-12 button-width button-search">
+                  <div class="mb-3">
+                      <button class="btn btn-prop fs15 fw500 cancelBtn button-cancel" type="button"
+                          (click)="cancelGeneration()">
+                          Cancel
+                      </button>
+                  </div>
+              </div>
+                <div class="col-lg-2 col-sm-12 button-width button-search">
+                    <div class="mb-3">
+                        <button class="btn btn-prop bg-green fs15 fw500 search-btn" type="button"
+                            (click)="openGenerateModel()">
+                            Create
+                        </button>
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <ng-template #responseModel let-modal>
+        <div class="modal-body pb-4">
+            <div class="row mx-0 text-left">
+                <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+                    <img src="assets/img/common/cross.svg">
+                    {{this.errorMessage}}
+                </div>
+            </div>
+        </div>
+        <div class="w-100 text-center">
+            <button class="btn btn-prop color-white bg-red w-50" type="button" data-dismiss="modal"
+                (click)="closeModal()">Close</button>
+        </div>
+    </ng-template>
+
+
+    <ng-template #successModel let-modal>
+        <div class="modal-body pb-4">
+            <div class="row mx-0 text-left">
+                <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+                    <img src="assets/img/common/tick.svg">
+                    {{this.successMessage}}
+                </div>
+            </div>
+        </div>
+        <div class="w-100 text-center">
+            <button class="btn btn-prop close-button color-white bg-green w-50" type="button" data-dismiss="modal"
+                (click)="closeModal()">Close</button>
+        </div>
+    </ng-template>
+
+    <ng-template #confirmationModal let-modal>
+        <div class="modal-body pb-2 pt-2">
+            <div class="row mx-0 text-left">
+                <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+                    <div class="mb-2 ">
+                        <!-- <img src="assets/img/users/log-out2.svg" class="logout-img"><span class="logoutIcon fs20 fw700"></span> -->
+                    </div>
+                    <div class="modal-text fs15 fw500">
+                        <div>Are you sure you want to generate new report ?</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mx-0 mt-4">
+                <div class="col-6 px-1">
+                    <button class="btn btn-prop cancel-button ms-0" type="button" data-dismiss="modal"
+                        (click)="close()">Cancel</button>
+                </div>
+                <div class="col-6 px-1">
+                    <button class="btn btn-prop bg-green" type="button" data-dismiss="modal"
+                        (click)="search()">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </ng-template>

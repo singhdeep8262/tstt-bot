@@ -1,0 +1,120 @@
+.bg-img {
+  width: 100%;
+  height: 100vh;
+  /* background: url('../../../assets/img/login/bg-img.png') no-repeat center center fixed; */
+  background-image:linear-gradient(to bottom, #000000E3, #2B2B2B);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.login-container {
+  top: 25%;
+  position: relative;
+}
+
+.form-floating>.form-control:not(:placeholder-shown) {
+  padding-left: 68px;
+}
+
+.form-check-input:checked {
+  background-color: #00E556;
+  border-color: #14892F;
+}
+
+.form-check-input:focus {
+  border-color: #14892F;
+  outline: 0;
+  box-shadow: none;
+}
+
+.form-control:focus,
+.form-control:active,
+.form-control:active:focus {
+  outline: 0px !important;
+  border: none;
+  -webkit-appearance: none;
+  box-shadow: none !important;
+}
+
+.fs35 {
+  font-size: 35px;
+}
+
+.section-container {
+  padding: 30px 20px 20px;
+  position: relative;
+}
+
+.open-eye-img {
+  width: 56px;
+  position: absolute;
+  position: absolute;
+  right: 1px;
+  top: 0px;
+}
+
+.closed-eye-img {
+  width: 56px;
+  position: absolute;
+  position: absolute;
+  right: 1px;
+  top: 0px;
+}
+
+.username,
+.password {
+  background: #4C4B49 0% 0% no-repeat padding-box;
+  border-radius: 12px;
+  height: 60px;
+  color: #fff;
+  padding-left: 68px;
+}
+
+.btn-prop {
+  font-weight: 500;
+  border: none;
+  padding: 8px 0;
+}
+
+.user-img,
+.password-img {
+  width: 56px;
+  position: absolute;
+}
+
+.btn-login {
+  background: #00E556 0% 0% no-repeat padding-box;
+  color: #2B2B2B;
+  height: 50px;
+  font-size: 18px;
+  border-radius: 12px;
+}
+
+.btn-login:focus,
+.btn-login:active,
+.btn-login:active:focus {
+    box-shadow: 0 0 0 0.2rem #87d6a5;
+}
+
+.form-floating>label {
+  position: absolute;
+  top: 2px;
+  left: 55px;
+}
+
+.passworField {
+    -webkit-text-security: disc;
+  /* font: large Verdana,sans-serif; */
+  font-family: text-security-disc;
+  font-size: 20px !important;
+  letter-spacing: 3px !important;
+}
+@media screen and (min-width: 767px) and (max-width: 1400px) {
+
+  .login-container{
+       top:15%;
+  }
+
+ }

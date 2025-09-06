@@ -1,0 +1,8 @@
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19">
+  <g id="trash-2">
+    <rect id="Rectangle_602" data-name="Rectangle 602" width="19" height="19" fill="#d93535" opacity="0"/>
+    <path id="Path_27133" data-name="Path 27133" d="M16.25,5H12.5V3.747A1.815,1.815,0,0,0,10.625,2H8.375A1.815,1.815,0,0,0,6.5,3.747V5H2.75a.75.75,0,0,0,0,1.5H3.5v8.25A2.25,2.25,0,0,0,5.75,17h7.5a2.25,2.25,0,0,0,2.25-2.25V6.5h.75a.75.75,0,0,0,0-1.5ZM8,3.747c0-.12.158-.248.375-.248h2.25c.217,0,.375.128.375.248V5H8Zm6,11a.75.75,0,0,1-.75.75H5.75A.75.75,0,0,1,5,14.75V6.5h9Z" transform="translate(0 0)" fill="#d93535"/>
+    <path id="Path_27134" data-name="Path 27134" d="M9,17a1,1,0,0,0,1-1V12a1,1,0,0,0-2,0v4A1,1,0,0,0,9,17Z" transform="translate(-1.818 -3.056)" fill="#d93535"/>
+    <path id="Path_27135" data-name="Path 27135" d="M15,17a1,1,0,0,0,1-1V12a1,1,0,0,0-2,0v4A1,1,0,0,0,15,17Z" transform="translate(-3.182 -3.056)" fill="#d93535"/>
+  </g>
+</svg>

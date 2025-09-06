@@ -1,0 +1,389 @@
+<div class="section-container">
+  <div class="card user-card p-0">
+    <div class="row mx-0 user-row user-container">
+      <div class="col-10 d-flex align-items-center">
+        <div class="fs25 fw600 color-dark-grey ml-2">Promotions
+        </div>
+      </div>
+      <div class="col-lg-2 col-sm-4 col-7" *ngIf="this.createUserAccess == true">
+        <button class="btn btn-prop add-user-btn fs15 fw500" type="button" (click)="openPromoModal()">
+          <img src="assets/img/common/add.png" class="mr-2 add-img">
+          Add Promotion
+        </button>
+      </div>
+    </div>
+    <div class="row mx-0 user-row">
+      <div class="row mx-0 filter-row">
+        <div class="promo-card px-0" *ngFor="let data of this.bannerList">
+          <div class="promo-img">
+            <img [src]="this.promoUrl+data?.imageUrl">
+          </div>
+          <div class="promo-details">
+            <div class="d-flex">
+              <div class="col-7 fs15 fw500">{{data?.name}}</div>
+              <div class="col-5 text-end" *ngIf="this.editUserAccess == true || this.deleteUserAccess == true">
+                <img class="pointer" *ngIf="data.isActive==true && this.editUserAccess == true"
+                  (click)="editbanner(data, data?.id)" src="assets/img/promotion/edit.svg" width="22px">
+                <img class="ms-2 pointer" *ngIf="this.deleteUserAccess == true" (click)="deletebanner(data?.id)"
+                  src="assets/img/promotion/delete.svg" width="22px">
+
+                <label *ngIf="this.showNewToggle==false" class="switch ms-2">
+                  <input type="checkbox" (change)="getToggleValue($event, data, data.id)" id="{{data.id}}"
+                    [checked]="data.isActive">
+                  <span class="slider round"></span>
+                </label>
+                <label *ngIf="this.showNewToggle==true" class="switch ms-2">
+                  <input type="checkbox" (change)="getToggleValue($event, data, data.id)" id="{{data.id}}"
+                    [checked]="data.Id==this.newIdValue?(this.reverseToggleValue):data.isActive">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+            <!-- <div class="color-gray fs15 fw500 mb-2">{{data?.subject}}
+              </div> -->
+            <!-- <div class="color-green fs15 fw500">
+                <img class="me-1 star-img" src="assets/img/promotion/star.svg" width="22px">{{data?.body}}
+              </div> -->
+          </div>
+        </div>
+      </div>
+      <div class="text-center d-flex justify-content-center mb-2" *ngIf="this.bannerList?.length > 0">
+        <div class="pagination">
+          <a href="javascript: void(0)" style="color: #333333;" (click)="goToPage(currentPage - 1)"><u>Prev</u></a>
+          <a href="javascript: void(0)" *ngFor="let page of pageArray" (click)="goToPage(page)"
+            [ngClass]="{'active': currentPage == page, 'no-page': page == 0}">
+            {{page == 0 ? "..." : page}}
+          </a>
+          <a href="javascript: void(0)" style="color: #333333;" (click)="goToPage(currentPage + 1)"><u>Next</u></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #responseModel let-modal>
+  <div class="modal-body pb-4">
+    <div class="row mx-0 text-left">
+      <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+        <img src="assets/img/common/cross.svg">
+        {{this.errorMessage}}
+      </div>
+    </div>
+  </div>
+  <div class="w-100 text-center">
+    <button class="btn btn-prop color-white bg-red w-50" type="button" data-dismiss="modal"
+      (click)="closeModal()">Close</button>
+  </div>
+</ng-template>
+
+<ng-template #successModel let-modal>
+  <div class="modal-body pb-4">
+    <div class="row mx-0 text-left">
+      <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+        <img src="assets/img/common/tick.svg">
+        {{this.successMessage}}
+      </div>
+    </div>
+  </div>
+  <div class="w-100 text-center">
+    <button class="btn btn-prop color-white bg-green close-button w-50" type="button" data-dismiss="modal"
+      (click)="close()">Close</button>
+  </div>
+</ng-template>
+
+<ng-template #addPromoModel let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Create New Promotion</h5>
+  </div>
+  <div class="modal-body pb-4 pt-0">
+    <div class="row mx-0 text-left" [formGroup]="uploadForm">
+      <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text">
+        <div class="upload-form-group form-group">
+          <label>Name <span class="asterisk ">*</span></label>
+          <input class="form-control" type="text" maxlength="100" formControlName="name"
+            (keydown)="spaceRestrict($event)" [ngClass]="{'redBorder': this.uploadForm.get('name').invalid &&
+          (this.uploadForm.get('name').dirty || this.uploadForm.get('name').touched) ||
+          ( this.submitted && this.uploadForm.get('name').invalid )}" />
+          <div class="messageDiv uxErrorMessage"
+            *ngIf="this.uploadForm.get('name').invalid &&
+              (this.uploadForm.get('name').dirty || this.uploadForm.get('name').touched) || ( this.submitted && this.uploadForm.get('name').invalid )">
+            <small>Name is required</small>
+          </div>
+        </div>
+        <div class="upload-form-group form-group">
+          <label>Link</label>
+          <input class="form-control" type="text" maxlength="250" formControlName="link"
+            (keydown)="spaceRestrict($event)" />
+        </div>
+
+        <!-- <div class="upload-form-group form-group">
+          <label>Subject <span class="asterisk ">*</span></label>
+          <input class="form-control" type="text" maxlength="250" formControlName="subject"  (keydown)="spaceRestrict($event)" [ngClass]="{'redBorder': this.uploadForm.get('subject').invalid &&
+          (this.uploadForm.get('subject').dirty || this.uploadForm.get('subject').touched) ||
+          ( this.submitted && this.uploadForm.get('subject').invalid )}" />
+          <div class="messageDiv uxErrorMessage"
+            *ngIf="this.uploadForm.get('subject').invalid &&
+              (this.uploadForm.get('subject').dirty || this.uploadForm.get('subject').touched) || ( this.submitted && this.uploadForm.get('subject').invalid )">
+            <small>Subject is required</small>
+          </div>
+         </div> -->
+
+        <!-- <div class="upload-form-group form-group">
+          <label>Body <span class="asterisk ">*</span></label>
+          <textarea id="text-area" class="form-control" type="text" formControlName="body" maxlength="250" (keydown)="spaceRestrict($event)" [ngClass]="{'redBorder': this.uploadForm.get('body').invalid &&
+          (this.uploadForm.get('body').dirty || this.uploadForm.get('body').touched) ||
+          ( this.submitted && this.uploadForm.get('body').invalid )}"></textarea>
+          <div class="messageDiv uxErrorMessage"
+            *ngIf="this.uploadForm.get('body').invalid &&
+              (this.uploadForm.get('body').dirty || this.uploadForm.get('body').touched) || ( this.submitted && this.uploadForm.get('body').invalid )">
+            <small>Body is required</small>
+          </div>
+         </div> -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-2">
+          <div class="mb-4 d-flex">
+            <label class="fw500 mb-0 fs15 pl-0 label-checkbox col-10 d-flex">Promo Validity</label>
+            <label class="switch col-1 ms-3">
+              <input type="checkbox" formControlName="time" (click)="promodatevalidity($event)" />
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+        <div class="row d-flex" *ngIf="this.uploadForm.controls.time.value == true">
+          <div class="col-lg-12 col-md-4 col-sm-12 width20 mb-2">
+            <div class="w-100" style="margin-bottom: 9px;">
+              <label class="fw500 mb-0 fs14 labels d-flex mb-1">Start Date Time</label>
+              <input type="text" class="form-control-date img cursor-pointer" (keydown)="restrictAlphas($event)"
+                maxlength="10" formControlName="dateFrom" placeholder="YYYY-MM-DD HH:mm:ss" bsDatepicker [bsConfig]="{withTimepicker: true,keepDatepickerOpened: true, rangeInputFormat : 'YYYY-MM-DD HH:mm:ss', dateInputFormat: 'YYYY-MM-DD HH:mm:ss'
+               }" [ngClass]="{'redBorder': this.uploadForm.get('dateFrom').invalid &&
+               (this.uploadForm.get('dateFrom').dirty || this.uploadForm.get('dateFrom').touched) ||
+               ( this.submitted && this.uploadForm.get('dateFrom').invalid )}" />
+              <div class="messageDiv uxErrorMessage text-start"
+                *ngIf="this.uploadForm.get('dateFrom').invalid &&
+                   (this.uploadForm.get('dateFrom').dirty || this.uploadForm.get('dateFrom').touched) || ( this.submitted && this.uploadForm.get('dateFrom').invalid )">
+                <small>Start Date Time is required</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12 col-md-4 col-sm-12 width20">
+            <div class="w-100" style="margin-bottom: 9px;">
+              <label class="fw500 mb-0 fs14 labels d-flex mb-1">End Date Time</label>
+              <input type="text" class="form-control-date img cursor-pointer" (keydown)="restrictAlphas($event)"
+                maxlength="10" formControlName="dateTo" placeholder="YYYY-MM-DD HH:mm:ss" [minDate]="today"
+                [bsConfig]="{isAnimated: true , withTimepicker: true, keepDatepickerOpened: true,  rangeInputFormat : 'YYYY-MM-DD HH:mm:ss', dateInputFormat: 'YYYY-MM-DD HH:mm:ss'}"
+                bsDatepicker [ngClass]="{'redBorder': this.uploadForm.get('dateTo').invalid &&
+                (this.uploadForm.get('dateTo').dirty || this.uploadForm.get('dateTo').touched) ||
+                ( this.submitted && this.uploadForm.get('dateTo').invalid )}" />
+              <div class="messageDiv uxErrorMessage text-start"
+                *ngIf="this.uploadForm.get('dateTo').invalid &&
+                    (this.uploadForm.get('dateTo').dirty || this.uploadForm.get('dateTo').touched) || ( this.submitted && this.uploadForm.get('dateTo').invalid )">
+                <small>End Date Time is required</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="promo-upload col-12 mt-3 mb-1" [ngClass]="{'min-height-img' : !this.uploadForm.controls.image.value ,'redBorder': this.uploadForm.get('image').invalid &&
+          (this.uploadForm.get('image').dirty || this.uploadForm.get('image').touched) ||
+          ( this.submitted && this.uploadForm.get('image').invalid )}">
+          <label class="mb-0" for="doc1" [ngClass]="{'upload-promo-img' : !this.uploadForm.controls.image.value}">
+            <img id="previewPromo" class="pointer preview-img" src="assets/img/promotion/Upload.svg">
+            <div *ngIf="!this.uploadForm.controls.image.value" class="color-green fw500 fs15">Upload Image here</div>
+          </label>
+          <input type="file" accept=".jpeg, .jpg, .png" class="d-none" id="doc1" (change)="onUpload($event, 'add')">
+
+          <div class="add-middle mb-2" *ngIf="this.uploadForm.controls.image.value">
+
+            <label for="doc1" class="doc1 bg-green btn btn-prop">
+              <input type="file" accept=".jpeg, .jpg, .png" id="doc1" class="d-none"
+                (change)="onUpload($event, 'add')">Upload Image
+            </label>
+
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-start fs12 color-red pl-2">
+          <span class="fa fa-info-circle error-info-icon me-1"></span>Only JPG, JPEG and PNG file are allowed and max
+          File size should be 500 KB. The dimensions must be 380 x 140.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mx-0">
+    <div class="col-6 px-1 mb-2">
+      <button class="btn btn-prop cancel-btn" type="button" data-dismiss="modal" (click)="closeModal()">Cancel</button>
+    </div>
+    <div class="col-6 px-1 mb-2">
+      <button class="btn btn-prop bg-green" type="button" data-dismiss="modal"
+        (click)="addPromoDetails()">Continue</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #editPromoModel let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Edit Promotion</h5>
+  </div>
+  <div class="modal-body pb-4 pt-0">
+    <div class="row mx-0 text-left" [formGroup]="editForm">
+      <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text">
+        <div class="upload-form-group form-group">
+          <label>Name <span class="asterisk ">*</span></label>
+          <input class="form-control" type="text" maxlength="100" formControlName="name"
+            (keydown)="spaceRestrict($event)" [ngClass]="{'redBorder': this.editForm.get('name').invalid &&
+          (this.editForm.get('name').dirty || this.editForm.get('name').touched) ||
+          ( this.submitted && this.editForm.get('name').invalid )}" />
+          <div class="messageDiv uxErrorMessage"
+            *ngIf="this.editForm.get('name').invalid &&
+              (this.editForm.get('name').dirty || this.editForm.get('name').touched) || ( this.submitted && this.editForm.get('name').invalid )">
+            <small>Name is required</small>
+          </div>
+        </div>
+
+        <div class="upload-form-group form-group">
+          <label>Link</label>
+          <input class="form-control" type="text" formControlName="link" (keydown)="spaceRestrict($event)" />
+        </div>
+
+        <!-- <div class="upload-form-group form-group">
+          <label>Subject <span class="asterisk ">*</span></label>
+          <input class="form-control" type="text" maxlength="250" formControlName="subject"  (keydown)="spaceRestrict($event)" [ngClass]="{'redBorder': this.editForm.get('subject').invalid &&
+          (this.editForm.get('subject').dirty || this.editForm.get('subject').touched) ||
+          ( this.submitted && this.editForm.get('subject').invalid )}" />
+          <div class="messageDiv uxErrorMessage"
+            *ngIf="this.editForm.get('subject').invalid &&
+              (this.editForm.get('subject').dirty || this.editForm.get('subject').touched) || ( this.submitted && this.editForm.get('subject').invalid )">
+            <small>Subject is required</small>
+          </div>
+         </div> -->
+
+        <!-- <div class="upload-form-group form-group">
+          <label>Body <span class="asterisk ">*</span></label>
+          <textarea id="text-area" class="form-control" type="text" formControlName="body" maxlength="250" (keydown)="spaceRestrict($event)" [ngClass]="{'redBorder': this.uploadForm.get('body').invalid &&
+          (this.editForm.get('body').dirty || this.editForm.get('body').touched) ||
+          ( this.submitted && this.editForm.get('body').invalid )}"></textarea>
+          <div class="messageDiv uxErrorMessage"
+            *ngIf="this.editForm.get('body').invalid &&
+              (this.editForm.get('body').dirty || this.editForm.get('body').touched) || ( this.submitted && this.editForm.get('body').invalid )">
+            <small>Body is required</small>
+          </div>
+         </div> -->
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-2">
+          <div class="mb-4 d-flex">
+            <label class="fw500 mb-0 fs15 pl-0 label-checkbox col-10 d-flex">Promo Validity</label>
+            <label class="switch col-1 ms-3">
+              <input type="checkbox" formControlName="time" (click)="promoEditvalidity($event)" />
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+        <div class="row d-flex" *ngIf="this.editForm.controls.time.value==true">
+          <div class="col-lg-12 col-md-4 col-sm-12 width20 mb-2">
+            <div class="w-100" style="margin-bottom: 9px;">
+              <label class="fw500 mb-0 fs14 labels d-flex mb-1">Start Date Time</label>
+              <input type="text" class="form-control-date img cursor-pointer" (keydown)="restrictAlphas($event)"
+                maxlength="10" formControlName="dateFrom" placeholder="YYYY-MM-DD HH:mm:ss" bsDatepicker [bsConfig]="{ isAnimated: true ,withTimepicker: true,keepDatepickerOpened: true, rangeInputFormat : 'YYYY-MM-DD HH:mm:ss', dateInputFormat: 'YYYY-MM-DD HH:mm:ss'
+               }" [ngClass]="{'redBorder': this.editForm.get('dateFrom').invalid &&
+               (this.editForm.get('dateFrom').dirty || this.editForm.get('dateFrom').touched) ||
+               ( this.submitted && this.editForm.get('dateFrom').invalid )}" />
+              <div class="messageDiv uxErrorMessage text-start"
+                *ngIf="this.editForm.get('dateFrom').invalid &&
+                   (this.editForm.get('dateFrom').dirty || this.editForm.get('dateFrom').touched) || ( this.submitted && this.editForm.get('dateFrom').invalid )">
+                <small>Start Date Time is required</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12 col-md-4 col-sm-12 width20">
+            <div class="w-100" style="margin-bottom: 9px;">
+              <label class="fw500 mb-0 fs14 labels d-flex mb-1">End Date Time</label>
+              <input type="text" class="form-control-date img cursor-pointer" (keydown)="restrictAlphas($event)"
+                maxlength="10" formControlName="dateTo" placeholder="YYYY-MM-DD HH:mm:ss" [minDate]="today"
+                [bsConfig]="{isAnimated: true  ,withTimepicker: true, keepDatepickerOpened: true,  rangeInputFormat : 'YYYY-MM-DD HH:mm:ss', dateInputFormat: 'YYYY-MM-DD HH:mm:ss'}"
+                bsDatepicker [ngClass]="{'redBorder': this.editForm.get('dateTo').invalid &&
+                (this.editForm.get('dateTo').dirty || this.editForm.get('dateTo').touched) ||
+                ( this.submitted && this.editForm.get('dateTo').invalid )}" />
+              <div class="messageDiv uxErrorMessage text-start"
+                *ngIf="this.editForm.get('dateTo').invalid &&
+                    (this.editForm.get('dateTo').dirty || this.editForm.get('dateTo').touched) || ( this.submitted && this.editForm.get('dateTo').invalid )">
+                <small>End Date Time is required</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="promo-upload col-12 mt-3 mb-1" [ngClass]="{'min-height-img' : !this.editForm.controls.image.value ,'redBorder': this.editForm.get('image').invalid &&
+        (this.editForm.get('image').dirty || this.editForm.get('image').touched) ||
+        ( this.submitted && this.editForm.get('image').invalid )}">
+          <label class="mb-0" for="doc1" [ngClass]="{'upload-promo-img' : !this.editForm.controls.image.value}">
+            <img class="pointer preview-img" id="editPreviewPromo"
+              [src]="this.imageEdit?  this.imageEdit : 'assets/img/promotion/Upload.svg'"
+              [ngClass]="{'upload-btn' : this.editForm.controls.image.value}">
+            <div *ngIf="!this.editForm.controls.image.value" class="color-green fw500 fs15">Upload Image here</div>
+          </label>
+          <input type="file" accept=".jpeg, .jpg, .png" class="d-none" id="doc1" (change)="onUpload($event, 'edit')">
+          <div class="middle mb-2" *ngIf="this.editForm.controls.image.value">
+
+            <label for="doc1" class="doc1 bg-green btn btn-prop">
+              <input type="file" accept=".jpeg, .jpg, .png" id="doc1" class="d-none"
+                (change)="onUpload($event, 'add')">Upload Image
+            </label>
+
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-start fs12 color-red pl-2">
+          <span class="fa fa-info-circle error-info-icon me-1"></span>Only JPG, JPEG and PNG file are allowed and max
+          File size should be 500 KB. The dimensions must be 380 x 140.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mx-0">
+    <div class="col-6 px-1 mb-2">
+      <button class="btn btn-prop cancel-btn" type="button" data-dismiss="modal" (click)="closeModal()">Cancel</button>
+    </div>
+    <div class="col-6 px-1 mb-2">
+      <button class="btn btn-prop bg-green" type="button" data-dismiss="modal"
+        (click)="editPromoDetails()">Continue</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #deleteconfirmationModal let-modal>
+  <div class="modal-body pb-4 pt-2">
+    <div class="row mx-0 text-left">
+      <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+        <div class="modal-text fs15">
+          <div>Are you sure you want to delete?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mx-0">
+    <div class="col-6 px-1 mb-2">
+      <button class="btn btn-prop cancel-btn" type="button" data-dismiss="modal" (click)="closeModal()">Cancel</button>
+    </div>
+    <div class="col-6 px-1 mb-2">
+      <button class="btn btn-prop color-white bg-red" type="button" data-dismiss="modal"
+        (click)="confirmDelete()">Delete</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #toggleConfirmationModal let-modal>
+  <div class="modal-body pb-2 pt-2">
+    <div class="row mx-0 text-left">
+      <div class="col-sm-12 col-md-12 col-lg-12 px-0 text-left text" id="errorMessage">
+        <div class="modal-text fs15 color-green details">
+          <div>{{ this.toggleMessage}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mx-0 mt-3">
+    <div class="col-6 px-1 mb-2">
+      <button class="btn btn-prop cancel-btn" type="button" data-dismiss="modal"
+        (click)="setToggleVal()">Cancel</button>
+    </div>
+    <div class="col-6 px-1 mb-2">
+      <button class="btn btn-prop bg-green" type="button" data-dismiss="modal" (click)="confirmEdit()">Confirm</button>
+    </div>
+  </div>
+</ng-template>
